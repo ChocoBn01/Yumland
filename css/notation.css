@@ -162,7 +162,6 @@ a{
     align-self: center;
     color:white;
     background-color: var(--primary-client);
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
     display: block;
     margin: 50px auto 40px auto;
 }
