@@ -94,15 +94,47 @@ a{
         padding-bottom: 20px;
     }
 
-    .logo_login {
-        width: 150px;
-        height: 150px;
-        margin: 0 auto 20px auto; 
-        display: block;
+    .logo_login{
+        display: block; 
+        margin: 10px auto; 
+        width: 80%; 
     }
 
+.login_submit {
+        display: block; 
+        margin: 10px auto; 
+        width: 80%; 
+}
+
+.login_case_code {
+    display: block; 
+    margin: 10px auto; 
+    width: 80%; 
+}
+
+.login_case_email {
+    display: block; 
+    margin: 10px auto; 
+    width: 80%; 
+}
+
+
+.mdp_oublie {
+    display: block; 
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.pas_de_compte {
+    display: block; 
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;
+}
 
 }
+
 
 
 
