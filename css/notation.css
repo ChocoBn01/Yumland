@@ -225,8 +225,9 @@ footer {
     }
 
     .com_1, .com_2, .com_3 {
-        padding:20px;
-        width: 80%;
+       padding: 10px 20px; 
+        text-align: left;
+        width: 90%;         
         margin-top: 10px;
     }
 }
