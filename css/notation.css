@@ -1,3 +1,10 @@
+header {
+    width: 100%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 body {
     margin: 0;
     display: flex;
@@ -170,4 +177,10 @@ a{
     transform: translateY(-2px);
     box-shadow: 2px 2px 0px black;
     color: var(--couleur-curseur-bouton);
+}
+
+footer {
+    width: 100%;
+    border-top: 1px solid black; 
+    text-align: center;
 }
