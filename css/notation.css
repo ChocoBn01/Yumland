@@ -185,11 +185,46 @@ footer {
 }
 
 @media screen and (max-width: 768px) { 
-    .rect_bleu{
-        width: 90%;
+    .rect_bleu {
+        width: 95%;
         min-width: 300px;
-        padding-left: 15px;
-        padding-right: 15px;
+        padding: 20px;
+        margin-top: 50px;
     }
-  
+    .logo_login {
+        width: 150px;
+        height: 150px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    .cmd1_s_img, .cmd2_s_img, .cmd3_s_img {
+        margin-left: 0;  
+        margin-top: 10px; 
+        align-items: center; 
+    }
+
+    .l1_1, .l1_2, .l1_3 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .radio_1, .radio_2, .radio_3 {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .cmd_1, .cmd_2, .cmd_3 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+
+    .com_1, .com_2, .com_3 {
+        width: 80%;
+        margin-top: 10px;
+    }
 }
