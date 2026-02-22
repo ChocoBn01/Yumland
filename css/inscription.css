@@ -122,8 +122,12 @@ body {
         width: 90%;
         min-width: 400px;
     }
-
+    .logo_login{
+        width: 150px;
+        height: 150px;  
+    }
 }
+
 
 
 
