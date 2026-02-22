@@ -35,8 +35,7 @@ body {
     margin-left: 135px;
 }
 .Notez_votre_cmd{
-    margin-left: 50px;
-    align-self: center;
+    text-align: center;
     color: var(--text-light);
     font-size: 50px;
     margin-bottom: 50px;
@@ -183,4 +182,14 @@ footer {
     width: 100%;
     border-top: 1px solid black; 
     text-align: center;
+}
+
+@media screen and (max-width: 768px) { 
+    .rect_bleu{
+        width: 90%;
+        min-width: 300px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+  
 }
