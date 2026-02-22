@@ -106,8 +106,12 @@ body {
     cursor: pointer;
 }
 
+
 @media (max-width: 768px) {
     
+    .inscription_text{
+        margin-top: 40px;
+    }
     .rect_bleu {
         width: 90%; 
         height: auto; 
@@ -121,7 +125,18 @@ body {
         width: 150px;
         height: 150px;
     }
+
+    .login_case_email, .login_case_adr, .login_case_fname, .login_case_infocomp, .login_case_tel, .login_case_name, .login_case_code {
+        margin: 10px; 
+        width: 80%;
 }
+
+    .login_submit{
+        width: 50%;
+    }
+
+}
+
 
 
 
