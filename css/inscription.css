@@ -107,14 +107,21 @@ body {
 }
 
 @media (max-width: 768px) {
+    
     .rect_bleu {
         width: 90%; 
+        min-width: 0; 
         height: auto; 
-        padding-bottom: 20px;
-        margin-bottom:30px;
+        padding-bottom: 40px;
+        margin: 20px auto;
     }
 
+    .logo_login {
+        width: 150px;
+        height: 150px;
+    }
 }
+
 
 
 
