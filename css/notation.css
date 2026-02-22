@@ -164,6 +164,7 @@ a{
     background-color: var(--primary-client);
     display: block;
     margin: 50px auto 40px auto;
+    cursor: pointer;
 }
 .avis_submit:hover{
     transform: translateY(-2px);
