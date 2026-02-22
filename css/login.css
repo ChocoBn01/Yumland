@@ -20,6 +20,7 @@ header {
     background-color: var(--card-bg-client);
     border-radius: 20px;
     border: solid black 1px;
+    margin-bottom: 30px;
 }
 body {
     margin: 0;
@@ -131,6 +132,7 @@ footer {
     }
 
 }
+
 
 
 
