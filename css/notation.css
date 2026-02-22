@@ -203,6 +203,7 @@ footer {
         margin-left: 0;  
         margin-top: 10px; 
         align-items: center; 
+        width: 100%;
     }
 
     .l1_1, .l1_2, .l1_3 {
@@ -227,7 +228,7 @@ footer {
     .com_1, .com_2, .com_3 {
        padding: 10px 20px; 
         text-align: left;
-        width: 90%;         
+        width: 100%;         
         margin-top: 10px;
     }
 }
