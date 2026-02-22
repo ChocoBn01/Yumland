@@ -63,16 +63,17 @@ body {
 .login_submit:hover{
     transform: translateY(-2px);
     box-shadow: 2px 2px 0px black;
+    color: var(--couleur-curseur-bouton);
 }
 .mdp_oublie{
     color: var(--text-light);
     margin: 0px 0px 0px 20px;
 }
 .mdp_oublie:hover{
-    color: var(--primary-client);
+    color: var(--couleur-curseur-bouton);
 }
 .pas_de_compte:hover{
-    color: var(--primary-client);
+    color: var(--couleur-curseur-bouton);
 }
 .pas_de_compte{
     color: var(--text-light);
@@ -122,6 +123,7 @@ a{
     }
 
 }
+
 
 
 
