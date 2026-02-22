@@ -89,13 +89,13 @@ a{
 
 @media (max-width: 768px) {
     h1{
-        margin-top: 15px;
+        margin-top: 25px;
     }
     .rect_bleu {
         width: 90%; 
         height: auto; 
         padding-bottom: 20px;
-        margin-bottom: 50px;
+        margin-bottom: 30px;
     }
 
     .logo_login{
@@ -124,6 +124,7 @@ a{
 
 
 }
+
 
 
 
