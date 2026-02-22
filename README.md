@@ -92,6 +92,6 @@ Les couleurs sont centralisées dans `css/variables.css` :
 
 Le site est entièrement responsive pour adaptabilité mobile.
 
-## 👤 Auteur
+## 👤 Auteurs
 
 **Imane Bateoui** **EVINA Nathan** **Diego Delvig**
