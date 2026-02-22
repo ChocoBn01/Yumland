@@ -91,7 +91,8 @@ a{
     .rect_bleu {
         width: 90%; 
         height: auto; 
-        padding-bottom: 40px;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
     }
 
     .logo_login{
@@ -120,6 +121,7 @@ a{
 
 
 }
+
 
 
 
