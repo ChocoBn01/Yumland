@@ -107,24 +107,8 @@ a{
         display: block;
     }
 
-    .login_case_email {
-        width: 80%;
-        margin: 10px auto;
-        display: block;
-    }
-
-    .mdp_oublie{
-        margin: 10px 0;
-        display: block; 
-        text-align: center;
-    }
-
-    .pas_de_compte {
-        margin: 10px 0;
-        display: block; 
-        text-align: center;
-    }
 }
+
 
 
 
