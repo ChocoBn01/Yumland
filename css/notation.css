@@ -206,6 +206,7 @@ footer {
     }
 
     .l1_1, .l1_2, .l1_3 {
+        margin-top: 10px;
         flex-direction: column;
         align-items: center;
     }
@@ -224,6 +225,7 @@ footer {
     }
 
     .com_1, .com_2, .com_3 {
+        padding:20px;
         width: 80%;
         margin-top: 10px;
     }
