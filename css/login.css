@@ -99,7 +99,27 @@ a{
         padding: 10px;
     }
 
+    .logo_login {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 20px auto; 
+        display: block;
+    }
+
+    .login_case_code {
+        width: 80%;
+        margin: 10px auto;
+        display: block;
+    }
+
+    .login_case_code {
+        width: 80%;
+        margin: 10px auto;
+        display: block;
+    }
 }
+
+
 
 
 
