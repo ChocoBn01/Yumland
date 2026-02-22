@@ -15,7 +15,7 @@
 }
 
 .texte-principal {
-    color: #ad115c;
+    color: var(--couleur-curseur-bouton);
     text-decoration: underline var(--primary-client);
 }
 
