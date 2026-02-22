@@ -193,6 +193,7 @@ footer {
     }
     .Notez_votre_cmd{
         font-size: 2rem;
+        white-space:nowrap;
     }
     .logo_login {
         width: 200px;
