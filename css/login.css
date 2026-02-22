@@ -91,19 +91,19 @@ a{
     .rect_bleu {
         width: 90%; 
         height: auto; 
-        padding-bottom: 20px;
+        padding-bottom: 40px;
     }
 
     .logo_login{
         display: block; 
         margin: 10px auto; 
-        width: 80%; 
+        width: 70%; 
     }
 
 .login_submit {
         display: block; 
         margin: 10px auto; 
-        width: 80%; 
+        width: 50%; 
 }
 
 .login_case_code {
@@ -119,21 +119,8 @@ a{
 }
 
 
-.mdp_oublie {
-    display: block; 
-    margin: 10px 0;
-    text-align: center;
-    width: 100%;
 }
 
-.pas_de_compte {
-    display: block; 
-    margin: 10px 0;
-    text-align: center;
-    width: 100%;
-}
-
-}
 
 
 
