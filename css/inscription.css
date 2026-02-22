@@ -105,15 +105,6 @@ body {
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     cursor: pointer;
 }
-@media (max-width: 768px) {
-    .conteneur-menu {
-        flex-direction: column;
-        padding: 20px;
-    }
-    .colonne-filtres {
-        width: 100%;
-        position: static;
-    }
-}
+
 
 
