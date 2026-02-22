@@ -33,7 +33,6 @@ body {
     color: black;
     text-align:center;
     font-size: large;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 .login_submit{
     border: solid 1px black;
@@ -43,7 +42,6 @@ body {
     align-self: center;
     color:white;
     background-color: var(--primary-client);
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
     display: block;
     margin: 15px auto 0px auto;
     cursor:pointer;
@@ -64,6 +62,7 @@ body {
         width: 80%; 
 }
 }
+
 
 
 
