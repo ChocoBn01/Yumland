@@ -114,6 +114,7 @@ body {
     }
     .rect_bleu {
         width: 90%; 
+        min-width: 400px
         height: auto; 
         padding-bottom: 40px;
         margin: 20px auto;
@@ -136,6 +137,7 @@ body {
     }
 
 }
+
 
 
 
