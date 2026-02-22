@@ -191,9 +191,12 @@ footer {
         padding: 20px;
         margin-top: 50px;
     }
+    .Notez_votre_cmd{
+        font-size: 2.5rem;
+    }
     .logo_login {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
         margin-left: auto;
         margin-right: auto;
         display: block;
