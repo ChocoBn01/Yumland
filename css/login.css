@@ -58,7 +58,7 @@ body {
     border-radius: 5px;
     width: 150px;
     height: 30px; 
-    color: var(--text-light);
+    color: white;
     background-color: var(--primary-client);
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     cursor:pointer;
@@ -125,6 +125,7 @@ a{
         text-align: center;
     }
 }
+
 
 
 
