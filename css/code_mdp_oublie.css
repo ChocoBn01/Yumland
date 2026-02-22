@@ -43,11 +43,12 @@ body {
     width: 150px;
     height: 30px; 
     align-self: center;
-    color:var(--text-light);
+    color: white;
     background-color: var(--primary-client);
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     display: block;
     margin: 15px auto 0px auto;
     cursor:pointer;
 }
+
 
