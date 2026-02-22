@@ -123,12 +123,15 @@ footer {
         margin: 10px auto; 
         width: 80%; 
     }
-    .pas_de_compte {
-    float: right;
-    margin-right: 20px; 
+     .liens-bas{
+        display: flex;
+        justify-content: space-between; 
+        padding-right: 20px;
+        margin-top: 15px;
     }
 
 }
+
 
 
 
