@@ -88,6 +88,9 @@ a{
 }
 
 @media (max-width: 768px) {
+    h1{
+        margin-top: 15px;
+    }
     .rect_bleu {
         width: 90%; 
         height: auto; 
@@ -121,6 +124,7 @@ a{
 
 
 }
+
 
 
 
