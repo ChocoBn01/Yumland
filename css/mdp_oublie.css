@@ -52,4 +52,12 @@ body {
     box-shadow: 2px 2px 0px black;
 }
 
+@media (max-width: 768px) {
+    .rect_bleu {
+        width: 90%; 
+        height: auto; 
+        padding-bottom: 20px;
+    }
+
+}
 
