@@ -16,7 +16,7 @@ body {
     justify-content: center; 
     align-items: center;   
     min-height: 100vh;    
-    background-color: var(--accent-client); 
+    background-color: var(--bg-client); 
 }
 .logo_login{
     margin-top: -5%;
@@ -45,8 +45,10 @@ body {
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     display: block;
     margin: 15px auto 0px auto;
+    cursor:pointer;
 }
 .login_submit:hover{
     transform: translateY(-2px);
     box-shadow: 2px 2px 0px black;
 }
+
