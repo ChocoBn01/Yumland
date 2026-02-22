@@ -101,25 +101,14 @@ footer {
         margin-bottom: 30px;
     }
 
-    .logo_login{
+    .logo_login, .login_submit{
         display: block; 
         margin: 10px auto; 
         width: 50%; 
     }
 
-    .login_submit {
-        display: block; 
-        margin: 10px auto; 
-        width: 50%; 
-    }
 
-    .login_case_code {
-        display: block; 
-        margin: 10px auto; 
-        width: 80%; 
-    }
-
-    .login_case_email {
+    .login_case_code, .login_case_email {
         display: block; 
         margin: 10px auto; 
         width: 80%; 
@@ -141,6 +130,7 @@ footer {
         margin: none;
     }
 }
+
 
 
 
