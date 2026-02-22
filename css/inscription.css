@@ -109,7 +109,7 @@ h1{
     margin-bottom: 40px;
     border: 1px solid black;
     border-radius: 5px;
-    width: 70%;
+    width: 50%;
     height: 30px; 
     color:white;
     background-color: var(--primary-client);
@@ -138,6 +138,7 @@ footer {
         height: 150px;  
     }
 }
+
 
 
 
