@@ -52,16 +52,8 @@ body {
     color: var(--couleur-curseur-bouton);
 }
 
-@media (max-width: 768px) {
-    .rect_bleu {
-        width: 90%; 
-        height: auto; 
-        padding-bottom: 20px;
-    }
-    .login_case_email {
-        width: 80%; 
-}
-}
+
+
 
 
 
