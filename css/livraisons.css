@@ -115,19 +115,13 @@ main {
         gap: 15px;
     }
 
-    .maps {
+    .maps, .btn-livraison {
         max-width: 100%; 
         width: 100%;
         padding: 30px;
         font-size: 1.2rem;
     }
 
-    .btn-livraison {
-        max-width: 100%; 
-        width: 100%;
-        padding: 30px; 
-        font-size: 1.2rem;
-    }
 
 }
 
