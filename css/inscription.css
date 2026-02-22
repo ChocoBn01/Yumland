@@ -1,3 +1,12 @@
+
+header {
+    width: 100%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
 .rect_bleu{
     width:80%;
     min-width: 600px;
@@ -113,6 +122,7 @@ body {
     }
 
 }
+
 
 
 
