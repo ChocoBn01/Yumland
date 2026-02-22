@@ -40,7 +40,7 @@ body {
     width: 150px;
     height: 30px; 
     align-self: center;
-    color:var(--text-light);
+    color:white;
     background-color: var(--primary-client);
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     display: block;
@@ -51,4 +51,5 @@ body {
     transform: translateY(-2px);
     box-shadow: 2px 2px 0px black;
 }
+
 
