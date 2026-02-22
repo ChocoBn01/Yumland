@@ -87,6 +87,21 @@ a{
     text-decoration: none;
 }
 
+@media (max-width: 768px) {
+    .rect_bleu {
+        width: 90%; 
+        height: auto; 
+        padding-bottom: 20px;
+    }
+
+    header {
+        flex-direction: column; 
+        padding: 10px;
+    }
+
+}
+
+
 
 
 
