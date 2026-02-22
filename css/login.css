@@ -45,6 +45,7 @@ body {
     color: var(--text-light);
     background-color: var(--primary-client);
     font-family: "Comic Sans MS", "Comic Sans", cursive;
+    cursor:pointer;
 }
 .login_submit:hover{
     transform: translateY(-2px);
@@ -69,5 +70,6 @@ body {
 a{
     text-decoration: none;
 }
+
 
 
