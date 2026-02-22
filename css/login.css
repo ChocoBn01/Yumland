@@ -124,6 +124,11 @@ footer {
         margin: 10px auto; 
         width: 80%; 
     }
+
+    .pas_de_compte{
+        margin: none;
+    }
+    
      .liens-bas{
         display: flex;
         justify-content: space-between; 
@@ -132,6 +137,7 @@ footer {
     }
 
 }
+
 
 
 
