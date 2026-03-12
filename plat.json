@@ -1,0 +1,42 @@
+{
+    "cro'c poulet fermier":{
+        "name": "cro'c poulet fermier",
+        "age":{
+            "junior": true,
+            "adulte": false,
+            "senior": false
+        },
+        "saveur":{
+            "volaille": true,
+            "boeuf/gibier": false,
+            "poisson": false,
+            "veggie": false
+        },
+        "specifique":{
+            "sans cereale": false,
+            "hypoallergenique": false,
+            "digestion sensible": false
+        },
+        "prix": 12.5
+    },
+    "mijote de boeuf et carotte":{
+        "name": "mijote de boeuf et carotte",
+        "age":{
+            "junior": false,
+            "adulte": true,
+            "senior": false
+        },
+        "saveur":{
+            "volaille": false,
+            "boeuf/gibier": true,
+            "poisson": false,
+            "veggie": false
+        },
+        "specifique":{
+            "sans cereale": false,
+            "hypoallergenique": false,
+            "digestion sensible": false
+        },
+        "prix": 14.9
+    }
+}
