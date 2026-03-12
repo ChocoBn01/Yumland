@@ -36,6 +36,30 @@
                 <input type="email" name="nemail" id="idemail" class="login_case_email" placeholder="   Adresse email">
                 <input type="password" name="ncode" id="idcode" class="login_case_code" placeholder="   Mot de passe">
                 <input type="submit" value="S'inscrire" class="login_submit">
+                <?php 
+                    if(empty($_REQUEST['nname'])){
+                    }
+                    else{
+                        $file= "data.json";
+                        if(file_exists($file)){
+                            $client_passe=file_get_contents($file);
+                            $data=json_decode($client_passe, true);
+                        }
+                        else{
+                            $data=[];
+                        }
+                        $name=$_POST['nname'];
+                        $fname=$_POST['nfname'];
+                        $adr=$_POST['nadr'];
+                        $tel=$_POST['ntel'];
+                        $infocomp=$_POST['ninfocomp'];
+                        $email=$_POST['nemail'];
+                        $code=$_POST['ncode'];
+                        $new_user=array('name' => $name, 'fname'=>$fname, 'adr'=>$adr, 'tel'=>$tel, 'infocomp'=>$infocomp, 'email'=>$email, 'code'=>$code);
+                        $data[]=$new_user;
+                        file_put_contents("data.json", json_encode($data, JSON_PRETTY_PRINT));
+                    }
+                    ?>
             </div>
         </form>
     <footer>
