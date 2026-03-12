@@ -17,9 +17,9 @@
         </div>
         <nav>
             <ul>
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="menu.html">La Carte</a></li>
-                <li><a href="login.html" class="active btn">Connexion</a></li>
+                <li><a href="index.php">Accueil</a></li>
+                <li><a href="menu.php">La Carte</a></li>
+                <li><a href="login.php" class="active btn">Connexion</a></li>
             </ul>
         </nav>
         </header>
@@ -47,6 +47,7 @@
 
     </body>
 </html>
+
 
 
 
