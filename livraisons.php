@@ -18,11 +18,11 @@
         </div>
         <nav>
             <ul>
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="menu.html">La Carte</a></li>
-                <li><a href="profil.html">Mon Profil</a></li>
-                <li><a href="commandes.html" class="active">Livraison</a></li>
-                <li><a href="index.html" class="btn">Déconnexion</a></li>
+                <li><a href="index.php">Accueil</a></li>
+                <li><a href="menu.php">La Carte</a></li>
+                <li><a href="profil.php">Mon Profil</a></li>
+                <li><a href="commandes.php" class="active">Livraison</a></li>
+                <li><a href="index.php" class="btn">Déconnexion</a></li>
             </ul>
         </nav>
     </header>
