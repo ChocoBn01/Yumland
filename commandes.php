@@ -19,9 +19,9 @@
         </div>
         <nav>
             <ul>
-                <li><a href="index.html">Voir le site</a></li>
-                <li><a href="commandes.html" class="active">Commandes</a></li>
-                <li><a href="index.html" class="btn">Déconnexion</a></li>
+                <li><a href="index.php">Voir le site</a></li>
+                <li><a href="commandes.php" class="active">Commandes</a></li>
+                <li><a href="index.php" class="btn">Déconnexion</a></li>
             </ul>
         </nav>
     </header>
