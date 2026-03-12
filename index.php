@@ -19,9 +19,9 @@
     </div>
     <nav>
         <ul>
-            <li><a href="index.html" class="active">Accueil</a></li>
-            <li><a href="menu.html">La Carte</a></li>
-            <li><a href="login.html" class="btn">Connexion</a></li>
+            <li><a href="index.php" class="active">Accueil</a></li>
+            <li><a href="menu.php">La Carte</a></li>
+            <li><a href="login.php" class="btn">Connexion</a></li>
         </ul>
     </nav>
     </header>
