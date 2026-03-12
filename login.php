@@ -32,10 +32,10 @@
                     <input type="submit" value="Se connecter" class="login_submit">
                 
                 <div class="liens-bas">
-                <a class="mdp_oublie" href="mdp_oublie.html">
+                <a class="mdp_oublie" href="mdp_oublie.php">
                     Mot de passe oublié 
                 </a>
-                <a class="pas_de_compte" href="inscription.html">
+                <a class="pas_de_compte" href="inscription.php">
                     S'inscrire
                 </a>
                 </div>
@@ -47,6 +47,7 @@
 
     </body>
 </html>
+
 
 
 
