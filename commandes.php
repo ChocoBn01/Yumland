@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/client.css">
     <link rel="stylesheet" href="css/accueil.css"> <link rel="stylesheet" href="css/commandes.css">
     <link href="assets/Logo projet.png" rel="icon">
-     </head>
+    </head>
 <body>
 
     <header>
@@ -21,7 +21,16 @@
             <ul>
                 <li><a href="index.php">Voir le site</a></li>
                 <li><a href="commandes.php" class="active">Commandes</a></li>
-                <li><a href="index.php" class="btn">Déconnexion</a></li>
+                <li><a href="<?php if(isset($_COOKIE["client"])){ echo "profil.php"; } else{ echo "login.php"; }  ?>" class="btn">
+                        <?php  
+                            if(isset($_COOKIE["client"])){
+                                echo "Profil";
+                            }
+                            else{
+                                echo "Connexion";
+                            }
+                        ?>
+                    </a></li>
             </ul>
         </nav>
     </header>
@@ -73,7 +82,7 @@
                         </div>
                     </article>
 
-                     <article class="carte-commande">
+                    <article class="carte-commande">
                         <div class="en-tete-commande">
                             <span class="numero-commande">#CMD-8544</span>
                             <span class="timer">🕒 2 min</span>
