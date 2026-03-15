@@ -1,9 +1,12 @@
+<?php 
+    $client=json_decode($_COOKIE["client"], true);    
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Livraison - Les Croquettes du Chef</title>
+    <title>Livraison - Les Croquettes du Chef</title>
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/client.css">
     <link rel="stylesheet" href="css/livraisons.css">
@@ -20,15 +23,22 @@
             <ul>
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="menu.php">La Carte</a></li>
-                <li><a href="profil.php">Mon Profil</a></li>
                 <li><a href="commandes.php" class="active">Livraison</a></li>
-                <li><a href="index.php" class="btn">Déconnexion</a></li>
+                <li><a href="<?php if(isset($_COOKIE["client"])){ echo "profil.php"; } else{ echo "login.php"; }  ?>" class="btn">
+                        <?php  
+                            if(isset($_COOKIE["client"])){
+                                echo "Profil";
+                            }
+                            else{
+                                echo "Connexion";
+                            }
+                        ?>
+                    </a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-       
     
         <h2>LIVRAISON EN COURS</h2>
 
