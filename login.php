@@ -1,3 +1,23 @@
+<?php 
+    if(empty($_REQUEST['nemail'])){
+    }
+    else{
+        $file= "data.json";
+        if(file_exists($file)){
+            $data=file_get_contents($file);
+            $data=json_decode($data, true);
+            $mail=$_REQUEST['nemail'];
+            if(isset($data[$mail])){
+                $mdp=$_REQUEST['ncode'];
+                if($mdp==$data[$mail]['code']){
+                    setcookie("client", json_encode($data[$mail]), time()+3600);
+                    header("Location: index.php");
+                    exit;
+                }
+            }    
+        }                        
+    }
+?>
 <!DOCTYPE html>
 <html> 
     <head>
@@ -29,25 +49,22 @@
                 <img class="logo_login" src="assets/Logo projet.png" alt="logo de notre site de vente">
                 <input type="email" name="nemail" id="idemail" class="login_case_email" placeholder="   Adresse email">
                 <input type="password" name="ncode" id="idcode" class="login_case_code" placeholder="   Mot de passe">
-                    <input type="submit" value="Se connecter" class="login_submit">
-                
+                <input type="submit" value="Se connecter" class="login_submit">
                 <div class="liens-bas">
-                <a class="mdp_oublie" href="mdp_oublie.php">
-                    Mot de passe oublié 
-                </a>
-                <a class="pas_de_compte" href="inscription.php">
-                    S'inscrire
-                </a>
+                    <a class="mdp_oublie" href="mdp_oublie.php">
+                        Mot de passe oublié 
+                    </a>
+                    <a class="pas_de_compte" href="inscription.php">
+                        S'inscrire
+                    </a>
                 </div>
             </form>
         </div>
     <footer>
         <p>&copy; 2026 Les Croquettes du Chef - Espace Client</p>
     </footer>
-
     </body>
 </html>
-
 
 
 
