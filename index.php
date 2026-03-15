@@ -1,3 +1,6 @@
+<?php 
+    $client=json_decode($_COOKIE["client"], true);    
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -21,7 +24,16 @@
         <ul>
             <li><a href="index.php" class="active">Accueil</a></li>
             <li><a href="menu.php">La Carte</a></li>
-            <li><a href="login.php" class="btn">Connexion</a></li>
+            <li><a href="<?php if(isset($_COOKIE["client"])){ echo "profil.php"; } else{ echo "login.php"; }  ?>" class="btn">
+                <?php  
+                    if(isset($_COOKIE["client"])){
+                        echo "Profil";
+                    }
+                    else{
+                        echo "Connexion";
+                    }
+                ?>
+            </a></li>
         </ul>
     </nav>
     </header>
@@ -48,7 +60,7 @@
 
                     <article class="capsule">
                         <div class="capsule-img">
-                            <img src="assets/Boeuf wagyu.png" alt="Croc Premium">
+                            <img src="assets/le prestige du chef.png" alt="Croc Premium">
                         </div>
                         <div class="capsule-info">
                             <h4>Le Prestige du Chef</h4>
@@ -62,7 +74,7 @@
 
                     <article class="capsule">
                         <div class="capsule-img">
-                            <img src="assets/Couronne de gibier.png" alt="Croc Gibier">
+                            <img src="assets/couronne de gibier.png" alt="Croc Gibier">
                         </div>
                         <div class="capsule-info">
                             <h4>Couronne de Gibier</h4>
@@ -76,7 +88,7 @@
 
                     <article class="capsule">
                         <div class="capsule-img">
-                            <img src="assets/perle de l'océan.png" alt="Croc Saumon">
+                            <img src="assets/perle de l'ocean.png" alt="Croc Saumon">
                         </div>
                         <div class="capsule-info">
                             <h4>Perle de l'Océan</h4>
@@ -94,7 +106,7 @@
 
                     <article class="capsule">
                         <div class="capsule-img">
-                            <img src="assets/Croc' poulet.png" alt="Croc Poulet">
+                            <img src="assets/cro'c poulet fermier.png" alt="Croc Poulet">
                         </div>
                         <div class="capsule-info">
                             <h4>Croc' Poulet Fermier</h4>
@@ -108,7 +120,7 @@
 
                     <article class="capsule">
                         <div class="capsule-img">
-                            <img src="assets/saumon et patate.png" alt="Croc Saumon">
+                            <img src="assets/saumon et patate douce.png" alt="Croc Saumon">
                         </div>
                         <div class="capsule-info">
                             <h4>Saumon & Patate Douce</h4>
@@ -122,7 +134,7 @@
 
                     <article class="capsule">
                         <div class="capsule-img">
-                            <img src="assets/Mijoté de boeuf et carotte.png" alt="Croc Boeuf">
+                            <img src="assets/mijote de boeuf et carotte.png" alt="Croc Boeuf">
                         </div>
                         <div class="capsule-info">
                             <h4>Mijoté de Bœuf & Carottes</h4>
