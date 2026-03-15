@@ -1,3 +1,8 @@
+<?php 
+    $client=json_decode($_COOKIE["client"], true);  
+    $plat_data=file_get_contents("plat.json");
+    $plat=json_decode($plat_data, true);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,7 +14,7 @@
     <link rel="stylesheet" href="css/client.css">
     <link rel="stylesheet" href="css/accueil.css"> <link rel="stylesheet" href="css/menu.css">   
     <link href="assets/Logo projet.png" rel="icon">
-     </head>
+</head>
 <body>
 
     <header>
@@ -21,7 +26,18 @@
             <ul>
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="menu.php" class="active">La Carte</a></li>
-                <li><a href="login.php" class="btn">Connexion</a></li>
+                <li>
+                    <a href="<?php if(isset($_COOKIE["client"])){ echo "profil.php"; } else{ echo "login.php"; }  ?>" class="btn">
+                        <?php  
+                            if(isset($_COOKIE["client"])){
+                                echo "Profil";
+                            }
+                            else{
+                                echo "Connexion";
+                            }
+                        ?>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -37,24 +53,25 @@
             <aside class="colonne-filtres">
                 <div class="groupe-filtres">
                     <h3>🐕 Âge</h3>
-                    <label><input type="checkbox"> Chiots (Junior)</label>
+                    <label><input type="checkbox" checked> Chiots (Junior)</label>
                     <label><input type="checkbox" checked> Adultes</label>
-                    <label><input type="checkbox"> Seniors</label>
+                    <label><input type="checkbox" checked> Seniors</label>
                 </div>
 
                 <div class="groupe-filtres">
                     <h3>🥩 Saveurs</h3>
-                    <label><input type="checkbox"> Volaille</label>
-                    <label><input type="checkbox"> Bœuf / Gibier</label>
-                    <label><input type="checkbox"> Poisson</label>
-                    <label><input type="checkbox"> Végétarien</label>
+                    <label><input type="checkbox" checked> Volaille</label>
+                    <label><input type="checkbox" checked> Volaille</label>
+                    <label><input type="checkbox" checked> Bœuf / Gibier</label>
+                    <label><input type="checkbox" checked> Poisson</label>
+                    <label><input type="checkbox" checked> Végétarien</label>
                 </div>
 
                 <div class="groupe-filtres">
                     <h3>⚠️ Spécifique</h3>
-                    <label><input type="checkbox"> Sans Céréales</label>
-                    <label><input type="checkbox"> Hypoallergénique</label>
-                    <label><input type="checkbox"> Digestion Sensible</label>
+                    <label><input type="checkbox" checked> Sans Céréales</label>
+                    <label><input type="checkbox" checked> Hypoallergénique</label>
+                    <label><input type="checkbox" checked> Digestion Sensible</label>
                 </div>
 
                 <button class="btn-filtres">Appliquer les filtres</button>
@@ -68,262 +85,24 @@
                 </div>
 
                 <div class="grille-plats">
-                    
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/Croc' poulet.png" alt="Croc Poulet">
-                            <span class="etiquette-nouveau">Nouveau</span>
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Croc' Poulet Fermier</h4>
-                            <p class="description">Riche en protéines pour les chiens actifs.</p>
-                            <div class="carte-footer">
-                                <span class="prix">12.50€</span>
-                                <button class="btn-carte">+</button>
+                    <?php foreach($plat as $index){ ?>
+                        <article class="carte-plat">
+                            <div class="carte-img">
+                                <img src="assets/<?php echo $index['image']; ?>" alt="<?php echo $index['name']; ?>">
+                                <?php if($index['new']==true){ ?>
+                                    <span class="etiquette-nouveau">Nouveau</span>
+                                <?php } ?>
                             </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/Mijoté de boeuf et carotte.png" alt="Mijoté Boeuf">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Mijoté de Bœuf & Carottes</h4>
-                            <p class="description">Morceaux tendres en sauce, idéal pour l'énergie au quotidien.</p>
-                            <div class="carte-footer">
-                                <span class="prix">14.90€</span>
-                                <button class="btn-carte">+</button>
+                            <div class="carte-contenu">
+                                <h4><?php echo $index['name']; ?></h4>
+                                <p class="description"><?php echo $index['description']; ?></p>
+                                <div class="carte-footer">
+                                    <span class="prix"><?php echo number_format($index['prix'], 2, ',', ' ');?>€</span>
+                                    <button class="btn-carte">+</button>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/saumon.png" alt="Saumon">
-                            <span class="etiquette-nouveau">Nouveau</span>
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Délice de Saumon Frais</h4>
-                            <p class="description">Riche en Oméga-3 pour un poil soyeux et une peau saine.</p>
-                            <div class="carte-footer">
-                                <span class="prix">16.50€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/agneau.png" alt="Agneau">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Agneau Rôti aux Herbes</h4>
-                            <p class="description">Une viande douce et digeste, parfaite pour les estomacs sensibles.</p>
-                            <div class="carte-footer">
-                                <span class="prix">15.20€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/Canard.png" alt="Canard">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Canard Confit & Lentilles</h4>
-                            <p class="description">Recette hypoallergénique sans céréales aux saveurs rustiques.</p>
-                            <div class="carte-footer">
-                                <span class="prix">17.00€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/Dinde.png" alt="Dinde">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Dinde Douceur & Petits Pois</h4>
-                            <p class="description">Faible en matières grasses, le choix numéro un des seniors.</p>
-                            <div class="carte-footer">
-                                <span class="prix">13.80€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/terrine.png" alt="Cerf">
-                            <span class="etiquette-nouveau">Nouveau</span>
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Terrine de Cerf Sauvage</h4>
-                            <p class="description">Viande giboyeuse et myrtilles antioxydantes. Un vrai festin.</p>
-                            <div class="carte-footer">
-                                <span class="prix">18.50€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/porc.png" alt="Porc">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Porc Ibérique & Pommes</h4>
-                            <p class="description">Un goût irrésistible qui séduira même les chiens les plus difficiles.</p>
-                            <div class="carte-footer">
-                                <span class="prix">14.00€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/duo poisson.png" alt="Poisson blanc">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Duo de Poissons Blancs</h4>
-                            <p class="description">Cabillaud et colin accompagnés d'épinards frais pour la vitalité.</p>
-                            <div class="carte-footer">
-                                <span class="prix">15.90€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/Potiron.png" alt="Végétarien">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Recette Végétale Potiron</h4>
-                            <p class="description">Quinoa, potiron et courgettes. 100% végétarien et équilibré.</p>
-                            <div class="carte-footer">
-                                <span class="prix">12.00€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/Festin au veau.png" alt="Veau chiot">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Festin du Chiot au Veau</h4>
-                            <p class="description">Petites bouchées de veau tendres pour une croissance harmonieuse.</p>
-                            <div class="carte-footer">
-                                <span class="prix">13.50€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/Boulettes.png" alt="Sanglier">
-                            <span class="etiquette-nouveau">Nouveau</span>
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Boulettes de Sanglier</h4>
-                            <p class="description">Une recette d'hiver aux éclats de châtaignes. Très gourmand.</p>
-                            <div class="carte-footer">
-                                <span class="prix">17.90€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/mijoté de boeuf.png" alt="Pâtée Boeuf">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Mijoté de Bœuf</h4>
-                            <p class="description">Morceaux tendres en sauce.</p>
-                            <div class="carte-footer">
-                                <span class="prix">4.90€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/saumon et patate.png" alt="Saumon">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Saumon & Patate Douce</h4>
-                            <p class="description">Idéal pour un poil brillant.</p>
-                            <div class="carte-footer">
-                                <span class="prix">14.90€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/Boeuf wagyu.png" alt="Agneau">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Le Prestige du Chef</h4>
-                            <p class="description">Recette d'exception au bœuf Wagyu pour offrir une expérience gustative unique.</p>
-                            <div class="carte-footer">
-                                <span class="prix">24.90€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/Couronne de gibier.png" alt="Canard">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Couronne de Gibier</h4>
-                            <p class="description">Riche en viande de cerf et en antioxydants pour soutenir la vitalité au quotidien.</p>
-                            <div class="carte-footer">
-                                <span class="prix">22.50€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/perle de l'océan.png" alt="Dinde">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Perle de l'Océan</h4>
-                            <p class="description">Allie saumon fumé et graines de chia, idéal pour favoriser une digestion douce.</p>
-                            <div class="carte-footer">
-                                <span class="prix">26.00€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="carte-plat">
-                        <div class="carte-img">
-                            <img src="assets/os bio.png" alt="Friandises">
-                        </div>
-                        <div class="carte-contenu">
-                            <h4>Os à mâcher Bio</h4>
-                            <p class="description">Hygiène dentaire naturelle.</p>
-                            <div class="carte-footer">
-                                <span class="prix">3.50€</span>
-                                <button class="btn-carte">+</button>
-                            </div>
-                        </div>
-                    </article>
-
+                        </article>
+                    <?php } ?>
                 </div>
             </div>
         </section>
