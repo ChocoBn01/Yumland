@@ -1,10 +1,15 @@
+<?php 
+    $client=json_decode($_COOKIE["client"], true);   
+    $commande_data =file_get_contents("commande.json");
+    $commande = json_decode($commande_data, true); 
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
-   <title>Les Croquettes du Chef</title>
+    <title>Les Croquettes du Chef</title>
     
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/profil.css">
@@ -20,10 +25,18 @@
         </div>
         <nav>
             <ul>
-                <li><a href="index.php">Accueil</a></li>
+                <?php if(isset($client['role']['restaurateur']) && $client['role']['restaurateur'] == true){ ?>
+                    <li><a href="commandes.php">Commande</a></li>
+                <?php } ?>
+                <?php if(isset($client['role']['livreur']) && $client['role']['livreur'] == true){ ?>
+                    <li><a href="livraisons.php">Livraison</a></li>
+                <?php } ?>
+                <?php if(isset($client['role']['admin']) && $client['role']['admin'] == true){ ?>
+                    <li><a href="admin.php">Administration</a></li>
+                <?php } ?>
                 <li><a href="menu.php">La Carte</a></li>
                 <li><a href="profil.php" class="active">Mon profil</a></li>
-                <li><a href="index.php" class="btn">Déconnexion</a></li>
+                <li><a href="logout.php" class="btn">Déconnexion</a></li>
             </ul>
         </nav>
     </header>
@@ -31,19 +44,21 @@
     <aside class="sidebar-perso">
         <div class="titre-modif">
             <h3>Mes informations</h3>
-            <a href="" class="carre-crayon">✏️</a>
+            <a href="modification.php" class="carre-crayon">✏️</a>
         </div>
         <div class="info-details">
             <p>NOM :</p>
-            <p><strong>Dupont</strong></p>
+            <p><strong><?php echo $client['fname']; ?></strong></p>
             <p>PRÉNOM :</p>
-            <p><strong>Maxime</strong></p>
+            <p><strong><?php echo $client['name']; ?></strong></p>
             <p>ADRESSE :</p>
-            <p><strong>12 rue des Lilas, 95300 Pontoise</strong></p>
+            <p><strong><?php echo $client['adr']; ?></strong></p>
             <p>TÉLÉPHONE :</p>
-            <p><strong>06 52 83 17 95</strong></p>
-            <p>INFOS COMPLÉMENTAIRES :</p>
-            <p><strong>Étage : 6ème, code : 0000</strong></p>
+            <p><strong><?php echo $client['tel']; ?></strong></p>
+            <?php if($client['infocomp']!=""){ ?>
+                <p>INFOS COMPLÉMENTAIRES :</p>
+                <p><strong><?php echo $client['infocomp']; ?></strong></p>
+            <?php } ?>
         </div>
     </aside>
 
@@ -54,42 +69,39 @@
             <h3>Programme De Fidélité</h3>
             <p>
                 N° de carte de fidélité :<br />
-                <span class="numero-carte">600881064999</span>
+                <span class="numero-carte"><?php echo $client['numero_fidelite']; ?></span>
             </p>
-            <p>Vous avez <strong>100 points</strong></p>
+            <p>Vous avez <strong><?php echo $client['point_fidelite']; ?> points</strong></p>
             <div class="barre">
                 <div class="avancee"></div>
             </div>
-            <p><small>Encore 50 points avant votre prochaine box offerte !</small></p>
+            <p><small>Encore <?php echo 150-($client['point_fidelite']); ?> points avant votre prochaine box offerte !</small></p>
         </div>
                 <div class="carte-info">
                     <h3>Anciennes commandes 🛍️</h3>
-                        <div class="commande">
-                        <div class="numero">
-                            <strong>Commande n°8542</strong>
-                            <a href="" class="bouton-recommande" >Recommander</a>
-                        </div>
-                                <p>Croc' Poulet Fermier - 12.50€</p>
-                        </div>
-
-                        <div class="commande">
-                        <div class="numero">
-                            <strong>Commande n°8003</strong>
-                            <a href="" class="bouton-recommande" >Recommander</a>
-                        </div>
-                                <p>Os à macher - 3.50€</p>
-                        </div>
-
-                        <div class="commande derniere-ligne">
-                            <div class="numero">
-                                <strong>Commande n°7910</strong>
-                                <a href="" class="bouton-recommande" >Recommander</a>
-                            </div>
-                                <p>Le Prestige du Chef - 24.90€</p>
-                            </div>
-                        </div>
-    </section>
-    
+                        <?php 
+                            $email = $client['email'];
+                            if(!empty($commande[$email])){
+                                foreach($commande[$email] as $id_cmd => $details){ ?>
+                                    <div class="commande">
+                                        <div class="numero">
+                                            <strong>Commande n°<?php echo $details['num'];?> (<?php echo $details['date']; ?>)</strong>
+                                            <a href="#" class="bouton-recommande">Recommander</a>
+                                        </div>
+                                        <?php foreach($details['plats'] as $produit){ ?>
+                                            <p><?php echo $produit['nom']; ?> - <?php echo number_format($produit['prix'], 2, ',', ' '); ?>€</p>
+                                        <?php } ?>
+                                    </div>
+                                <?php } 
+                            } else { ?>
+                                <div class="commande">
+                                    <div class="numero">
+                                        <strong><br>Vous n'avez pas encore passé de commande.</strong>
+                                        <a href="menu.php" class="bouton-recommande">Commander</a>
+                                    </div>
+                                </div>
+                            <?php } ?>
+    </section>    
 </main>
 <footer>
         <p>&copy; 2026 Les Croquettes du Chef - Espace Client</p>
