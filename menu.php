@@ -61,7 +61,6 @@
                 <div class="groupe-filtres">
                     <h3>🥩 Saveurs</h3>
                     <label><input type="checkbox" checked> Volaille</label>
-                    <label><input type="checkbox" checked> Volaille</label>
                     <label><input type="checkbox" checked> Bœuf / Gibier</label>
                     <label><input type="checkbox" checked> Poisson</label>
                     <label><input type="checkbox" checked> Végétarien</label>
