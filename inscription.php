@@ -12,7 +12,7 @@
         }
         else{
             $data=[];
-            $num=100000000;
+            $num=1;
         }
         if(file_exists($commande)){
             $commande_passe=file_get_contents($commande);
@@ -26,7 +26,7 @@
         $infocomp=$_POST['ninfocomp'];
         $email=$_POST['nemail'];
         $code=$_POST['ncode'];
-        $new_user=array('name' => $name, 'fname'=>$fname, 'adr'=>$adr, 'tel'=>$tel, 'infocomp'=>$infocomp, 'email'=>$email, 'code'=>password_hash($code), 'point_fidelite'=>0, 'numero_fidelite'=>$num, 'role'=>array('livreur'=>false,'admin'=>false,'bloque'=>false, 'restaurateur'=>false));
+        $new_user=array('name' => $name, 'fname'=>$fname, 'adr'=>$adr, 'tel'=>$tel, 'infocomp'=>$infocomp, 'email'=>$email, 'code'=>password_hash($code, PASSWORD_DEFAULT), 'point_fidelite'=>0, 'numero_fidelite'=>$num, 'role'=>array('livreur'=>false,'admin'=>false,'bloque'=>false, 'restaurateur'=>false));
         $data[$email]=$new_user;
         $vide=[];
         $data_commande[$email]=(object) $vide;
