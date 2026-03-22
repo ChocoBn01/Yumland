@@ -1,6 +1,6 @@
 <?php 
     $client=json_decode($_COOKIE["client"], true);  
-    $plat_data=file_get_contents("plat.json");
+    $plat_data=file_get_contents("donnees/plat.json");
     $plat=json_decode($plat_data, true);
 ?>
 <!DOCTYPE html>
