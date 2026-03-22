@@ -1,5 +1,43 @@
 <?php 
-    $client=json_decode($_COOKIE["client"], true);    
+    $client=json_decode($_COOKIE["client"], true);   
+    $file=file_get_contents("donnees/data.json");
+    $data=json_decode($file, true);
+    $file_pers_supp="supprime.json";
+    function aff_role($client){
+        if($client['role']['bloque']==true){
+            echo "BLOQUE";
+        }
+        else if($client['role']['livreur']==true){
+            echo "Livreur";
+            if($client['role']['admin']==true){
+                echo "&Admin";
+            }
+            if($client['role']['restaurateur']==true){
+                echo "&Restaurateur";
+            }
+        }
+        else if(($client['role']['admin']==true)){
+            echo "Admin";
+            if($client['role']['livreur']==true){
+                echo "&Livreur";
+            }
+            if($client['role']['restaurateur']==true){
+                echo "&Restaurateur";
+            }
+        }
+        else if(($client['role']['restaurateur']==true)){
+            echo "Restaurateur";
+            if($client['role']['admin']==true){
+                echo "&Admin";
+            }
+            if($client['role']['livreur']==true){
+                echo "&Livreur";
+            }
+        }
+        else{
+            echo "Client";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -60,21 +98,13 @@
 <main>
 <table border="1">
     <tr>
-        <th>Email</th><th>Nom</th><th>Rôle</th><th>Statut</th><th>Actions</th>
+        <th>Email</th><th>Nom</th><th>Rôle</th><th>Actions</th>
     </tr>
+    <?php foreach($data as $pers){ ?>
     <tr>
-        <td>diego.delvig@gmail.com</td><td>Delvig Diego</td><td>Client</td><td>Actif</td><td><p><a href="">Aller sur le profil</a></p><p><a href="">Bloquer</a></p><p><a href="">Supprimer</a></p></td>
+        <td><?php echo $pers['email'] ?></td><td><?php echo $pers['name']." ".$pers['fname'] ?></td><td><?php aff_role($pers) ?></td><td><p><a href="">Aller sur le profil</a></p><p><a href="">Bloquer</a></p><p><a href="">Passer en restaurateur</a></p><p><a href="">Passer en admin</a></p><p><a href="">Passer en livreur</a></p><p><a href="">Supprimer</a></p></td>
     </tr>
-    <tr>
-    <td>nathanevina@gmail.com</td><td>Evsina Nathan</td><td>Livreur</td><td>En livraison</td><td><p><a href="">Aller sur le profil</a></p><p><a href="">Bloquer</a></p><p><a href="">Supprimer</a></p></td>
-    </tr>
-    <tr>
-    <td>imane-bateoui@hotmail.com</td><td>Bateoui Imane</td><td>Admin</td><td>Actif</td><td><p><a href="">Aller sur le profil</a></p><p><a href="">Bloquer</a></p><p><a href="">Supprimer</a></p></td>
-    </tr>
-    <tr>
-    <td>maxime.dupont@hotmail.com</td><td>Dupont Maxime</td><td>Client</td><td>Actif</td><td><p><a href="profil.html">Aller sur le profil</a></p><p><a href="">Bloquer</a></p><p><a href="">Supprimer</a></p></td>
-    </tr>
-
+        <?php } ?>
 </table>
 </main>
 
