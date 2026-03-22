@@ -1,0 +1,87 @@
+{
+    "nathaneviname@gmail.com": {
+        "name": "Nathan",
+        "fname": "Evina Mengang",
+        "adr": "20 Rue du 18 Juin 1940",
+        "tel": "0636317444",
+        "infocomp": "",
+        "email": "nathaneviname@gmail.com",
+        "code": "$2y$10$mFcdBAZiuiFwk5uRhJ8s3uCI2o\/Z1EPHCapu2V6iYjUhiImFmp31W",
+        "point_fidelite": 70,
+        "numero_fidelite": 1,
+        "role": {
+            "livreur": false,
+            "admin": true,
+            "bloque": false,
+            "restaurateur": false
+        }
+    },
+    "benoitleblanc@gmail.com": {
+        "name": "Benoit",
+        "fname": "Leblanc",
+        "adr": "1 avenue du parc,  95000",
+        "tel": "0134251010",
+        "infocomp": "",
+        "email": "benoitleblanc@gmail.com",
+        "code": "$2y$10$mOtwQkGNDDHed2WJHfnS9uLjjXNeIGQOV395bgLYa6D0JblakSJ6C",
+        "point_fidelite": 0,
+        "numero_fidelite": 2,
+        "role": {
+            "livreur": true,
+            "admin": false,
+            "bloque": false,
+            "restaurateur": false
+        }
+    },
+    "Matlec2206@gmail.com": {
+        "name": "Mathis",
+        "fname": "Leclercq",
+        "adr": "1 avenue du parc,  95000",
+        "tel": "0689251010",
+        "infocomp": "",
+        "email": "Matlec2206@gmail.com",
+        "code": "$2y$10$lyZG6rdjoan6TULaoeJCsuZ1UShttAGkLP6PozAd8Nsqh5XGhIkeu",
+        "point_fidelite": 0,
+        "numero_fidelite": 3,
+        "role": {
+            "livreur": false,
+            "admin": false,
+            "bloque": false,
+            "restaurateur": true
+        }
+    },
+    "client@client.com": {
+        "name": "Client",
+        "fname": "Client",
+        "adr": "1 rue des clients",
+        "tel": "0101010101",
+        "infocomp": "",
+        "email": "client@client.com",
+        "code": "$2y$10$VtRMZUQ3J\/wVKEjY9Lckn.xSLpKG0lygvQ3T6chQ2MVA.7djGp.cS",
+        "point_fidelite": 0,
+        "numero_fidelite": 4,
+        "role": {
+            "livreur": false,
+            "admin": false,
+            "bloque": false,
+            "restaurateur": false
+        }
+    },
+    "diegodelig@yumland.com": {
+        "name": "Diego ",
+        "fname": "Delvig",
+        "adr": "14 avenue de la paix",
+        "tel": "0686957421",
+        "infocomp": "",
+        "email": "diegodelig@yumland.com",
+        "code": "$2y$10$vc.VSMe2bV3gGxbes9\/dm.OhSFjRe94KDGIhjQ0mV1cPVwUcfzoYW",
+        "point_fidelite": 0,
+        "numero_fidelite": 5,
+        "role": {
+            "livreur": false,
+            "admin": true,
+            "bloque": false,
+            "restaurateur": false
+        }
+    }
+}
