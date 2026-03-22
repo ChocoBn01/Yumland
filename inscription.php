@@ -3,7 +3,7 @@
     }
     else{
         $file= "data.json";
-        $commande="commande.json";
+        $commande="donnees/commande_passe.json";
         if(file_exists($file)){
             $client_passe=file_get_contents($file);
             $data=json_decode($client_passe, true);
@@ -30,8 +30,8 @@
         $data[$email]=$new_user;
         $vide=[];
         $data_commande[$email]=(object) $vide;
-        file_put_contents("data.json", json_encode($data, JSON_PRETTY_PRINT));
-        file_put_contents("commande.json", json_encode($data_commande, JSON_PRETTY_PRINT));
+        file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT));
+        file_put_contents("donnees/commande.json", json_encode($data_commande, JSON_PRETTY_PRINT));
         header("Location: login.php");
         exit;
     }
