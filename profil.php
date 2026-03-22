@@ -1,7 +1,49 @@
 <?php 
     $client=json_decode($_COOKIE["client"], true);   
-    $commande_data =file_get_contents("commande.json");
+    $commande_data =file_get_contents("donnees/commande_passe.json");
     $commande = json_decode($commande_data, true); 
+    function aff_num_cmd_ou_fidelite($num, $cmd_ou_fidelite){
+        if($cmd_ou_fidelite==1){
+            if($num<10){
+                echo "000".$num;
+            }
+            else if($num<100){
+                echo "00".$num;
+            }
+            else if($num<1000){
+                echo "0".$num;
+            }
+            else{
+                echo $num;
+            }
+        }
+        else{
+            if($num<10){
+                echo "0000000".$num;
+            }
+            else if($num<100){
+                echo "000000".$num;
+            }
+            else if($num<10000){
+                echo "00000".$num;
+            }
+            else if($num<100000){
+                echo "0000".$num;
+            }
+            else if($num<1000000){
+                echo "000".$num;
+            }
+            else if($num<10000000){
+                echo "00".$num;
+            }
+            else if($num<100000000){
+                echo "0".$num;
+            }
+            else{
+                echo $num;
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -69,9 +111,9 @@
             <h3>Programme De Fidélité</h3>
             <p>
                 N° de carte de fidélité :<br />
-                <span class="numero-carte"><?php echo $client['numero_fidelite']; ?></span>
+                <span class="numero-carte"><?php aff_num_cmd_ou_fidelite($client['numero_fidelite'], 2); ?></span>
             </p>
-            <p>Vous avez <strong><?php echo $client['point_fidelite']; ?> points</strong></p>
+            <p>Vous avez <strong><?php  echo $client['point_fidelite']; ?> points</strong></p>
             <div class="barre">
                 <div class="avancee"></div>
             </div>
@@ -85,11 +127,11 @@
                                 foreach($commande[$email] as $id_cmd => $details){ ?>
                                     <div class="commande">
                                         <div class="numero">
-                                            <strong>Commande n°<?php echo $details['num'];?> (<?php echo $details['date']; ?>)</strong>
+                                            <strong>Commande n°<?php aff_num_cmd_ou_fidelite($details['num'], 1) ;?> (<?php echo $details['date']['jour']."/".$details['date']['mois']."/".$details['date']['annee'].":".$details['date']['heure'].":".$details['date']['minute']; ?>)</strong>
                                             <a href="#" class="bouton-recommande">Recommander</a>
                                         </div>
                                         <?php foreach($details['plats'] as $produit){ ?>
-                                            <p><?php echo $produit['nom']; ?> - <?php echo number_format($produit['prix'], 2, ',', ' '); ?>€</p>
+                                        <p><?php echo $produit['quantite']."x       -".$produit['name']; ?> - <?php echo number_format($produit['quantite']*$produit['prix'], 2, ',', ' '); ?>€</p>
                                         <?php } ?>
                                     </div>
                                 <?php } 
