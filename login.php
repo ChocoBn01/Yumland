@@ -2,7 +2,7 @@
     if(empty($_REQUEST['nemail'])){
     }
     else{
-        $file= "data.json";
+        $file= "donnees/data.json";
         if(file_exists($file)){
             $data=file_get_contents($file);
             $data=json_decode($data, true);
