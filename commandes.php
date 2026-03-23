@@ -1,3 +1,72 @@
+<?php 
+    $client=json_decode($_COOKIE["client"], true);  
+    $liste_client_data =file_get_contents("donnees/data.json");
+    $liste_client = json_decode($liste_client_data, true);  
+    $commande_data =file_get_contents("donnees/commande.json");
+    $commande = json_decode($commande_data, true); 
+    function aff_num_cmd_ou_fidelite($num, $cmd_ou_fidelite){
+        if($cmd_ou_fidelite==1){
+            if($num<10){
+                echo "000".$num;
+            }
+            else if($num<100){
+                echo "00".$num;
+            }
+            else if($num<1000){
+                echo "0".$num;
+            }
+            else{
+                echo $num;
+            }
+        }
+        else{
+            if($num<10){
+                echo "0000000".$num;
+            }
+            else if($num<100){
+                echo "000000".$num;
+            }
+            else if($num<10000){
+                echo "00000".$num;
+            }
+            else if($num<100000){
+                echo "0000".$num;
+            }
+            else if($num<1000000){
+                echo "000".$num;
+            }
+            else if($num<10000000){
+                echo "00".$num;
+            }
+            else if($num<100000000){
+                echo "0".$num;
+            }
+            else{
+                echo $num;
+            }
+        }
+    }
+    $nb_cmd_cuisine=0;
+    $nb_cmd_livraison=0;
+    if(!empty($commande)){
+        foreach($commande as $id_cmd => $detail){
+            if($detail['etat']['cuisinee']==true){
+                $nb_cmd_livraison++;
+            }
+            else{
+                $nb_cmd_cuisine++;
+            }
+        }
+    }
+    function aff_temps($num){
+        if($num<10){
+            return "0".$num;
+        }
+        else{
+            return $num;
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -45,102 +114,74 @@
             
             <section class="colonne-commandes a-preparer">
                 <div class="en-tete-colonne">
-                    <h2>🔥 À Préparer (3)</h2>
+                    <h2>🔥 À Préparer (<?php echo $nb_cmd_cuisine; ?>)</h2>
                 </div>
-                
                 <div class="liste-commandes">
-                    <article class="carte-commande">
-                        <div class="en-tete-commande">
-                            <span class="numero-commande">#CMD-8542</span>
-                            <span class="timer">🕒 5 min</span>
-                        </div>
-                        <div class="infos-client">
-                            <strong>Client :</strong> Maxime Dupont
-                        </div>
-                        <ul class="liste-articles">
-                            <li>1x Croc' Poulet Fermier</li>
-                            <li>1x Os à mâcher Bio</li>
-                        </ul>
-                        <div class="actions-commande">
-                            <button class="btn-action ready">✅ Prête à partir</button>
-                        </div>
-                    </article>
-
-                    <article class="carte-commande">
-                        <div class="en-tete-commande">
-                            <span class="numero-commande">#CMD-8543</span>
-                            <span class="timer alert">🕒 15 min</span>
-                        </div>
-                        <div class="infos-client">
-                            <strong>Client :</strong> Sophie Martin
-                        </div>
-                        <ul class="liste-articles">
-                            <li>2x Saumon & Patate Douce</li>
-                        </ul>
-                        <div class="actions-commande">
-                            <button class="btn-action ready">✅ Prête à partir</button>
-                        </div>
-                    </article>
-
-                    <article class="carte-commande">
-                        <div class="en-tete-commande">
-                            <span class="numero-commande">#CMD-8544</span>
-                            <span class="timer">🕒 2 min</span>
-                        </div>
-                        <div class="infos-client">
-                            <strong>Client :</strong> Lucas Bernard
-                        </div>
-                        <ul class="liste-articles">
-                            <li>1x Mijoté de Boeuf et Carotte</li>
-                            <li>1x Os à mâcher Bio</li>
-                        </ul>
-                        <div class="actions-commande">
-                            <button class="btn-action ready">✅ Prête à partir</button>
-                        </div>
-                    </article>
+                    <?php 
+                        foreach($commande as $cmd=> $detail){
+                    ?>
+                            <?php 
+                                if($detail['etat']['cuisinee']==false){
+                            ?>
+                                <article class="carte-commande">
+                                    <div class="en-tete-commande">
+                                        <span class="numero-commande">#CMD-<?php aff_num_cmd_ou_fidelite($detail['num'], 1); ?></span>
+                                        <span class="<?php if($detail['temps']<15){echo "timer";}else{echo"timer alert";} ?>">🕒 <?php echo $detail['temps'] ?> min</span>
+                                    </div>
+                                    <div class="infos-client">
+                                        <strong>Client : </strong><?php echo $liste_client[$detail['mail']]['name']." ".$liste_client[$detail['mail']]['fname'] ?>
+                                    </div>
+                                    <ul class="liste-articles">
+                                        <?php foreach($detail['plats'] as $plats=> $plat){ 
+                                            if($detail['etat']['cuisinee'] == true) {
+                                                continue; 
+                                            }
+                                        ?>
+                                            <li>
+                                                <?php echo $plat['quantite']."x ".$plat['name']; ?>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                    <div class="actions-commande">
+                                        <button class="btn-action ready">✅ Prête à partir</button>
+                                    </div>
+                                </article>
+                            <?php } ?>
+                    <?php } ?>
                 </div>
             </section>
 
+            
             <section class="colonne-commandes livraison">
                 <div class="en-tete-colonne">
-                    <h2>🚀 En Livraison (2)</h2>
+                    <h2>🚀 En Livraison (<?php echo $nb_cmd_livraison; ?>)</h2>
                 </div>
-
                 <div class="liste-commandes">
-                    <article class="carte-commande delivering">
-                        <div class="en-tete-commande">
-                            <span class="numero-commande">#CMD-8540</span>
-                            <span class="status-badge">🛵 En route</span>
-                        </div>
-                        <div class="infos-client">
-                            <strong>Livreur :</strong> Nathan E.
-                        </div>
-                        <div class="adresse-livraison">
-                            📍 12 rue des Lilas, Pontoise
-                        </div>
-                        <div class="actions-commande">
-                            <button class="btn-action info">Voir détails</button>
-                        </div>
-                    </article>
-
-                    <article class="carte-commande delivering">
-                        <div class="en-tete-commande">
-                            <span class="numero-commande">#CMD-8539</span>
-                            <span class="status-badge">🛵 En route</span>
-                        </div>
-                        <div class="infos-client">
-                            <strong>Livreur :</strong> Imane B.
-                        </div>
-                        <div class="adresse-livraison">
-                            📍 45 Bd du Port, Cergy
-                        </div>
-                        <div class="actions-commande">
-                            <button class="btn-action info">Voir détails</button>
-                        </div>
-                    </article>
+                    <?php 
+                        foreach($commande as $cmd=> $detail){
+                    ?>
+                            <?php 
+                                if($detail['etat']['cuisinee']==true){
+                            ?>
+                                <article class="carte-commande delivering">
+                                    <div class="en-tete-commande">
+                                        <span class="numero-commande">#CMD-<?php aff_num_cmd_ou_fidelite($detail['num'], 1); ?></span>
+                                        <span class="status-badge">🛵 En route</span>
+                                    </div>
+                                    <div class="infos-client">
+                                        <strong>Livreur : </strong><?php echo $liste_client[$detail['livreur']]['name']." ".$liste_client[$detail['livreur']]['fname'] ?>
+                                    </div>
+                                    <div class="adresse-livraison">
+                                        📍 <?php echo $liste_client[$detail['mail']]['adr'] ?>
+                                    </div>
+                                    <div class="actions-commande">
+                                        <button class="btn-action info">Voir détails</button>
+                                    </div>
+                                </article>
+                            <?php } ?>
+                    <?php } ?>
                 </div>
             </section>
-
         </div>
     </main>
 
