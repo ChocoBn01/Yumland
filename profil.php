@@ -121,11 +121,21 @@
                 N° de carte de fidélité :<br />
                 <span class="numero-carte"><?php aff_num_cmd_ou_fidelite($client['numero_fidelite'], 2); ?></span>
             </p>
+            <?php $pourcentage=(100*$client['point_fidelite'])/150;
+                if($pourcentage>=100){
+                    $pourcentage=100;
+                }
+            ?>
             <p>Vous avez <strong><?php  echo $client['point_fidelite']; ?> points</strong></p>
             <div class="barre">
-                <div class="avancee"></div>
+                <div class="avancee" style="width:<?php echo $pourcentage; ?>%;"></div>
             </div>
-            <p><small>Encore <?php echo 150-($client['point_fidelite']); ?> points avant votre prochaine box offerte !</small></p>
+            <?php if($pourcentage<100){ ?>
+                <p><small>Encore <?php echo 150-($client['point_fidelite']); ?> points avant votre prochaine box offerte !</small></p>
+            <?php }else{ ?>
+                <p><small>🎉 Félicitations ! Vous avez débloqué votre box offerte !</small></p>
+            <?php } ?>
+            
         </div>
                 <div class="carte-info">
                     <h3>Anciennes commandes 🛍️</h3>
