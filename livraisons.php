@@ -1,5 +1,62 @@
-<?php 
-    $client=json_decode($_COOKIE["client"], true);    
+<?php
+$client = json_decode($_COOKIE["client"], true);
+$liste_client_data = file_get_contents("donnees/data.json");
+$liste_client = json_decode($liste_client_data, true);
+$commande_data = file_get_contents("donnees/commande.json");
+$commande = json_decode($commande_data, true);
+function aff_num_cmd_ou_fidelite($num, $cmd_ou_fidelite)
+{
+    if ($cmd_ou_fidelite == 1) {
+        if ($num < 10) {
+            echo "000" . $num;
+        } elseif ($num < 100) {
+            echo "00" . $num;
+        } elseif ($num < 1000) {
+            echo "0" . $num;
+        } else {
+            echo $num;
+        }
+    } else {
+        if ($num < 10) {
+            echo "0000000" . $num;
+        } elseif ($num < 100) {
+            echo "000000" . $num;
+        } elseif ($num < 10000) {
+            echo "00000" . $num;
+        } elseif ($num < 100000) {
+            echo "0000" . $num;
+        } elseif ($num < 1000000) {
+            echo "000" . $num;
+        } elseif ($num < 10000000) {
+            echo "00" . $num;
+        } elseif ($num < 100000000) {
+            echo "0" . $num;
+        } else {
+            echo $num;
+        }
+    }
+}
+$cmd_ou_pas = false;
+$temps=0;
+if (!empty($commande)) {
+    foreach ($commande as $id_cmd => $detail) {
+        if ($detail["etat"]["cuisinee"] == true &&$detail["livreur"] == $client["email"]) {
+            $cmd_ou_pas = true;
+            if($detail['temps']>=$temps){
+                $cmd=$detail;
+                $temps=$detail['temps'];
+            }
+        }
+    }
+}
+function aff_temps($num)
+{
+    if ($num < 10) {
+        return "0" . $num;
+    } else {
+        return $num;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -24,45 +81,52 @@
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="menu.php">La Carte</a></li>
                 <li><a href="commandes.php" class="active">Livraison</a></li>
-                <li><a href="<?php if(isset($_COOKIE["client"])){ echo "profil.php"; } else{ echo "login.php"; }  ?>" class="btn">
-                        <?php  
-                            if(isset($_COOKIE["client"])){
-                                echo "Profil";
-                            }
-                            else{
-                                echo "Connexion";
-                            }
-                        ?>
+                <li><a href="<?php if (isset($_COOKIE["client"])) {
+                    echo "profil.php";
+                } else {
+                    echo "login.php";
+                } ?>" class="btn">
+                        <?php if (isset($_COOKIE["client"])) {
+                            echo "Profil";
+                        } else {
+                            echo "Connexion";
+                        } ?>
                     </a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-    
+
         <h2>LIVRAISON EN COURS</h2>
 
-
-        <div class="livreur-info">
-            <h3>COMMANDE N°8099</h3>
-            
-            <div class="bloc-blanc">
-                <p><u>ADRESSE</u> : <b>1 PLACE DE LA PAIX</b></p> 
-                <p><u>NOM</u> : <b>PHILIPPE</b></p>
-                <p><u>PRÉNOM</u> : <b>JEAN</b></p>
-                <p><u>CODE</u> : <b>4052</b></p>
-                <p><u>ÉTAGE</u> :<b> 3</b></p>
-                <p><u>COMMENTAIRE</u> : <b> NE PAS SONNER ! Appelez moi quand vous arrivez.</b></p>
+        <?php if ($cmd_ou_pas == true) { ?>
+            <div class="livreur-info">
+                <h3>COMMANDE N°<?php aff_num_cmd_ou_fidelite($cmd['num'], 1); ?></h3>
+                <div class="bloc-blanc">
+                    <p><u>ADRESSE</u> : <b><?php echo strtoupper($liste_client[$cmd['mail']]['adr']); ?></b></p>
+                    <p><u>NOM</u> : <b><?php echo strtoupper($liste_client[$cmd['mail']]['fname']); ?></b></p>
+                    <p><u>PRÉNOM</u> : <b><?php echo strtoupper($liste_client[$cmd['mail']]['name']); ?></b></p>
+                    <p><u>MAIL</u> : <b><?php echo $liste_client[$cmd['mail']]['email']; ?></b></p>
+                    <p><u><?php echo "TELEPHONE"; ?></u> : <b><?php echo strtoupper($liste_client[$cmd['mail']]['tel']); ?></b></p>
+                    <?php if($liste_client[$cmd['mail']]['infocomp']!=""){?>
+                        <p><u>INFORMATION COMPLEMENTAIRE</u> :<b><?php echo " ".strtoupper($liste_client[$cmd['mail']]['infocomp']); ?></b></p>
+                    <?php } ?>
+                    
+                </div>
+                <div class="zone-boutons">
+                    <a class="maps" href="https://www.google.com/maps/place/<?php echo urlencode($liste_client[$cmd['mail']]['adr']) ?>/" target="_blank">LANCER L'ITINÉRAIRE (Google Maps)</a>
+                    <a href="" class="btn-livraison">LIVRAISON TERMINÉE</a>
+                </div>
             </div>
-            <div class="zone-boutons">
-                <a class="maps" href="https://www.google.com/maps/place/1+Pl.+de+la+Paix,+95300+Pontoise/@49.0581815,2.0872005,17z/data=!3m1!4b1!4m6!3m5!1s0x47e6f50b6b1245ad:0x15c17ae95d9e5480!8m2!3d49.0581815!4d2.0897754!16s%2Fg%2F11rg5xczzx?entry=ttu&g_ep=EgoyMDI2MDIxNi4wIKXMDSoASAFQAw%3D%3D" target="_blank">LANCER L'ITINÉRAIRE (Google Maps)</a>
-                <a href="" class="btn-livraison">LIVRAISON TERMINÉE</a>
+        <?php } else{?>
+            <div class="livreur-info">
+                <div class="bloc-blanc">
+                    <h1>AUCUNE COMMANDE A LIVREE</h1>
+                </div>
             </div>
-        </div>
-        
+        <?php } ?>  
 </main>
-    
-
     <footer>
         <p>&copy; 2026 Les Croquettes du Chef - Espace Livreur</p>
     </footer>
