@@ -54,18 +54,16 @@ h1{
 }
 
 .barre { 
-    background: var(--card-bg-client);
+    background: #ead0d8;
     border-radius: 10px;
     height: 15px;
     width: 100%;
     margin: 10px 0;
+    overflow: hidden;
 }
-
 .avancee {
-    background: #ead0d8;
+    background: var(--couleur-curseur-bouton);
     height: 100%;
-    border-radius: 10px;
-    width: 75%;
 }
 
 
