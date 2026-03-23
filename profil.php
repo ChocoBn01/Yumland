@@ -44,6 +44,14 @@
             }
         }
     }
+    function aff_temps($num){
+        if($num<10){
+            return "0".$num;
+        }
+        else{
+            return $num;
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -127,7 +135,7 @@
                                 foreach($commande[$email] as $id_cmd => $details){ ?>
                                     <div class="commande">
                                         <div class="numero">
-                                            <strong>Commande n°<?php aff_num_cmd_ou_fidelite($details['num'], 1) ;?> (<?php echo $details['date']['jour']."/".$details['date']['mois']."/".$details['date']['annee'].":".$details['date']['heure'].":".$details['date']['minute']; ?>)</strong>
+                                            <strong>Commande n°<?php aff_num_cmd_ou_fidelite($details['num'], 1) ;?> (<?php echo aff_temps($details['date']['jour'])."/".aff_temps($details['date']['mois'])."/".aff_temps($details['date']['annee']).":".aff_temps($details['date']['heure']).":".aff_temps($details['date']['minute']); ?>)</strong>
                                             <a href="#" class="bouton-recommande">Recommander</a>
                                         </div>
                                         <?php foreach($details['plats'] as $produit){ ?>
