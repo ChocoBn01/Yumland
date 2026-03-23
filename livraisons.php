@@ -108,7 +108,7 @@ function aff_temps($num)
                     <p><u>NOM</u> : <b><?php echo strtoupper($liste_client[$cmd['mail']]['fname']); ?></b></p>
                     <p><u>PRÉNOM</u> : <b><?php echo strtoupper($liste_client[$cmd['mail']]['name']); ?></b></p>
                     <p><u>MAIL</u> : <b><?php echo $liste_client[$cmd['mail']]['email']; ?></b></p>
-                    <p><u><?php echo "TELEPHONE"; ?></u> : <b><?php echo strtoupper($liste_client[$cmd['mail']]['tel']); ?></b></p>
+                    <p><u><?php echo "TELEPHONE"; ?></u> : <b><?php echo $liste_client[$cmd['mail']]['tel']; ?></b></p>
                     <?php if($liste_client[$cmd['mail']]['infocomp']!=""){?>
                         <p><u>INFORMATION COMPLEMENTAIRE</u> :<b><?php echo " ".strtoupper($liste_client[$cmd['mail']]['infocomp']); ?></b></p>
                     <?php } ?>
