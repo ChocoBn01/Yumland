@@ -60,6 +60,7 @@ a:hover{
     font-weight: bold;
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
+    font-size: large;
 }
 
 .maps:hover {
