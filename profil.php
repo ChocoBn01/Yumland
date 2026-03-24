@@ -131,9 +131,9 @@
                 <div class="avancee" style="width:<?php echo $pourcentage; ?>%;"></div>
             </div>
             <?php if($pourcentage<100){ ?>
-                <p><small>Encore <?php echo 150-($client['point_fidelite']); ?> points avant votre prochaine box offerte !</small></p>
+                <p><small>Encore <?php echo 150-($client['point_fidelite']); ?> points avant votre prochaine plat offert !</small></p>
             <?php }else{ ?>
-                <p><small>🎉 Félicitations ! Vous avez débloqué votre box offerte !</small></p>
+                <p><small>🎉 Félicitations ! Vous avez débloqué votre plat offert !</small></p>
             <?php } ?>
             
         </div>
