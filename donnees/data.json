@@ -7,7 +7,7 @@
         "infocomp": "",
         "email": "nathaneviname@gmail.com",
         "code": "$2y$10$mFcdBAZiuiFwk5uRhJ8s3uCI2o\/Z1EPHCapu2V6iYjUhiImFmp31W",
-        "point_fidelite": 500,
+        "point_fidelite": 102,
         "numero_fidelite": 1,
         "role": {
             "livreur": true,
@@ -24,7 +24,7 @@
         "infocomp": "",
         "email": "benoitleblanc@gmail.com",
         "code": "$2y$10$mOtwQkGNDDHed2WJHfnS9uLjjXNeIGQOV395bgLYa6D0JblakSJ6C",
-        "point_fidelite": 0,
+        "point_fidelite": 59,
         "numero_fidelite": 2,
         "role": {
             "livreur": true,
@@ -41,7 +41,7 @@
         "infocomp": "",
         "email": "Matlec2206@gmail.com",
         "code": "$2y$10$lyZG6rdjoan6TULaoeJCsuZ1UShttAGkLP6PozAd8Nsqh5XGhIkeu",
-        "point_fidelite": 0,
+        "point_fidelite": 40,
         "numero_fidelite": 3,
         "role": {
             "livreur": false,
@@ -58,7 +58,7 @@
         "infocomp": "",
         "email": "client@client.com",
         "code": "$2y$10$VtRMZUQ3J\/wVKEjY9Lckn.xSLpKG0lygvQ3T6chQ2MVA.7djGp.cS",
-        "point_fidelite": 0,
+        "point_fidelite": 28,
         "numero_fidelite": 4,
         "role": {
             "livreur": false,
@@ -75,7 +75,7 @@
         "infocomp": "",
         "email": "diegodelig@yumland.com",
         "code": "$2y$10$vc.VSMe2bV3gGxbes9\/dm.OhSFjRe94KDGIhjQ0mV1cPVwUcfzoYW",
-        "point_fidelite": 0,
+        "point_fidelite": 29,
         "numero_fidelite": 5,
         "role": {
             "livreur": false,
