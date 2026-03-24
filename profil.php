@@ -86,7 +86,7 @@
                 <?php } ?>
                 <li><a href="menu.php">La Carte</a></li>
                 <li><a href="profil.php" class="active">Mon profil</a></li>
-                <li><a href="logout.php" class="btn">Déconnexion</a></li>
+                <li><a href="fichier_de_transit/logout.php" class="btn">Déconnexion</a></li>
             </ul>
         </nav>
     </header>
