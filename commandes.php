@@ -167,7 +167,7 @@
                                         <?php } ?>
                                     </ul>
                                     <div class="actions-commande">
-                                        <form>
+                                        <form method="POST" action="commandes.php">
                                             <button name="<?php aff_num_cmd_ou_fidelite($detail['num'], 1); ?>" class="btn-action ready">✅ Prête à partir</button>
                                         </form>
                                     </div>
