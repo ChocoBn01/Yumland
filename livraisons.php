@@ -77,6 +77,8 @@ if(isset($_REQUEST['button'])){
     $mail=$cmd['mail'];
     $new_tab=array('num'=>$cmd['num'], 'date'=>$cmd['date'], 'total'=>$cmd['total'], 'plats'=>$cmd['plats']);
     $file[$mail][aff_num_cmd_sans_echo($cmd['num'])]=$new_tab;
+    $liste_client[$mail]['point_fidelite']+=intval($cmd['total']);
+    file_put_contents("donnees/data.json", json_encode($liste_client, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     unset($commande[aff_num_cmd_sans_echo($cmd['num'])]);
     file_put_contents("donnees/commande_passe.json", json_encode($file, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     file_put_contents("donnees/commande.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
