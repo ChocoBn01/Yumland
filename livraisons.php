@@ -57,6 +57,32 @@ function aff_temps($num)
         return $num;
     }
 }
+function aff_num_cmd_sans_echo($num){
+    if($num<10){
+        return "000".$num;
+    }
+    else if($num<100){
+        return "00".$num;
+    }
+    else if($num<1000){
+        return "0".$num;
+    }
+    else{
+        return $num;
+    }
+}
+if(isset($_REQUEST['button'])){
+    $file_data=file_get_contents("donnees/commande_passe.json");
+    $file=json_decode($file_data, true);
+    $mail=$cmd['mail'];
+    $new_tab=array('num'=>$cmd['num'], 'date'=>$cmd['date'], 'total'=>$cmd['total'], 'plats'=>$cmd['plats']);
+    $file[$mail][aff_num_cmd_sans_echo($cmd['num'])]=$new_tab;
+    unset($commande[aff_num_cmd_sans_echo($cmd['num'])]);
+    file_put_contents("donnees/commande_passe.json", json_encode($file, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    file_put_contents("donnees/commande.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    header("Location: livraisons.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -108,15 +134,17 @@ function aff_temps($num)
                     <p><u>NOM</u> : <b><?php echo strtoupper($liste_client[$cmd['mail']]['fname']); ?></b></p>
                     <p><u>PRÉNOM</u> : <b><?php echo strtoupper($liste_client[$cmd['mail']]['name']); ?></b></p>
                     <p><u>MAIL</u> : <b><?php echo $liste_client[$cmd['mail']]['email']; ?></b></p>
-                    <p><u><?php echo "TELEPHONE"; ?></u> : <b><?php echo $liste_client[$cmd['mail']]['tel']; ?></b></p>
+                    <p><u><?php echo "TELEPHONE"; ?></u> : <b><?php echo strtoupper($liste_client[$cmd['mail']]['tel']); ?></b></p>
                     <?php if($liste_client[$cmd['mail']]['infocomp']!=""){?>
-                        <p><u>INFORMATION COMPLEMENTAIRE</u> :<b><?php echo " ".strtoupper($liste_client[$cmd['mail']]['infocomp']); ?></b></p>
+                        <p><u>INFORMATION COMPLEMENTAIRE</u> :<b><?php echo " ".$liste_client[$cmd['mail']]['infocomp']; ?></b></p>
                     <?php } ?>
                     
                 </div>
                 <div class="zone-boutons">
                     <a class="maps" href="https://www.google.com/maps/place/<?php echo urlencode($liste_client[$cmd['mail']]['adr']) ?>/" target="_blank">LANCER L'ITINÉRAIRE (Google Maps)</a>
-                    <a href="" class="btn-livraison">LIVRAISON TERMINÉE</a>
+                    <form method="POST" action="livraisons.php">
+                        <button name="button" class="btn-livraison">LIVRAISON TERMINÉE</button>
+                    </form>
                 </div>
             </div>
         <?php } else{?>
