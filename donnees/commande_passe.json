@@ -12,7 +12,7 @@
             },
             "total": 66.1,
             "plats":{
-                "agneau Rôti aux Herbes":{
+                "agneau roti aux herbes":{
                     "quantite":1,
                     "name": "Agneau Rôti aux Herbes",
                     "prix":15.2
@@ -24,7 +24,7 @@
                 },
                 "boulettes de sanglier":{
                     "quantite":1,
-                    "name": "Boulettes de sanglier",
+                    "name": "Boulettes de Sanglier",
                     "prix":17.9
                 }
             }
