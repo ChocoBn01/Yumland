@@ -46,6 +46,20 @@
             }
         }
     }
+    function aff_num_cmd_sans_echo($num){
+        if($num<10){
+            return "000".$num;
+        }
+        else if($num<100){
+            return "00".$num;
+        }
+        else if($num<1000){
+            return "0".$num;
+        }
+        else{
+            return $num;
+        }
+    }
     $nb_cmd_cuisine=0;
     $nb_cmd_livraison=0;
     if(!empty($commande)){
@@ -64,6 +78,16 @@
         }
         else{
             return $num;
+        }
+    }
+    if(!empty($commande)){
+        foreach($commande as $id_cmd => $detail){
+            if($detail['etat']['cuisinee']==false && isset($_REQUEST[aff_num_cmd_sans_echo($detail['num'])])){
+                $commande[aff_num_cmd_sans_echo($detail['num'])]['etat']['cuisinee']=true;
+                file_put_contents("donnees/commande.json", json_encode($commande, JSON_PRETTY_PRINT));
+                header("Location: commandes.php");
+                exit;
+            }
         }
     }
 ?>
@@ -143,7 +167,9 @@
                                         <?php } ?>
                                     </ul>
                                     <div class="actions-commande">
-                                        <button class="btn-action ready">✅ Prête à partir</button>
+                                        <form>
+                                            <button name="<?php aff_num_cmd_ou_fidelite($detail['num'], 1); ?>" class="btn-action ready">✅ Prête à partir</button>
+                                        </form>
                                     </div>
                                 </article>
                             <?php } ?>
@@ -175,7 +201,7 @@
                                         📍 <?php echo $liste_client[$detail['mail']]['adr'] ?>
                                     </div>
                                     <div class="actions-commande">
-                                        <button class="btn-action info">Voir détails</button>
+                                        <button name="<?php aff_num_cmd_ou_fidelite($detail['num'], 1); ?>" class="btn-action info">Voir détails</button>
                                     </div>
                                 </article>
                             <?php } ?>
