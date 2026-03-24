@@ -18,7 +18,7 @@
             "seconde": 43
         },
         "plats": {
-            "agneau Rôti aux Herbes": {
+            "agneau roti aux herbes": {
                 "quantite": 1,
                 "name": "Agneau Rôti aux Herbes",
                 "prix": 15.2
@@ -44,7 +44,7 @@
             "seconde": 12
         },
         "plats": {
-            "agneau Rôti aux Herbes": {
+            "agneau roti aux herbes": {
                 "quantite": 1,
                 "name": "Agneau Rôti aux Herbes",
                 "prix": 15.2
@@ -110,7 +110,7 @@
     },
     "0015": {
         "mail": "client@client.com",
-        "total": 34.0,
+        "total": 34,
         "num": 15,
         "etat": {
             "cuisinee": false,
@@ -130,7 +130,7 @@
             "canard confit et lentilles": {
                 "quantite": 2,
                 "name": "Canard Confit & Lentilles",
-                "prix": 17.0
+                "prix": 17
             }
         }
     },
@@ -162,10 +162,10 @@
     },
     "0017": {
         "mail": "nathaneviname@gmail.com",
-        "total": 31.0,
+        "total": 31,
         "num": 17,
         "etat": {
-            "cuisinee": false,
+            "cuisinee": true,
             "livree": false
         },
         "livreur": "benoitleblanc@gmail.com",
