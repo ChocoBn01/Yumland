@@ -41,6 +41,20 @@
             echo "Client";
         }
     }
+    function aff_num_cmd_sans_echo($num){
+    if($num<10){
+        return "000".$num;
+    }
+    else if($num<100){
+        return "00".$num;
+    }
+    else if($num<1000){
+        return "0".$num;
+    }
+    else{
+        return $num;
+    }
+}
     foreach($data as $pers){
         if(isset($_REQUEST['bloque_'.$pers['numero_fidelite']])){
             if($data[$pers['email']]['role']['bloque']==true){
@@ -99,9 +113,39 @@
             }
         }
         if(isset($_REQUEST['supprimer_'.$pers['numero_fidelite']])){
-            
+            $commande_data = file_get_contents("donnees/commande.json");
+            $commande = json_decode($commande_data, true);
+            $commande_passees_data = file_get_contents("donnees/commande_passe.json");
+            $commande_passees = json_decode($commande_passees_data, true);
+            if(file_exists("donnees/client_spprimes.json")){
+                $client_supp_end=json_decode(file_get_contents("donnees/client_spprimes.json"), true);
+            }
+            else{
+                $client_supp_end=[];
+            }
+            if(isset($commande_passees[$pers['email']])){
+                $client_supp=array('data'=>$pers, 'commandes_passees'=>$commande_passees[$pers['email']]);
+            }   
+            else{
+                $client_supp=array('data'=>$pers, 'commandes_passees'=>[]);
+            }
+            $client_supp_end[$pers['email']]=$client_supp;
+            unset($data[$pers['email']]);
+            unset($commande_passees[$pers['email']]);
+            foreach ($commande as $id_cmd => $detail) {
+                if($detail["mail"] == $pers['email']){
+                    unset($commande[aff_num_cmd_sans_echo($detail['num'])]);
+                }
+            }
+            file_put_contents("donnees/client_spprimes.json", json_encode($client_supp_end, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            file_put_contents("donnees/commande.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            file_put_contents("donnees/commande_passe.json", json_encode($commande_passees, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            header("Location: admin.php");
+            exit;
         }
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
