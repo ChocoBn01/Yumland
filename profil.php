@@ -2,6 +2,12 @@
     $client=json_decode($_COOKIE["client"], true);   
     $commande_data =file_get_contents("donnees/commande_passe.json");
     $commande = json_decode($commande_data, true); 
+    $file=file_get_contents("donnees/data.json");
+    $data=json_decode($file, true);
+    if($data[$client['email']]['role']['bloque']==true){
+        setcookie("client", json_encode($data[$mail]), time()-3600);  
+        header("Location: index.php");
+    }
     function aff_num_cmd_ou_fidelite($num, $cmd_ou_fidelite){
         if($cmd_ou_fidelite==1){
             if($num<10){
