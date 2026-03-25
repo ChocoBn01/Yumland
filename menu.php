@@ -2,6 +2,12 @@
     $client=json_decode($_COOKIE["client"], true);  
     $plat_data=file_get_contents("donnees/plat.json");
     $plat=json_decode($plat_data, true);
+    $file=file_get_contents("donnees/data.json");
+    $data=json_decode($file, true);
+    if($data[$client['email']]['role']['bloque']==true){
+        setcookie("client", json_encode($data[$mail]), time()-3600);  
+        header("Location: index.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -53,24 +59,24 @@
             <aside class="colonne-filtres">
                 <div class="groupe-filtres">
                     <h3>🐕 Âge</h3>
-                    <label><input type="checkbox" checked> Chiots (Junior)</label>
-                    <label><input type="checkbox" checked> Adultes</label>
-                    <label><input type="checkbox" checked> Seniors</label>
+                    <label><input type="checkbox" name="junior" checked> Chiots (Junior)</label>
+                    <label><input type="checkbox" name="adulte" checked> Adultes</label>
+                    <label><input type="checkbox" name="senior" checked> Seniors</label>
                 </div>
 
                 <div class="groupe-filtres">
                     <h3>🥩 Saveurs</h3>
-                    <label><input type="checkbox" checked> Volaille</label>
-                    <label><input type="checkbox" checked> Bœuf / Gibier</label>
-                    <label><input type="checkbox" checked> Poisson</label>
-                    <label><input type="checkbox" checked> Végétarien</label>
+                    <label><input type="checkbox" name="volaille" checked> Volaille</label>
+                    <label><input type="checkbox" name="boeuf/gibier" checked> Bœuf / Gibier</label>
+                    <label><input type="checkbox" name="poisson" checked> Poisson</label>
+                    <label><input type="checkbox" name="veggie" checked> Végétarien</label>
                 </div>
 
                 <div class="groupe-filtres">
                     <h3>⚠️ Spécifique</h3>
-                    <label><input type="checkbox" checked> Sans Céréales</label>
-                    <label><input type="checkbox" checked> Hypoallergénique</label>
-                    <label><input type="checkbox" checked> Digestion Sensible</label>
+                    <label><input type="checkbox" name="sans cereale" checked> Sans Céréales</label>
+                    <label><input type="checkbox" name="hypoallergenique" checked> Hypoallergénique</label>
+                    <label><input type="checkbox" name="digestion sensible" checked> Digestion Sensible</label>
                 </div>
 
                 <button class="btn-filtres">Appliquer les filtres</button>
