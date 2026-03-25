@@ -3,7 +3,7 @@
     $file=file_get_contents("donnees/data.json");
     $data=json_decode($file, true);
     if($data[$client['email']]['role']['bloque']==true){
-        setcookie("client", ", time()-3600);  
+        setcookie("client", "", time()-3600);  
         header("Location: index.php");
     }
     function aff_role($client){
@@ -39,6 +39,67 @@
         }
         else{
             echo "Client";
+        }
+    }
+    foreach($data as $pers){
+        if(isset($_REQUEST['bloque_'.$pers['numero_fidelite']])){
+            if($data[$pers['email']]['role']['bloque']==true){
+                $data[$pers['email']]['role']['bloque']=false;
+                file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT));
+                header("Location: admin.php");
+                exit;
+            }
+            else{
+                $data[$pers['email']]['role']['bloque']=true;
+                file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT));
+                header("Location: admin.php");
+                exit;
+            }
+        }
+        if(isset($_REQUEST['restaurateur_'.$pers['numero_fidelite']])){
+            if($data[$pers['email']]['role']['restaurateur']==false){
+                $data[$pers['email']]['role']['restaurateur']=true;
+                file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT));
+                header("Location: admin.php");
+                exit;
+            }
+            else{
+                $data[$pers['email']]['role']['restaurateur']=false;
+                file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT));
+                header("Location: admin.php");
+                exit;
+            }
+        }
+        if(isset($_REQUEST['admin_'.$pers['numero_fidelite']])){
+            if($data[$pers['email']]['role']['admin']==false){
+                $data[$pers['email']]['role']['admin']=true;
+                file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT));
+                header("Location: admin.php");
+                exit;
+            }
+            else{
+                $data[$pers['email']]['role']['admin']=false;
+                file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT));
+                header("Location: admin.php");
+                exit;
+            }
+        }
+        if(isset($_REQUEST['livreur_'.$pers['numero_fidelite']])){
+            if($data[$pers['email']]['role']['livreur']==false){
+                $data[$pers['email']]['role']['livreur']=true;
+                file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT));
+                header("Location: admin.php");
+                exit;
+            }
+            else{
+                $data[$pers['email']]['role']['livreur']=false;
+                file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT));
+                header("Location: admin.php");
+                exit;
+            }
+        }
+        if(isset($_REQUEST['supprimer_'.$pers['numero_fidelite']])){
+            
         }
     }
 ?>
@@ -105,9 +166,21 @@
     </tr>
     <?php foreach($data as $pers){ ?>
     <tr>
-        <td><?php echo $pers['email'] ?></td><td><?php echo $pers['name']." ".$pers['fname'] ?></td><td><?php aff_role($pers) ?></td><td><p><a href="">Aller sur le profil</a></p><p><a href="">Bloquer</a></p><p><a href="">Passer en restaurateur</a></p><p><a href="">Passer en admin</a></p><p><a href="">Passer en livreur</a></p><p><a href="">Supprimer</a></p></td>
+        <td><?php echo $pers['email'] ?></td>
+        <td><?php echo $pers['name']." ".$pers['fname'] ?></td>
+        <td><?php aff_role($pers) ?></td>
+        <td>
+            <form method="POST" action="admin.php">
+                <p><a>Aller sur le profil</a></p>
+                <p><button name="bloque_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['bloque']==true){ echo "Débloquer";}else{ echo "Bloquer";} ?></button></p>
+                <p><button name="restaurateur_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['restaurateur']==true){ echo "Retirer restaurateur";}else{ echo "Passer en restaurateur";} ?></button></p>
+                <p><button name="admin_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['admin']==true){ echo "Retirer admin";}else{ echo "Passer en admin";} ?></button></p>
+                <p><button name="livreur_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['livreur']==true){ echo "Retirer livreur";}else{ echo "Passer en livreur";} ?></button></p>
+                <p><button name="supprimer_<?php echo $pers['numero_fidelite']; ?>">Supprimer</button></p>
+            </form>
+        </td>
     </tr>
-        <?php } ?>
+    <?php } ?>
 </table>
 </main>
 
