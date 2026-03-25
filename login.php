@@ -8,8 +8,8 @@
             $data=json_decode($data, true);
             $mail=$_REQUEST['nemail'];
             if(isset($data[$mail])){
-                $mdp=password_hash($_REQUEST['ncode']);
-                if($mdp==$data[$mail]['code']){
+                $mdp=$_REQUEST['ncode'];
+                if(password_verify($mdp, $data[$mail]['code']) && $data[$mail]['role']['bloque']!=true){
                     setcookie("client", json_encode($data[$mail]), time()+3600);
                     header("Location: index.php");
                     exit;
