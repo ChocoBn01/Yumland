@@ -171,12 +171,18 @@
         <td><?php aff_role($pers) ?></td>
         <td>
             <form method="POST" action="admin.php">
-                <p><a>Aller sur le profil</a></p>
-                <p><button name="bloque_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['bloque']==true){ echo "Débloquer";}else{ echo "Bloquer";} ?></button></p>
+                <?php if($pers['email']!="nathaneviname@gmail.com"){ ?>
+                    <p><a href="">Aller sur le profil</a></p>
+                    <p><button name="bloque_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['bloque']==true){ echo "Débloquer";}else{ echo "Bloquer";} ?></button></p>
+                <?php } ?>
                 <p><button name="restaurateur_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['restaurateur']==true){ echo "Retirer restaurateur";}else{ echo "Passer en restaurateur";} ?></button></p>
-                <p><button name="admin_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['admin']==true){ echo "Retirer admin";}else{ echo "Passer en admin";} ?></button></p>
+                <?php if($pers['email']!="nathaneviname@gmail.com"){ ?>
+                    <p><button name="admin_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['admin']==true){ echo "Retirer admin";}else{ echo "Passer en admin";} ?></button></p>
+                <?php } ?>
                 <p><button name="livreur_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['livreur']==true){ echo "Retirer livreur";}else{ echo "Passer en livreur";} ?></button></p>
-                <p><button name="supprimer_<?php echo $pers['numero_fidelite']; ?>">Supprimer</button></p>
+                <?php if($pers['email']!="nathaneviname@gmail.com"){ ?>
+                    <p><button name="supprimer_<?php echo $pers['numero_fidelite']; ?>">Supprimer</button></p>
+                <?php } ?>
             </form>
         </td>
     </tr>
