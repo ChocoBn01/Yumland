@@ -5,7 +5,7 @@
     $commande_data =file_get_contents("donnees/commande.json");
     $commande = json_decode($commande_data, true); 
     if($liste_client[$client['email']]['role']['bloque']==true){
-        setcookie("client", json_encode($data[$mail]), time()-3600);  
+        setcookie("client", ", time()-3600);  
         header("Location: index.php");
     }
     function aff_num_cmd_ou_fidelite($num, $cmd_ou_fidelite){
