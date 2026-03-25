@@ -3,7 +3,7 @@
     $file=file_get_contents("donnees/data.json");
     $data=json_decode($file, true);
     if($data[$client['email']]['role']['bloque']==true){
-        setcookie("client", json_encode($data[$mail]), time()-3600);  
+        setcookie("client", ", time()-3600);  
         header("Location: index.php");
     }
     function aff_role($client){
