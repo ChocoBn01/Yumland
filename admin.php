@@ -2,7 +2,11 @@
     $client=json_decode($_COOKIE["client"], true);   
     $file=file_get_contents("donnees/data.json");
     $data=json_decode($file, true);
-    $file_pers_supp="supprime.json";
+    $file_pers_supp="donnees/supprime.json";
+    if($data[$client['email']]['role']['bloque']==true){
+        setcookie("client", json_encode($data[$mail]), time()-3600);  
+        header("Location: index.php");
+    }
     function aff_role($client){
         if($client['role']['bloque']==true){
             echo "BLOQUE";
