@@ -10,9 +10,11 @@
             if(isset($data[$mail])){
                 $mdp=$_REQUEST['ncode'];
                 if(password_verify($mdp, $data[$mail]['code']) && $data[$mail]['role']['bloque']!=true){
-                    $panier_data="donnees/panier:$mail.json";
-                    $panier=array("total"=>0);
-                    file_put_contents($panier_data, json_encode($panier, JSON_PRETTY_PRINT));
+                    if(!file_exists("donnees/panier_$mail.json")){
+                        $panier_data="donnees/panier_$mail.json";
+                        $panier=array("total"=>0);
+                        file_put_contents($panier_data, json_encode($panier, JSON_PRETTY_PRINT));
+                    }
                     setcookie("client", json_encode($data[$mail]), time()+3600);
                     header("Location: index.php");
                     exit;
