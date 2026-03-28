@@ -4,6 +4,9 @@
     $commande = json_decode($commande_data, true); 
     $file=file_get_contents("donnees/data.json");
     $data=json_decode($file, true);
+    setcookie("client", json_encode($data[$client['email']]), time()-3600);  
+    setcookie("client", json_encode($data[$client['email']]), time()+3600);
+    $client=json_decode($_COOKIE["client"], true);
     if($data[$client['email']]['role']['bloque']==true){
         setcookie("client", json_encode($data[$mail]), time()-3600);  
         header("Location: index.php");
@@ -143,30 +146,31 @@
             <?php } ?>
             
         </div>
-                <div class="carte-info">
-                    <h3>Anciennes commandes 🛍️</h3>
-                        <?php 
-                            $email = $client['email'];
-                            if(!empty($commande[$email])){
-                                foreach($commande[$email] as $id_cmd => $details){ ?>
-                                    <div class="commande">
-                                        <div class="numero">
-                                            <strong>Commande n°<?php aff_num_cmd_ou_fidelite($details['num'], 1) ;?> (<?php echo aff_temps($details['date']['jour'])."/".aff_temps($details['date']['mois'])."/".aff_temps($details['date']['annee']).":".aff_temps($details['date']['heure']).":".aff_temps($details['date']['minute']); ?>)</strong>
-                                            <a href="#" class="bouton-recommande">Recommander</a>
-                                        </div>
-                                        <?php foreach($details['plats'] as $produit){ ?>
-                                        <p><?php echo $produit['quantite']."x       -".$produit['name']; ?> - <?php echo number_format($produit['quantite']*$produit['prix'], 2, ',', ' '); ?>€</p>
-                                        <?php } ?>
-                                    </div>
-                                <?php } 
-                            } else { ?>
-                                <div class="commande">
-                                    <div class="numero">
-                                        <strong><br>Vous n'avez pas encore passé de commande.</strong>
-                                        <a href="menu.php" class="bouton-recommande">Commander</a>
-                                    </div>
+        <div class="carte-info">
+            <h3>Anciennes commandes 🛍️</h3>
+                <?php 
+                    $email = $client['email'];
+                    if(!empty($commande[$email])){
+                        foreach($commande[$email] as $id_cmd => $details){ ?>
+                            <div class="commande">
+                                <div class="numero">
+                                    <strong>Commande n°<?php aff_num_cmd_ou_fidelite($details['num'], 1) ;?> (<?php echo aff_temps($details['date']['jour'])."/".aff_temps($details['date']['mois'])."/".aff_temps($details['date']['annee']).":".aff_temps($details['date']['heure']).":".aff_temps($details['date']['minute']); ?>)</strong>
+                                    <a href="#" class="bouton-recommande">Recommander</a>
                                 </div>
-                            <?php } ?>
+                                <?php foreach($details['plats'] as $produit){ ?>
+                                <p><?php echo $produit['quantite']."x       -".$produit['name']; ?> - <?php echo number_format($produit['quantite']*$produit['prix'], 2, ',', ' '); ?>€</p>
+                                <?php } ?>
+                            </div>
+                        <?php } 
+                    } else { ?>
+                        <div class="commande">
+                            <div class="numero">
+                                <strong><br>Vous n'avez pas encore passé de commande.</strong>
+                                <a href="menu.php" class="bouton-recommande">Commander</a>
+                            </div>
+                        </div>
+                <?php } ?>
+        </div>        
     </section>    
 </main>
 <footer>
