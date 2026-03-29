@@ -11,6 +11,48 @@
         setcookie("client", json_encode($data[$mail]), time()-3600);  
         header("Location: index.php");
     }
+    function aff_num_cmd_ou_fidelite($num, $cmd_ou_fidelite){
+        if($cmd_ou_fidelite==1){
+            if($num<10){
+                echo "000".$num;
+            }
+            else if($num<100){
+                echo "00".$num;
+            }
+            else if($num<1000){
+                echo "0".$num;
+            }
+            else{
+                echo $num;
+            }
+        }
+        else{
+            if($num<10){
+                echo "0000000".$num;
+            }
+            else if($num<100){
+                echo "000000".$num;
+            }
+            else if($num<10000){
+                echo "00000".$num;
+            }
+            else if($num<100000){
+                echo "0000".$num;
+            }
+            else if($num<1000000){
+                echo "000".$num;
+            }
+            else if($num<10000000){
+                echo "00".$num;
+            }
+            else if($num<100000000){
+                echo "0".$num;
+            }
+            else{
+                echo $num;
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -48,8 +90,8 @@
                 <h2>Récapitulatif de commande</h2>
                 <?php foreach($commande['plats'] as $id => $detail){ ?>
                     <div class="ligne-article">
-                        <span><?php echo $plat[$id]['name']; ?> x<?php echo $commande[$id]['quantite']; ?></span>
-                        <span><?php number_format($detail['prix'], 2, ',', ' '); ?>€</span>
+                        <span><?php echo $plat[$id]['name']; ?> x<?php echo $commande['plats'][$id]['quantite']; ?></span>
+                        <span><?php echo number_format($plat[$id]['prix'], 2, ',', ' '); ?>€</span>
                     </div>
                 <?php } ?>
                 <?php if($commande['reduction']==true){ ?>
@@ -60,7 +102,7 @@
                 <?php } ?>
                 <div class="ligne-total">
                     <span>Total</span>
-                    <span><?php if($commande['reduction']==true){ echo $commande['total']/2;}else{ $commande['total'];} ?></span>
+                    <span><?php if($commande['reduction']==true){ echo number_format($commande['total']/2, 2, ',', ' ');}else{ echo number_format($commande['total'], 2, ',', ' ');} ?>€</span>
                 </div>
             </div>
             <div class="zone-boutons">
