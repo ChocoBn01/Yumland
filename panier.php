@@ -29,7 +29,7 @@
             exit;
         }
         else if(isset($_REQUEST['btn_plus_'.str_replace(" ", "_", $id)])){
-            $commande['total']=$commande['total']+$detail['prix'];
+            $commande['total']=round($commande['total'] + $detail['prix'], 2);;
             $commande['plats'][$id]['quantite']++;
             file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
             header("Location: panier.php");
@@ -37,7 +37,7 @@
         }
         else if($detail['quantite']>1){
             if(isset($_REQUEST['btn_moins_'.str_replace(" ", "_", $id)])){
-                $commande['total']=$commande['total']-$detail['prix'];
+                $commande['total']=round($commande['total'] + $detail['prix'], 2);;
                 $commande['plats'][$id]['quantite']--;
                 file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
                 header("Location: panier.php");
