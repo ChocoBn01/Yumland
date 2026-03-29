@@ -60,7 +60,6 @@
     <link href="assets/Logo projet.png" rel="icon">
 </head>
 <body>
-
     <header>
         <div class="logo">
             <img src="assets/Logo projet.png" alt="Logo" class="header-logo" style="height: 35px;">
@@ -76,35 +75,51 @@
     </header>
     <h1>Mon Panier</h1>
     <main class="container">
-    <section class="contenu-profil">
-        <?php foreach($commande['plats'] as $id => $detail){ ?>
-            <div class="carte-info">
-                <img class="img_cmd" src="assets/<?php echo $plat[$id]['image']; ?>" alt="<?php echo $detail['name']; ?>">
-                <div class="clm_1">
-                    <h2 class="name"><?php echo $plat[$id]['name'];?></h2>
-                    <p class="name"><small><?php if($plat[$id]['name']=="Os à mâcher Bio"){ echo conjugaison("Friandise", "Friandises", $detail['quantite'])." pour tous chiens";}else if($plat[$id]['age']['junior']==true){ echo conjugaison("Plat", "Plats", $detail['quantite'])." pour chiots";}else if($plat[$id]['age']['senior']==true){ echo conjugaison("Friandise", "Friandises", $detail['quantite'])." pour tous chiens";}else if($plat[$id]['age']['junior']==true){ echo conjugaison("Plat", "Plats", $detail['quantite'])." pour chiens seniors";}else{ echo conjugaison("Plat", "Plats", $detail['quantite'])." pour chien adultes";} ?></small></p>
+    <div class="diff_part">
+        <section class="contenu-profil">
+            <?php foreach($commande['plats'] as $id => $detail){ ?>
+                <div class="carte-info">
+                    <img class="img_cmd" src="assets/<?php echo $plat[$id]['image']; ?>" alt="<?php echo $detail['name']; ?>">
+                    <div class="clm_1">
+                        <h2 class="name"><?php echo $plat[$id]['name'];?></h2>
+                        <p class="name"><small><?php if($plat[$id]['name']=="Os à mâcher Bio"){ echo conjugaison("Friandise", "Friandises", $detail['quantite'])." pour tous chiens";}else if($plat[$id]['age']['junior']==true){ echo conjugaison("Plat", "Plats", $detail['quantite'])." pour chiots";}else if($plat[$id]['age']['senior']==true){ echo conjugaison("Friandise", "Friandises", $detail['quantite'])." pour tous chiens";}else if($plat[$id]['age']['junior']==true){ echo conjugaison("Plat", "Plats", $detail['quantite'])." pour chiens seniors";}else{ echo conjugaison("Plat", "Plats", $detail['quantite'])." pour chien adultes";} ?></small></p>
+                    </div>
+                    <div class="clm_2">
+                        <p class=prix><?php echo number_format($detail['quantite']*$plat[$id]['prix'], 2, ',', ' ');?>€</p>
+                        <form>   
+                            <?php if($detail['quantite']==1){ ?>
+                                <div class="gestion_quantite">
+                                    <button name="btn_suppr_<?php echo str_replace(" ", "_", $id); ?>" class="btn-carte"><small>🗑️</small></button>
+                                    <p class=""> <?php echo $detail['quantite']; ?> </p>
+                                    <button name="btn_plus_<?php echo str_replace(" ", "_", $id); ?>" class="btn-carte">+</button>
+                                </div>                        
+                            <?php }else{ ?>                    
+                                <div class="gestion_quantite">
+                                    <button name="btn_moins_<?php echo str_replace(" ", "_", $id); ?>" class="btn-carte">-</button>
+                                    <p class=""><strong><?php echo $detail['quantite']; ?></strong></p>
+                                    <button name="btn_plus_<?php echo str_replace(" ", "_", $id); ?>" class="btn-carte">+</button>
+                                </div>                        
+                            <?php } ?>
+                        </form>
+                    </div>    
                 </div>
-                <div class="clm_2">
-                    <p class=prix><?php echo number_format($detail['quantite']*$plat[$id]['prix'], 2, ',', ' ');?>€</p>
-                    <form>   
-                        <?php if($detail['quantite']==1){ ?>
-                            <div class="gestion_quantite">
-                                <button name="btn_suppr_<?php echo str_replace(" ", "_", $id); ?>" class="btn-carte"><small>🗑️</small></button>
-                                <p class=""> <?php echo $detail['quantite']; ?> </p>
-                                <button name="btn_plus_<?php echo str_replace(" ", "_", $id); ?>" class="btn-carte">+</button>
-                            </div>                        
-                        <?php }else{ ?>                    
-                            <div class="gestion_quantite">
-                                <button name="btn_moins_<?php echo str_replace(" ", "_", $id); ?>" class="btn-carte">-</button>
-                                <p class=""><strong><?php echo $detail['quantite']; ?></strong></p>
-                                <button name="btn_plus_<?php echo str_replace(" ", "_", $id); ?>" class="btn-carte">+</button>
-                            </div>                        
-                        <?php } ?>
-                    </form>
-                </div>    
+            <?php } ?>       
+        </section>
+        <div class="recapitulatif">
+            <h2>Récapitulatif</h2>
+            <?php foreach($commande['plats'] as $id => $detail){ ?>
+                <div class="commande">
+                    <p><?php echo $detail['name']."  x".$detail['quantite']; ?></p>
+                    <p class="prix_recap"><?php echo number_format($detail['quantite']*$plat[$id]['prix'], 2, ',', ' '); ?>€</p>
+                </div>
+            <?php } ?>
+            <div class="commande_total">
+                    <p><strong>TOTAL</strong></p>
+                    <p class="prix_recap"><strong><?php echo number_format($commande['total'], 2, ',', ' '); ?>€</strong></p>
             </div>
-        <?php } ?>       
-    </section>   
+            <a href="" class="bouton-recommande">Payement</a>
+        </div>
+    </div>
 </main>
 <footer>
     <p>&copy; 2026 Les Croquettes du Chef - Espace Client</p>
