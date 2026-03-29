@@ -107,12 +107,22 @@ p.prix{
     align-items: end;
     flex-direction: column;
 }
-.commande {
+.commande{
     margin-bottom: 20px; 
     padding-bottom: 10px; 
     border-bottom: 1px dashed var(--text-main);
     display: flex;
     flex-direction: row;
+    justify-content: space-between; 
+    align-items: center;
+}
+.reduction{
+    margin-bottom: 20px; 
+    padding-bottom: 10px; 
+    border-bottom: 1px dashed var(--text-main);
+    display: flex;
+    flex-direction: row;
+    color: var(--primary-client); 
     justify-content: space-between; 
     align-items: center;
 }
