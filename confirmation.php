@@ -3,8 +3,11 @@
     $mail=$client['email'];   
     $file=file_get_contents("donnees/data.json");
     $data=json_decode($file, true);
-    $commande_data =file_get_contents("donnees/panier_$mail.json");
-    $commande = json_decode($commande_data, true); 
+    $commande_data =file_get_contents("donnees/commande_passe.json");
+    $commande_passe = json_decode($commande_data, true); 
+    foreach($commande_passe[$client['email']] as $id=>$detail){
+        $commande=$detail;
+    }
     $plat_data=file_get_contents("donnees/plat.json");
     $plat=json_decode($plat_data, true);
     if($data[$client['email']]['role']['bloque']==true){
@@ -51,6 +54,14 @@
             else{
                 echo $num;
             }
+        }
+    }
+    function aff_temps($num){
+        if($num<10){
+            return "0".$num;
+        }
+        else{
+            return $num;
         }
     }
 ?>
@@ -102,19 +113,18 @@
                 <?php } ?>
                 <div class="ligne-total">
                     <span>Total</span>
-                    <span><?php if($commande['reduction']==true){ echo number_format($commande['total']/2, 2, ',', ' ');}else{ echo number_format($commande['total'], 2, ',', ' ');} ?>€</span>
+                    <span><?php echo number_format($commande['total'], 2, ',', ' '); ?>€</span>
                 </div>
             </div>
- 
             <div class="carte">
                 <h2>Informations</h2>
                 <div class="ligne-info">
                     <span class="label-info">Numéro de commande</span>
-                    <span>#00003</span>
+                    <span>#<?php aff_num_cmd_ou_fidelite($commande['num'], 1); ?></span>
                 </div>
                 <div class="ligne-info">
                     <span class="label-info">Date</span>
-                    <span>29 mars 2026 — 14h32</span>
+                    <span><?php echo aff_temps($commande['date']['jour'])."/".aff_temps($commande['date']['mois'])."/".aff_temps($commande['date']['annee'])." - ".aff_temps($commande['date']['heure']).":".aff_temps($commande['date']['minute']); ?></span>
                 </div>
                 <div class="ligne-info">
                     <span class="label-info">Paiement</span>
@@ -122,22 +132,17 @@
                 </div>
                 <div class="ligne-info">
                     <span class="label-info">Adresse</span>
-                    <span>12 rue des lilas, Pontoise</span>
+                    <span><?php echo $client['adr']; ?></span>
                 </div>
             </div>
- 
             <div class="zone-boutons">
                 <a href="index.php" class="btn-confirmation principal">Retour à l'accueil</a>
                 <a href="profil.php" class="btn-confirmation secondaire">Voir mes commandes</a>
             </div>
- 
         </div>
- 
     </main>
- 
     <footer>
         <p>&copy; 2026 Les Croquettes du Chef - Espace Client</p>
     </footer>
- 
 </body>
 </html>
