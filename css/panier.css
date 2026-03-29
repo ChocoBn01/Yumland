@@ -1,0 +1,125 @@
+.container {
+    display: grid;
+    grid-template-columns: clamp(200px, 22%, 290px) auto; 
+    
+    grid-template-areas:
+        "sidebar-perso contenu-profil"
+        "sidebar-perso footer";
+    
+    grid-template-rows: 1fr auto; 
+    min-height: 100vh;
+}
+h3{
+    font-family: var(--font-title);
+}
+h1{
+    padding-top: 50px;
+    font-family: var(--font-title);
+    text-align: center;
+}
+.contenu-profil {
+    grid-area: contenu-profil;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.carte-info {
+    background-color: var(--card-bg-client);
+    padding: 20px;
+    border: 2px solid var(--text-main);
+    max-width: 600px;
+    width: 90%;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+
+footer {
+    text-align: center;
+    padding: 32px;
+    background-color: var(--accent-client);
+    border-top: 1px solid var(--border-color);
+    margin-top: 0; 
+}
+
+
+
+@media screen and (max-width: 768px) { 
+    .container {
+        display: grid; 
+        grid-template-areas:
+            "sidebar-perso"
+            "contenu-profil"
+            "footer";
+        grid-template-columns: 100%; 
+        grid-template-rows: auto auto auto; 
+    }
+    .sidebar-perso {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid var(--text-main); 
+        padding: 20px;
+    }
+
+    .contenu-profil {
+        padding: 16px;
+    }
+
+}
+.btn-carte {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--text-main);
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-carte:hover {
+    transform: scale(1.1);
+    background: var(--primary-client);
+    color: var(--text-main);
+}
+.img_cmd{
+    width: 100px;
+    height: 100px;
+    border: solid black 2px;
+    border-radius: 15px;
+}
+p.prix{
+    font-size: x-large;
+    display: flex;
+    align-self:self-end;
+}
+.gestion_quantite{
+    width: 100px;
+    border: solid black 2px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center; 
+    justify-content: space-around;
+    padding: 2px;
+}
+.clm_1{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.clm_1 h2{
+    display: flex;
+    flex-direction: row;
+    font-size: larger;
+}
+.clm_2{
+    display: flex;
+    align-self: self-end;
+    align-items: end;
+    flex-direction: column;
+}
