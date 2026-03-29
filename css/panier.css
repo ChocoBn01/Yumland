@@ -1,12 +1,8 @@
 .container {
-    display: grid;
-    grid-template-columns: clamp(200px, 22%, 290px) auto; 
-    
-    grid-template-areas:
-        "sidebar-perso contenu-profil"
-        "sidebar-perso footer";
-    
-    grid-template-rows: 1fr auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
     min-height: 100vh;
 }
 h3{
@@ -16,6 +12,15 @@ h1{
     padding-top: 50px;
     font-family: var(--font-title);
     text-align: center;
+}
+.diff_part {
+    display: flex;
+    flex-direction: row; 
+    gap: 40px; 
+    width: 100%;
+    max-width: 1100px; 
+    justify-content: center;
+    align-items: flex-start; 
 }
 .contenu-profil {
     grid-area: contenu-profil;
@@ -29,8 +34,8 @@ h1{
     background-color: var(--card-bg-client);
     padding: 20px;
     border: 2px solid var(--text-main);
-    max-width: 600px;
-    width: 90%;
+    max-width: 650px;
+    width: 100%;
     border-radius: 15px;
     display: flex;
     flex-direction: row;
@@ -47,28 +52,7 @@ footer {
 
 
 
-@media screen and (max-width: 768px) { 
-    .container {
-        display: grid; 
-        grid-template-areas:
-            "sidebar-perso"
-            "contenu-profil"
-            "footer";
-        grid-template-columns: 100%; 
-        grid-template-rows: auto auto auto; 
-    }
-    .sidebar-perso {
-        width: 100%;
-        border-right: none;
-        border-bottom: 2px solid var(--text-main); 
-        padding: 20px;
-    }
 
-    .contenu-profil {
-        padding: 16px;
-    }
-
-}
 .btn-carte {
     width: 30px;
     height: 30px;
@@ -122,4 +106,95 @@ p.prix{
     align-self: self-end;
     align-items: end;
     flex-direction: column;
+}
+.commande {
+    margin-bottom: 20px; 
+    padding-bottom: 10px; 
+    border-bottom: 1px dashed var(--text-main);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    align-items: center;
+}
+.commande_total {
+    margin-bottom: 20px; 
+    padding-bottom: 10px; 
+    padding-top: 10px;
+    margin-top: 50px;
+    border-bottom: 1px dashed var(--text-main);
+    border-top: 1px dashed var(--text-main);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    align-items: center;
+}
+.bouton-recommande {
+    background: var(--primary-client); 
+    padding: 5px 10px;
+    color: var(--text-main);
+    border-radius: 8px;
+    border: 2px solid var(--border-color); 
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-self: center;
+}
+.recapitulatif {
+    background-color: var(--card-bg-client);
+    padding: 20px;
+    border: 2px solid var(--text-main);
+    max-width: 500px;
+    width: 40%;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.recapitulatif h2{
+    display: flex;
+    align-self: center;
+    padding-bottom: 50px;
+}
+.recap_each{
+    display: flex;
+    flex-direction: row;
+}
+.btn_payement{
+    display: flex;
+    align-self: center;
+}
+p.prix_recap{
+    display: flex;
+    align-self: self-end;
+    align-items: end;
+}
+@media screen and (max-width: 768px) { 
+    .container {
+        display: grid; 
+        grid-template-areas:
+            "sidebar-perso"
+            "diff_part"
+            "footer";
+        grid-template-columns: 100%; 
+        grid-template-rows: auto auto auto; 
+        
+    }
+    .sidebar-perso {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid var(--text-main); 
+        padding: 20px;
+    }
+
+    .contenu-profil {
+        padding: 16px;
+    }
+    .diff_part {
+        flex-direction: column; 
+        align-items: center;
+    }
+    
+    .recapitulatif {
+        width: 100%;
+    }
 }
