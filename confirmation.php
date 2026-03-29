@@ -1,3 +1,59 @@
+<?php 
+    $client=json_decode($_COOKIE["client"], true);
+    $mail=$client['email'];   
+    $file=file_get_contents("donnees/data.json");
+    $data=json_decode($file, true);
+    $commande_data =file_get_contents("donnees/panier_$mail.json");
+    $commande = json_decode($commande_data, true); 
+    $plat_data=file_get_contents("donnees/plat.json");
+    $plat=json_decode($plat_data, true);
+    if($data[$client['email']]['role']['bloque']==true){
+        setcookie("client", json_encode($data[$mail]), time()-3600);  
+        header("Location: index.php");
+    }
+    function aff_num_cmd_ou_fidelite($num, $cmd_ou_fidelite){
+        if($cmd_ou_fidelite==1){
+            if($num<10){
+                echo "000".$num;
+            }
+            else if($num<100){
+                echo "00".$num;
+            }
+            else if($num<1000){
+                echo "0".$num;
+            }
+            else{
+                echo $num;
+            }
+        }
+        else{
+            if($num<10){
+                echo "0000000".$num;
+            }
+            else if($num<100){
+                echo "000000".$num;
+            }
+            else if($num<10000){
+                echo "00000".$num;
+            }
+            else if($num<100000){
+                echo "0000".$num;
+            }
+            else if($num<1000000){
+                echo "000".$num;
+            }
+            else if($num<10000000){
+                echo "00".$num;
+            }
+            else if($num<100000000){
+                echo "0".$num;
+            }
+            else{
+                echo $num;
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,7 +66,6 @@
     <link href="assets/Logo projet.png" rel="icon">
 </head>
 <body>
- 
     <header>
         <div class="logo">
             <img src="assets/Logo projet.png" alt="Logo" class="header-logo">
@@ -24,41 +79,31 @@
             </ul>
         </nav>
     </header>
- 
     <main>
- 
         <div class="bloc-confirmation">
- 
             <div class="entete-confirmation">
                 <div class="icone-check">✅</div>
                 <h1>Commande confirmée !</h1>
                 <p>Votre paiement a été accepté. Votre commande part en cuisine dès maintenant.</p>
             </div>
- 
             <div class="carte">
                 <h2>Récapitulatif de commande</h2>
- 
-                <div class="ligne-article">
-                    <span>Bœuf Wagyu Premium x2</span>
-                    <span>29,98 €</span>
-                </div>
-                <div class="ligne-article">
-                    <span>Terrine de Canard Fermier x1</span>
-                    <span>12,50 €</span>
-                </div>
-                <div class="ligne-article">
-                    <span>Croquettes Saumon & Quinoa x1</span>
-                    <span>18,00 €</span>
-                </div>
- 
+                <?php foreach($commande['plats'] as $id => $detail){ ?>
+                    <div class="ligne-article">
+                        <span><?php echo $plat[$id]['name']; ?> x<?php echo $commande['plats'][$id]['quantite']; ?></span>
+                        <span><?php echo number_format($plat[$id]['prix'], 2, ',', ' '); ?>€</span>
+                    </div>
+                <?php } ?>
+                <?php if($commande['reduction']==true){ ?>
+                    <div class="ligne-reduction">
+                        <span>Réduction coupon fidélité</span>
+                        <span>-<?php echo $commande['total']/2;?></span>
+                    </div>
+                <?php } ?>
                 <div class="ligne-total">
-                    <span>Total payé</span>
-                    <span>60,48 €</span>
+                    <span>Total</span>
+                    <span><?php if($commande['reduction']==true){ echo number_format($commande['total']/2, 2, ',', ' ');}else{ echo number_format($commande['total'], 2, ',', ' ');} ?>€</span>
                 </div>
-            </div>
- 
-            <div class="carte carte-cuisine">
-                <p>👨‍🍳 Votre commande est en cuisine ! Temps estimé : <strong>15 à 20 min</strong>.</p>
             </div>
  
             <div class="carte">
