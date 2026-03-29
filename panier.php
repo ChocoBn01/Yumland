@@ -123,7 +123,7 @@
 </main>
 <footer>
     <p>&copy; 2026 Les Croquettes du Chef - Espace Client</p>
-    </footer>
+</footer>
 </body>
 </html>
 
