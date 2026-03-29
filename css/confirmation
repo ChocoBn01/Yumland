@@ -1,1 +1,156 @@
-test
+main {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+ 
+.bloc-confirmation {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+ 
+
+.entete-confirmation {
+    text-align: center;
+    padding: 20px 0;
+}
+ 
+.icone-check {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+ 
+.entete-confirmation h1 {
+    font-family: var(--font-title);
+    font-size: 2rem;
+    color: var(--couleur-curseur-bouton);
+    margin-bottom: 8px;
+}
+ 
+.entete-confirmation p {
+    color: var(--text-main);
+    font-size: 1rem;
+}
+ 
+
+.carte {
+    background-color: white;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px 25px;
+}
+ 
+.carte h2 {
+    font-family: var(--font-title);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg-client);
+    color: var(--text-main);
+}
+ 
+
+.carte-cuisine {
+    background-color: var(--card-bg-client);
+    border-color: var(--border-color);
+}
+ 
+.carte-cuisine p {
+    font-size: 1rem;
+    color: var(--text-main);
+}
+ 
+
+.ligne-article {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--bg-client);
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+ 
+
+
+.ligne-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+    margin-top: 8px;
+    border-top: 2px solid var(--border-color);
+    font-weight: bold;
+    font-size: 1.05rem;
+    color: var(--couleur-curseur-bouton);
+}
+ 
+
+.ligne-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--bg-client);
+    font-size: 0.9rem;
+}
+ 
+.ligne-info:last-child {
+    border-bottom: none;
+}
+ 
+.label-info {
+    font-weight: bold;
+    color: var(--text-main);
+}
+ 
+
+.zone-boutons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+}
+ 
+.btn-confirmation {
+    text-decoration: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: var(--text-main);
+}
+ 
+.btn-confirmation:hover {
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 0px var(--border-color);
+}
+ 
+.btn-confirmation.principal {
+    background-color: var(--couleur-curseur-bouton);
+    color: var(--text-light);
+    border-color: var(--couleur-curseur-bouton);
+}
+ 
+.btn-confirmation.secondaire {
+    background-color: var(--primary-client);
+    border-color: var(--primary-client) ;
+   
+}
+
+
+ 
+
+@media (max-width: 768px) {
+    .entete-confirmation h1 {
+        font-size: 1.5rem;
+    }
+ 
+    .zone-boutons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
