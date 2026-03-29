@@ -1,12 +1,32 @@
 <?php 
     $client=json_decode($_COOKIE["client"], true);  
+    $mail=$client['email'];  
     $plat_data=file_get_contents("donnees/plat.json");
     $plat=json_decode($plat_data, true);
     $file=file_get_contents("donnees/data.json");
     $data=json_decode($file, true);
     if($data[$client['email']]['role']['bloque']==true){
-        setcookie("client", ", time()-3600);  
+        setcookie("client", json_encode($data[$mail]), time()-3600);  
         header("Location: index.php");
+    }
+    if(isset($_COOKIE["client"])){ 
+        $commande_data =file_get_contents("donnees/panier_$mail.json");
+        $commande = json_decode($commande_data, true); 
+        foreach($plat as $index => $detail){
+            if(isset($_REQUEST['btn_plus_'.str_replace(" ", "_", $index)])){
+                $commande['total']+=round($commande['total'] + $detail['prix'], 2);
+                if(isset($commande['plats'][$index])){
+                    $commande['plats'][$index]['quantite']++;
+                }
+                else{
+                    $commande['plats'][$index]['quantite']=1;
+                    $commande['plats'][$index]['prix']=$detail['prix'];
+                    $commande['plats'][$index]['name']=$detail['name'];
+                }
+                file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+                header("Location: menu.php");
+            }
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -32,6 +52,7 @@
             <ul>
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="menu.php" class="active">La Carte</a></li>
+                <li><a href="panier.php">🛒</a></li>
                 <li>
                     <a href="<?php if(isset($_COOKIE["client"])){ echo "profil.php"; } else{ echo "login.php"; }  ?>" class="btn">
                         <?php  
@@ -88,27 +109,28 @@
                     <input type="text" placeholder="Rechercher une croquette précise...">
                     <button>🔍</button>
                 </div>
-
-                <div class="grille-plats">
-                    <?php foreach($plat as $index){ ?>
-                        <article class="carte-plat">
-                            <div class="carte-img">
-                                <img src="assets/<?php echo $index['image']; ?>" alt="<?php echo $index['name']; ?>">
-                                <?php if($index['new']==true){ ?>
-                                    <span class="etiquette-nouveau">Nouveau</span>
-                                <?php } ?>
-                            </div>
-                            <div class="carte-contenu">
-                                <h4><?php echo $index['name']; ?></h4>
-                                <p class="description"><?php echo $index['description']; ?></p>
-                                <div class="carte-footer">
-                                    <span class="prix"><?php echo number_format($index['prix'], 2, ',', ' ');?>€</span>
-                                    <button class="btn-carte">+</button>
+                <form method="POST" action="menu.php">
+                    <div class="grille-plats">
+                        <?php foreach($plat as $index=>$detail){ ?>
+                            <article class="carte-plat">
+                                <div class="carte-img">
+                                    <img src="assets/<?php echo $detail['image']; ?>" alt="<?php echo $detail['name']; ?>">
+                                    <?php if($detail['new']==true){ ?>
+                                        <span class="etiquette-nouveau">Nouveau</span>
+                                    <?php } ?>
                                 </div>
-                            </div>
-                        </article>
-                    <?php } ?>
-                </div>
+                                <div class="carte-contenu">
+                                    <h4><?php echo $detail['name']; ?></h4>
+                                    <p class="description"><?php echo $detail['description']; ?></p>
+                                    <div class="carte-footer">
+                                        <span class="prix"><?php echo number_format($detail['prix'], 2, ',', ' ');?>€</span>
+                                        <button name="btn_plus_<?php echo str_replace(" ", "_", $index); ?>" class="btn-carte">+</button>
+                                    </div>
+                                </div>
+                            </article>
+                        <?php } ?>
+                    </div>
+                </form>
             </div>
         </section>
     </main>
