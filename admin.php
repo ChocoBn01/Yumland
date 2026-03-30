@@ -1,4 +1,7 @@
 <?php 
+    if(!isset($_COOKIE["client"])){
+        header("Location: index.php");
+    }
     $client=json_decode($_COOKIE["client"], true);   
     $file=file_get_contents("donnees/data.json");
     $data=json_decode($file, true);
