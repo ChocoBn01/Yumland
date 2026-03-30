@@ -6,7 +6,7 @@
     if(empty($_REQUEST['nname'])||empty($_REQUEST['nfname'])||empty($_REQUEST['nadr'])||empty($_REQUEST['ntel'])){
     }
     else{
-        $file= "data.json";
+        $file= "donnees/data.json";
         if(file_exists($file)){
             $client_passe=file_get_contents($file);
             $data=json_decode($client_passe, true);
