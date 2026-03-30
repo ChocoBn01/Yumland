@@ -9,6 +9,9 @@
         setcookie("client", "", time()-3600);  
         header("Location: index.php");
     }
+    if($client['email']['role']['admin']==false ){
+        header("Location: profil.php");
+    }
     function aff_role($client){
         if($client['role']['bloque']==true){
             echo "BLOQUE";
@@ -152,7 +155,6 @@
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -163,9 +165,7 @@
     <link rel="stylesheet" href="css/client.css">
     <link href="assets/Logo projet.png" rel="icon">
 </head>
-
 <body>
-
 <header>
         <div class="logo">
             <img src="assets/Logo projet.png" alt="Logo" class="header-logo" style="height: 35px;">
@@ -189,10 +189,8 @@
             </ul>
         </nav>
 </header>
-
 <section class="titre-admin">
     <h1>Utilisateurs</h1>
-
     <div class="filtres-admin">
         <label for="filtres-choix">Filtrer :</label>
         <select name="type-utilisateur" id="filtres-choix">
@@ -204,8 +202,6 @@
         </select>
     </div>
 </section>
-
-
 <main>
 <table border="1">
     <tr>
@@ -236,12 +232,9 @@
     <?php } ?>
 </table>
 </main>
-
 <footer>
-        <p>&copy; 2026 Les Croquettes du Chef - Espace Pro</p>
+    <p>&copy; 2026 Les Croquettes du Chef - Espace Pro</p>
 </footer>
-
 </body>
-
 </html>
 
