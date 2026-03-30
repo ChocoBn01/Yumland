@@ -111,7 +111,7 @@
                 <?php if($commande['reduction']==true){ ?>
                     <div class="ligne-reduction">
                         <span>Réduction coupon fidélité</span>
-                        <span>-<?php echo $commande['total']/2;?></span>
+                        <span>-<?php echo $commande['total']/3;?></span>
                     </div>
                 <?php } ?>
                 <div class="ligne-total">
