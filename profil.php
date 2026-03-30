@@ -143,9 +143,9 @@
                 <div class="avancee" style="width:<?php echo $pourcentage; ?>%;"></div>
             </div>
             <?php if($pourcentage<100){ ?>
-                <p><small>Encore <?php echo 300-($client['point_fidelite']); ?> points avant la réduction de 50% sur la commande suivante !</small></p>
+                <p><small>Encore <?php echo 300-($client['point_fidelite']); ?> points avant la réduction de 25% sur la commande suivante !</small></p>
             <?php }else{ ?>
-                <p><small>🎉 Félicitations ! Vous avez débloqué une réduction de 50% sur votre prochaine commande !</small></p>
+                <p><small>🎉 Félicitations ! Vous avez débloqué une réduction de 25% sur votre prochaine commande !</small></p>
             <?php } ?>
             
         </div>
@@ -177,10 +177,8 @@
     </section>    
 </main>
 <footer>
-        <p>&copy; 2026 Les Croquettes du Chef - Espace Client</p>
-    </footer>
-    
-    
+    <p>&copy; 2026 Les Croquettes du Chef - Espace Client</p>
+</footer> 
 </body>
 </html>
 
