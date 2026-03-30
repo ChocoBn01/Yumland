@@ -114,7 +114,6 @@
     <link href="assets/Logo projet.png" rel="icon">
     </head>
 <body>
-
     <header>
         <div class="logo">
             <img src="assets/Logo projet.png" alt="Logo" class="header-logo" style="height: 35px;">
@@ -137,13 +136,11 @@
             </ul>
         </nav>
     </header>
-
     <main>
         <section class="en-tete-tableau">
             <h1>Suivi du Service 🛎️</h1>
             <p>Gérez la préparation et le départ des commandes en temps réel.</p>
         </section>
-
         <div class="conteneur-tableau">
             
             <section class="colonne-commandes a-preparer">
@@ -186,8 +183,6 @@
                     <?php } ?>
                 </div>
             </section>
-
-            
             <section class="colonne-commandes livraison">
                 <div class="en-tete-colonne">
                     <h2>🚀 En Livraison (<?php echo $nb_cmd_livraison; ?>)</h2>
@@ -220,10 +215,8 @@
             </section>
         </div>
     </main>
-
     <footer>
         <p>&copy; 2026 Les Croquettes du Chef - Espace Pro</p>
     </footer>
-
 </body>
 </html>
