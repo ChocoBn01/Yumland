@@ -10,7 +10,7 @@
     setcookie("client", json_encode($data[$client['email']]), time()-3600);  
     setcookie("client", json_encode($data[$client['email']]), time()+3600);
     $client=json_decode($_COOKIE["client"], true);
-    if($data[$client['email']]['role']['bloque']==true || !isset($_COOKIE["client"])){
+    if($data[$client['email']]['role']['bloque']==true){
         setcookie("client", json_encode($data[$mail]), time()-3600);  
         header("Location: index.php");
     }
