@@ -1,4 +1,7 @@
 <?php 
+    if(!isset($_COOKIE["client"])){
+        header("Location: index.php");
+    }
     $client=json_decode($_COOKIE["client"], true);   
     $commande_data =file_get_contents("donnees/commande_passe.json");
     $commande = json_decode($commande_data, true); 
@@ -7,7 +10,7 @@
     setcookie("client", json_encode($data[$client['email']]), time()-3600);  
     setcookie("client", json_encode($data[$client['email']]), time()+3600);
     $client=json_decode($_COOKIE["client"], true);
-    if($data[$client['email']]['role']['bloque']==true){
+    if($data[$client['email']]['role']['bloque']==true || !isset($_COOKIE["client"])){
         setcookie("client", json_encode($data[$mail]), time()-3600);  
         header("Location: index.php");
     }
@@ -76,7 +79,6 @@
     <link href="assets/Logo projet.png" rel="icon">
 </head>
 <body>
-
     <header>
         <div class="logo">
             <img src="assets/Logo projet.png" alt="Logo" class="header-logo" style="height: 35px;">
@@ -94,6 +96,7 @@
                     <li><a href="admin.php">Administration</a></li>
                 <?php } ?>
                 <li><a href="menu.php">La Carte</a></li>
+                <li><a href="panier.php">🛒</a></li>
                 <li><a href="profil.php" class="active">Mon profil</a></li>
                 <li><a href="logout.php" class="btn">Déconnexion</a></li>
             </ul>
@@ -130,7 +133,7 @@
                 N° de carte de fidélité :<br />
                 <span class="numero-carte"><?php aff_num_cmd_ou_fidelite($client['numero_fidelite'], 2); ?></span>
             </p>
-            <?php $pourcentage=(100*$client['point_fidelite'])/150;
+            <?php $pourcentage=(100*$client['point_fidelite'])/300;
                 if($pourcentage>=100){
                     $pourcentage=100;
                 }
@@ -140,9 +143,9 @@
                 <div class="avancee" style="width:<?php echo $pourcentage; ?>%;"></div>
             </div>
             <?php if($pourcentage<100){ ?>
-                <p><small>Encore <?php echo 150-($client['point_fidelite']); ?> points avant votre prochaine plat offert !</small></p>
+                <p><small>Encore <?php echo 300-($client['point_fidelite']); ?> points avant la réduction de 50% sur la commande suivante !</small></p>
             <?php }else{ ?>
-                <p><small>🎉 Félicitations ! Vous avez débloqué votre plat offert !</small></p>
+                <p><small>🎉 Félicitations ! Vous avez débloqué une réduction de 50% sur votre prochaine commande !</small></p>
             <?php } ?>
             
         </div>
