@@ -2,7 +2,7 @@
     if(empty($_REQUEST['nname'])||empty($_REQUEST['nfname'])||empty($_REQUEST['nadr'])||empty($_REQUEST['ntel'])||empty($_REQUEST['nemail'])||empty($_REQUEST['ncode'])){
     }
     else{
-        $file= "data.json";
+        $file= "donnees/data.json";
         $commande="donnees/commande_passe.json";
         if(file_exists($file)){
             $client_passe=file_get_contents($file);
@@ -30,8 +30,8 @@
         $data[$email]=$new_user;
         $vide=[];
         $data_commande[$email]=(object) $vide;
-        file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT));
-        file_put_contents("donnees/commande.json", json_encode($data_commande, JSON_PRETTY_PRINT));
+        file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        file_put_contents("donnees/commande.json", json_encode($data_commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         header("Location: login.php");
         exit;
     }
