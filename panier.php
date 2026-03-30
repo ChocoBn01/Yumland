@@ -116,11 +116,28 @@
                     <p class="prix_recap"><?php echo number_format($detail['quantite']*$plat[$id]['prix'], 2, ',', ' '); ?>€</p>
                 </div>
             <?php } ?>
-            <div class="commande_total">
+            <?php if($data[$client['email']]['point_fidelite']>299){ 
+                    $commande['reduction']=true;
+                    file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+                ?>
+                <div class="reduction">
+                    <p>Réduction coupon fidélité</p>
+                    <p class="prix_recap"><?php echo "-".number_format($commande['total']/4, 2, ',', ' '); ?>€</p>
+                </div>
+                <div class="commande_total">
+                    <p><strong>TOTAL</strong></p>
+                    <p class="prix_recap"><strong><?php echo number_format($commande['total']/4, 2, ',', ' '); ?>€</strong></p>
+                </div>
+            <?php }else{ 
+                    $commande['reduction']=false;
+                    file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+                ?>
+                <div class="commande_total">
                     <p><strong>TOTAL</strong></p>
                     <p class="prix_recap"><strong><?php echo number_format($commande['total'], 2, ',', ' '); ?>€</strong></p>
-            </div>
-            <a href="" class="bouton-recommande">Payement</a>
+                </div>
+            <?php } ?>
+            <a href="pre-cybank.php" class="bouton-recommande">Payement</a>
         </div>
     </div>
 </main>
