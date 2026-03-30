@@ -8,8 +8,8 @@
     if($data[$client['email']]['role']['bloque']==true){
         setcookie("client", "", time()-3600);  
         header("Location: index.php");
-    }
-    if($client['email']['role']['admin']==false ){
+    }   
+    if($data[$client['email']]['role']['admin']==false ){
         header("Location: profil.php");
     }
     function aff_role($client){
