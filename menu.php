@@ -14,7 +14,7 @@
         $commande = json_decode($commande_data, true); 
         foreach($plat as $index => $detail){
             if(isset($_REQUEST['btn_plus_'.str_replace(" ", "_", $index)])){
-                $commande['total']+=round($commande['total'] + $detail['prix'], 2);
+                $commande['total']=round($commande['total'] + $detail['prix'], 2);
                 if(isset($commande['plats'][$index])){
                     $commande['plats'][$index]['quantite']++;
                 }
