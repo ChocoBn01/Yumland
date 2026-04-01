@@ -1,6 +1,7 @@
 <?php 
     if(!isset($_COOKIE["client"])){
         header("Location: index.php");
+        exit;
     }
     $client=json_decode($_COOKIE["client"], true);
     $mail=$client['email'];   
@@ -143,7 +144,9 @@
                         <p class="prix_recap"><strong><?php echo number_format($commande['total'], 2, ',', ' '); ?>€</strong></p>
                     </div>
                 <?php } ?>
-                <a href="pre-cybank.php" class="bouton-recommande">Payement</a>
+                <form action='https://www.plateforme-smc.fr/cybank/index.php' method='POST'>
+                    <input class="bouton-recommande" type='submit' value="Payement">
+                </form>
             </div>
         <?php }?>
     </div>
