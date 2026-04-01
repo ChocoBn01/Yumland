@@ -100,6 +100,12 @@
                     <label><input type="checkbox" name="digestion sensible" checked> Digestion Sensible</label>
                 </div>
 
+                <div class="groupe-filtres">
+                    <h3>🛒 Pack</h3>
+                    <label><input type="checkbox" name="pack" checked> Pack</label>
+                    <label><input type="checkbox" name="produit_unique" checked> Produit Unique</label>
+                </div>
+
                 <button class="btn-filtres">Appliquer les filtres</button>
             </aside>
 
