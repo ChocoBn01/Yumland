@@ -15,6 +15,17 @@
         setcookie("client", json_encode($data[$mail]), time()-3600);  
         header("Location: index.php");
     }
+    include("getapikey/getapikey.php");
+    $getapikey = getAPIKey("MI-1_I");
+    if($commande['reduction'] == true){ 
+        $montant = number_format(3 * $commande['total'] / 4, 2, '.', ''); 
+    } else {
+        $montant = number_format($commande['total'], 2, '.', '');
+    } 
+    $transac = uniqid();
+    $vendeur = "MI-1_I";
+    $retour = "http://localhost:7180/post-cybank.php"; 
+    $control = md5($getapikey . "#" . $transac . "#" . $montant . "#" . $vendeur . "#" . $retour . "#");
     function conjugaison($sing, $plur, $val){
         if($val==1){
             return $sing;
@@ -41,7 +52,7 @@
         }
         else if($detail['quantite']>1){
             if(isset($_REQUEST['btn_moins_'.str_replace(" ", "_", $id)])){
-                $commande['total']=round($commande['total'] + $detail['prix'], 2);;
+                $commande['total']=round($commande['total'] - $detail['prix'], 2);;
                 $commande['plats'][$id]['quantite']--;
                 file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
                 header("Location: panier.php");
@@ -56,7 +67,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
-    <title>Les Croquettes du Chef</title>
+    <title>Panier - Les Croquettes du Chef</title>
     
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/panier.css">
@@ -145,6 +156,11 @@
                     </div>
                 <?php } ?>
                 <form action='https://www.plateforme-smc.fr/cybank/index.php' method='POST'>
+                    <input type='hidden' name='transaction' value='<?php echo $transac; ?>'>
+                    <input type='hidden' name='montant' value='<?php echo $montant; ?>'>
+                    <input type='hidden' name='vendeur' value='<?php echo $vendeur; ?>'>
+                    <input type='hidden' name='retour' value='<?php echo $retour; ?>'>
+                    <input type='hidden' name='control' value='<?php echo $control; ?>'>
                     <input class="bouton-recommande" type='submit' value="Payement">
                 </form>
             </div>
