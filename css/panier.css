@@ -149,6 +149,13 @@ p.prix{
     text-decoration: none;
     display: flex;
     align-self: center;
+    cursor: pointer;  
+    font-family: inherit; 
+    font-size: inherit;   
+}
+form{
+    display: flex;
+    align-self: center;
 }
 .recapitulatif {
     background-color: var(--card-bg-client);
