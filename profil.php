@@ -1,6 +1,7 @@
 <?php 
     if(!isset($_COOKIE["client"])){
         header("Location: index.php");
+        exit;
     }
     $client=json_decode($_COOKIE["client"], true);   
     $commande_data =file_get_contents("donnees/commande_passe.json");
