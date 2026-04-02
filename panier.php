@@ -18,7 +18,8 @@
     include("getapikey/getapikey.php");
     $getapikey = getAPIKey("MI-1_I");
     if($commande['reduction'] == true){ 
-        $montant = number_format(3 * $commande['total'] / 4, 2, '.', ''); 
+        $reduc=$commande['total']/4;
+        $montant = number_format(3*$commande['total'] / 4, 2, '.', ''); 
     } else {
         $montant = number_format($commande['total'], 2, '.', '');
     } 
@@ -140,11 +141,11 @@
                     ?>
                     <div class="reduction">
                         <p>Réduction coupon fidélité</p>
-                        <p class="prix_recap"><?php echo "-".number_format($commande['total']/4, 2, ',', ' '); ?>€</p>
+                        <p class="prix_recap"><?php echo "-".number_format($reduc, 2, ',', ' '); ?>€</p>
                     </div>
                     <div class="commande_total">
                         <p><strong>TOTAL</strong></p>
-                        <p class="prix_recap"><strong><?php echo number_format($commande['total']/4, 2, ',', ' '); ?>€</strong></p>
+                        <p class="prix_recap"><strong><?php echo number_format($montant, 2, ',', ' '); ?>€</strong></p>
                     </div>
                 <?php }else{ 
                         $commande['reduction']=false;
@@ -152,7 +153,7 @@
                     ?>
                     <div class="commande_total">
                         <p><strong>TOTAL</strong></p>
-                        <p class="prix_recap"><strong><?php echo number_format($commande['total'], 2, ',', ' '); ?>€</strong></p>
+                        <p class="prix_recap"><strong><?php echo number_format($montant, 2, ',', ' '); ?>€</strong></p>
                     </div>
                 <?php } ?>
                 <form action='https://www.plateforme-smc.fr/cybank/index.php' method='POST'>
