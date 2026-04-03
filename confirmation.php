@@ -6,10 +6,12 @@
     $mail=$client['email'];   
     $file=file_get_contents("donnees/data.json");
     $data=json_decode($file, true);
-    $commande_data =file_get_contents("donnees/commande_passe.json");
+    $commande_data =file_get_contents("donnees/commande.json");
     $commande_passe = json_decode($commande_data, true); 
-    foreach($commande_passe[$client['email']] as $id=>$detail){
-        $commande=$detail;
+    foreach($commande_passe as $id=>$detail){
+        if($client['email']==$detail['mail']){
+            $commande=$detail;
+        }
     }
     $plat_data=file_get_contents("donnees/plat.json");
     $plat=json_decode($plat_data, true);
@@ -111,7 +113,7 @@
                 <?php if($commande['reduction']==true){ ?>
                     <div class="ligne-reduction">
                         <span>Réduction coupon fidélité</span>
-                        <span>-<?php echo $commande['total']/3;?></span>
+                        <span>-<?php echo number_format($commande['total']/3, 2, ',', ' ');?></span>
                     </div>
                 <?php } ?>
                 <div class="ligne-total">
@@ -139,7 +141,7 @@
                 </div>
             </div>
             <div class="zone-boutons">
-                <a href="index.php" class="btn-confirmation principal">Retour à l'accueil</a>
+                <a href="profil.php" class="btn-confirmation principal">Retour au profil</a>
                 <a href="profil.php" class="btn-confirmation secondaire">Voir mes commandes</a>
             </div>
         </div>
