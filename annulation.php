@@ -100,12 +100,12 @@
                 <?php if($commande['reduction']==true){ ?>
                     <div class="ligne-reduction">
                         <span>Réduction coupon fidélité</span>
-                        <span>-<?php echo $commande['total']/4;?></span>
+                        <span>-<?php echo number_format($commande['total']/4, 2, ',', ' ');?></span>
                     </div>
                 <?php } ?>
                 <div class="ligne-total">
                     <span>Total</span>
-                    <span><?php if($commande['reduction']==true){ echo number_format($commande['total']/2, 2, ',', ' ');}else{ echo number_format($commande['total'], 2, ',', ' ');} ?>€</span>
+                    <span><?php if($commande['reduction']==true){ echo number_format(3*$commande['total']/4, 2, ',', ' ');}else{ echo number_format($commande['total'], 2, ',', ' ');} ?>€</span>
                 </div>
             </div>
             <div class="zone-boutons">
