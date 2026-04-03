@@ -18,7 +18,7 @@
     include("getapikey/getapikey.php");
     $getapikey = getAPIKey("MI-1_I");
     if($commande['reduction'] == true){ 
-        $reduc=$commande['total']/4;
+        $reduc=number_format($commande['total'] / 4, 2, '.', '');;
         $montant = number_format(3*$commande['total'] / 4, 2, '.', ''); 
     } else {
         $montant = number_format($commande['total'], 2, '.', '');
@@ -92,7 +92,7 @@
     <h1>Mon Panier</h1>
     <?php if($commande['total']==0){?>
         <div class="rien_commander">
-            <p><strong>Vous n'avez rien commander</strong></p>
+            <p><strong>Vous n'avez rien ajouter au panier</strong></p>
         </div>
     <?php } ?>
     <main class="container">
@@ -142,6 +142,12 @@
                     <div class="reduction">
                         <p>Réduction coupon fidélité</p>
                         <p class="prix_recap"><?php echo "-".number_format($reduc, 2, ',', ' '); ?>€</p>
+                        <?php 
+                            if(number_format($reduc, 2, ',', ' ')==0.00){
+                                header("Location: panier.php");
+                                exit;
+                            } 
+                        ?>
                     </div>
                     <div class="commande_total">
                         <p><strong>TOTAL</strong></p>
