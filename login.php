@@ -11,8 +11,15 @@
                 $mdp=$_REQUEST['ncode'];
                 if(password_verify($mdp, $data[$mail]['code']) && $data[$mail]['role']['bloque']!=true){
                     if(!file_exists("donnees/panier_$mail.json")){
+                        $panier_passe_data =file_get_contents("donnees/panier.json");
+                        $panier_passe = json_decode($panier_passe_data, true); 
+                        if(isset($panier_passe[$mail])){
+                            $panier=$panier_passe[$mail];
+                        }
+                        else{
+                            $panier=array("total"=>0, "reduction"=>false);
+                        }
                         $panier_data="donnees/panier_$mail.json";
-                        $panier=array("total"=>0);
                         file_put_contents($panier_data, json_encode($panier, JSON_PRETTY_PRINT));
                     }
                     setcookie("client", json_encode($data[$mail]), time()+3600);
