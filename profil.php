@@ -165,7 +165,7 @@
                             <div class="commande">
                                 <div class="numero">
                                     <strong>Commande n°<?php aff_num_cmd_ou_fidelite($details['num'], 1) ;?> (<?php echo aff_temps($details['date']['jour'])."/".aff_temps($details['date']['mois'])."/".aff_temps($details['date']['annee']).":".aff_temps($details['date']['heure']).":".aff_temps($details['date']['minute']); ?>)</strong>
-                                    <a href="#" class="bouton-recommande">Recommander</a>
+                                    <button name="<?php aff_num_cmd_ou_fidelite($details['num'], 1) ; ?>" class="bouton-recommande">Recommander</button>
                                 </div>
                                 <?php foreach($details['plats'] as $produit){ ?>
                                 <p><?php echo $produit['quantite']."x       -".$produit['name']; ?> - <?php echo number_format($produit['quantite']*$produit['prix'], 2, ',', ' '); ?>€</p>
@@ -176,7 +176,7 @@
                         <div class="commande">
                             <div class="numero">
                                 <strong><br>Vous n'avez pas encore passé de commande.</strong>
-                                <a href="menu.php" class="bouton-recommande">Commander</a>
+                                <button name="<?php aff_num_cmd_ou_fidelite($details['num'], 1) ; ?>" class="bouton-recommande">Commander</button>
                             </div>
                         </div>
                 <?php } ?>
