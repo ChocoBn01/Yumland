@@ -113,13 +113,18 @@
                 <?php if($commande['reduction']==true){ ?>
                     <div class="ligne-reduction">
                         <span>Réduction coupon fidélité</span>
-                        <span>-<?php echo number_format($commande['total']/3, 2, ',', ' ');?></span>
+                        <span>-<?php echo number_format($commande['total']/4, 2, ',', ' ');?></span>
+                    </div>
+                    <div class="ligne-total">
+                        <span>Total</span>
+                        <span><?php echo number_format(3*$commande['total']/4, 2, ',', ' '); ?>€</span>
+                    </div>
+                <?php }else{?>
+                    <div class="ligne-total">
+                        <span>Total</span>
+                        <span><?php echo number_format($commande['total'], 2, ',', ' '); ?>€</span>
                     </div>
                 <?php } ?>
-                <div class="ligne-total">
-                    <span>Total</span>
-                    <span><?php echo number_format($commande['total'], 2, ',', ' '); ?>€</span>
-                </div>
             </div>
             <div class="carte">
                 <h2>Informations</h2>
