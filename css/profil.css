@@ -122,6 +122,7 @@ footer {
     transition: transform 0.2s, box-shadow 0.2s;
     font-weight: bold;
     text-decoration: none;
+    font-size: inherit;
 }
 
 .bouton-recommande:hover {
