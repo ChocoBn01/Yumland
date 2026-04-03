@@ -80,6 +80,7 @@
         $new_cmd[aff_num_cmd($num)]['note']=array('etat' => false, 'note' => 0);
         $new_cmd[aff_num_cmd($num)]['num']=$num;
         $new_cmd[aff_num_cmd($num)]['mail']=$mail;
+        $new_cmd[aff_num_cmd($num)]['etat']=array('cuisinee' => false, 'livree' => false);
         $new_cmd[aff_num_cmd($num)]['temps']=0;
         $new_cmd[aff_num_cmd($num)]['date'] = array("jour" => (int)date('d'), "mois" => (int)date('m'), "annee" => (int)date('Y'), "heure" => (int)date('H'), "minute" => (int)date('i'), "seconde" => (int)date('s'));
         if($commande['reduction']==true){
