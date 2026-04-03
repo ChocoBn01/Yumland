@@ -15,6 +15,12 @@
         setcookie("client", json_encode($data[$mail]), time()-3600);  
         header("Location: index.php");
     }
+    $mail=$client['email'];   
+    if(!file_exists("donnees/panier_$mail.json")){
+        $panier=array("total"=>0, "reduction"=>false);
+        $panier_data="donnees/panier_$mail.json";
+        file_put_contents($panier_data, json_encode($panier, JSON_PRETTY_PRINT));
+    }
     function aff_num_cmd_ou_fidelite($num, $cmd_ou_fidelite){
         if($cmd_ou_fidelite==1){
             if($num<10){
