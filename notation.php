@@ -1,3 +1,100 @@
+<?php 
+    if(!isset($_COOKIE["client"])){
+        header("Location: index.php");
+        exit;
+    }
+    $client=json_decode($_COOKIE["client"], true);
+    $mail=$client['email'];   
+    $file=file_get_contents("donnees/data.json");
+    $data=json_decode($file, true);
+    $commande_data =file_get_contents("donnees/commande_passe.json");
+    $commande = json_decode($commande_data, true); 
+    $plat_data=file_get_contents("donnees/plat.json");
+    $plat=json_decode($plat_data, true);
+    if($data[$client['email']]['role']['bloque']==true){
+        setcookie("client", json_encode($data[$mail]), time()-3600);  
+        header("Location: index.php");
+        exit;
+    }
+    foreach($commande[$mail] as $id => $cmd_client){
+        if($cmd_client['note']['etat']==false){
+            $cmd=$cmd_client;
+        }
+    }
+    function aff_num_cmd($num){
+        if($num<10){
+            return "000".$num;
+        }
+        else if($num<100){
+            return "00".$num;
+        }
+        else if($num<1000){
+            return "0".$num;
+        }
+        else{
+            return $num;
+        }
+    }
+    if(!isset($cmd)){
+        header("Location: index.php");
+        exit;
+    }
+    else{
+        foreach($cmd['plats'] as $idplat => $plat){
+            if(isset($_REQUEST["name".str_replace(" ", "_", $idplat)])){
+                $commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']=intval($_REQUEST["name".str_replace(" ", "_", $idplat)]);
+            }
+        }
+        if(isset($_REQUEST['com'])){
+            $commande[$mail][aff_num_cmd($cmd['num'])]['note']['com']=$_REQUEST['com'];
+        }
+        else{
+            $commande[$mail][aff_num_cmd($cmd['num'])]['note']['com']="";
+        }
+        $all=0;
+        foreach($cmd['plats'] as $idplat => $plat){
+            if(!isset($commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note'])){
+                $commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']=0;
+                $all=1;
+            }
+            else if($commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']==0){
+                $commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']=0;
+                $all=1;
+            }
+            if(isset($_REQUEST["com_".str_replace(" ", "_", $idplat)])){
+                $commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']['com']=$_REQUEST["com_".str_replace(" ", "_", $idplat)];
+            }
+            if(!isset($commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']['com'])){
+                $commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']['com']="";
+                $all=1;
+            }
+        }
+        if($all==1){
+            $commande[$mail][aff_num_cmd($cmd['num'])]['note']['etat']=false;
+            file_put_contents("donnees/commande_passe.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            header("Location: notation.php");
+            exit;
+        }
+        else{
+            if(isset($_REQUEST['submit_btn'])){
+                $commande[$mail][aff_num_cmd($cmd['num'])]['note']['etat']=true;
+                
+                $somme = 0;
+                $quantite = 0;
+                
+                foreach($cmd['plats'] as $idplat => $plat){
+                    $somme+=$commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note'];
+                    $quantite++;
+                }
+                $commande[$mail][aff_num_cmd($cmd['num'])]['note']['note']=intval($somme/$quantite);
+                
+                file_put_contents("donnees/commande_passe.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+                header("Location: index.php");
+                exit;
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html> 
     <head>
@@ -30,78 +127,37 @@
                 <div class="Notez_votre_cmd">   
                     Notez votre commande
                 </div>
-                <div class="cmd_1">
-                    <img class="img_cmd_1" src="assets/Boeuf wagyu.png" alt="image Prestige du chef">
-                    <div class="cmd1_s_img">
-                        <div class="l1_1">
-                            <div class="nplat_1">
-                                Le Prestige du Chef 
-                            </div>
-                            <div class="radio_1">                               
-                                <input type="radio" name="nnote_1" id="idnote_1_1" class="note_1" value="1">
-                                <label for="idnote_1_1">★</label>                                
-                                <input type="radio" name="nnote_1" id="idnote_1_2" class="note_1" value="2">
-                                <label for="idnote_1_2">★</label>                               
-                                <input type="radio" name="nnote_1" id="idnote_1_3" class="note_1" value="3">
-                                <label for="idnote_1_3">★</label>                               
-                                <input type="radio" name="nnote_1" id="idnote_1_4" class="note_1" value="4">
-                                <label for="idnote_1_4">★</label>
-                                <input type="radio" name="nnote_1" id="idnote_1_5" class="note_1" value="5">
-                                <label for="idnote_1_5">★</label>
-                            </div>
-                        </div>
-                        <textarea name="ncom_1" id="idcom_1" class="com_1" placeholder="   Votre commentaire"></textarea>
-                    </div>
-                </div>
-                <div class="cmd_2">
-                    <img class="img_cmd_2" src="assets/Couronne de gibier.png" alt="image Couronne de Gibier">
-                    <div class="cmd2_s_img">
-                        <div class="l1_2">
-                            <div class="nplat_2">
-                                Couronne de gibier
-                            </div>
-                            <div class="radio_2">
-                                <input type="radio" name="nnote_2" id="idnote_2_1" class="note_2" value="1">
-                                <label for="idnote_2_1">★</label>
-                                <input type="radio" name="nnote_2" id="idnote_2_2" class="note_2" value="2">
-                                <label for="idnote_2_2">★</label>
-                                <input type="radio" name="nnote_2" id="idnote_2_3" class="note_2" value="3">
-                                <label for="idnote_2_3">★</label>
-                                <input type="radio" name="nnote_2" id="idnote_2_4" class="note_2" value="4">
-                                <label for="idnote_2_4">★</label> 
-                                <input type="radio" name="nnote_2" id="idnote_2_5" class="note_2" value="5">
-                                <label for="idnote_2_5">★</label>
+                <form method="POST">
+                    <?php foreach($cmd['plats'] as $idplat => $plat){ ?>
+                        <div class="cmd_1">
+                            <img class="img_cmd_1" src="assets/Boeuf wagyu.png" alt="image Prestige du chef">
+                            <div class="cmd1_s_img">
+                                <div class="l1_1">
+                                    <div class="nplat_1">
+                                        <?php echo $plat['name']; ?>
+                                    </div>
+                                    <div class="radio_1">                               
+                                        <input type="radio" name="<?php echo "name".str_replace(" ", "_", $idplat); ?>" class="note_1" value="1">
+                                        <label for="idnote_1_1">★</label>                                
+                                        <input type="radio" name="<?php echo "name".str_replace(" ", "_", $idplat); ?>" class="note_1" value="2">
+                                        <label for="idnote_1_2">★</label>                               
+                                        <input type="radio" name="<?php echo "name".str_replace(" ", "_", $idplat); ?>" class="note_1" value="3">
+                                        <label for="idnote_1_3">★</label>                               
+                                        <input type="radio" name="<?php echo "name".str_replace(" ", "_", $idplat); ?>" class="note_1" value="4">
+                                        <label for="idnote_1_4">★</label>
+                                        <input type="radio" name="<?php echo "name".str_replace(" ", "_", $idplat); ?>" class="note_1" value="5">
+                                        <label for="idnote_1_5">★</label>
+                                    </div>
+                                </div>
+                                <textarea name="<?php echo "com_".str_replace(" ", "_", $idplat); ?>" class="com_1" placeholder="   Votre commentaire sur le plat"></textarea>
                             </div>
                         </div>
-                        <textarea name="ncom_2" id="idcom_2" class="com_2" placeholder="   Votre commentaire"></textarea>
-                    </div>
-                </div>
-                <div class="cmd_3">
-                    <img class="img_cmd_3" src="assets/perle de l'océan.png" alt="image Perle de l'Océan">
-                    <div class="cmd3_s_img">
-                        <div class="l1_3">
-                            <div class="nplat_3">
-                                Perle de l'Océan 
-                            </div>
-                            <div class="radio_3">                            
-                                <input type="radio" name="nnote_3" id="idnote_3_1" class="note_3" value="1">
-                                <label for="idnote_3_1">★</label>                            
-                                <input type="radio" name="nnote_3" id="idnote_3_2" class="note_3" value="2">
-                                <label for="idnote_3_2">★</label>                            
-                                <input type="radio" name="nnote_3" id="idnote_3_3" class="note_3" value="3">
-                                <label for="idnote_3_3">★</label>                            
-                                <input type="radio" name="nnote_3" id="idnote_3_4" class="note_3" value="4">
-                                <label for="idnote_3_4">★</label>
-                                <input type="radio" name="nnote_3" id="idnote_3_5" class="note_3" value="5">
-                                <label for="idnote_3_5">★</label>
-                            </div>
-                        </div>
-                        <textarea name="ncom_3" id="idcom_3" class="com_3" placeholder="   Votre commentaire"></textarea>
-                    </div>
-                </div>
-                <a href="profil.html">
-                    <input type="submit" value="Soumettre mes avis" class="avis_submit">
-                </a>
+                    <?php } ?>
+                    <textarea name="com" class="com_1" placeholder="   Votre commentaire sur la commande"></textarea>
+                    <button class="avis_submit" name="submit_btn">
+                        Soumettre mes avis
+                    </button>
+                </form>    
             </form>
         </div>
     <footer>
