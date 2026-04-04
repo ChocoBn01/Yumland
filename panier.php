@@ -84,7 +84,7 @@
         <nav>
             <ul>
                 <li><a href="menu.php">La Carte</a></li>
-                <li><a href="profil.php" class="active">Mon profil</a></li>
+                <li><a href="profil.php" class="active">Mon panier</a></li>
                 <li><a href="profil.php" class="btn">Profil</a></li>
             </ul>
         </nav>
