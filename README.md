@@ -35,16 +35,16 @@
 
 ```
 Yumland/
-├── index.html              # Page d'accueil
-├── menu.html               # Catalogue des produits
-├── profil.html             # Profil utilisateur
-├── commandes.html          # Gestion des commandes (cuisine)
-├── admin.html              # Panel administrateur
-├── livraisons.html         # Gestion des livraisons
-├── login.html              # Page de connexion
-├── inscription.html        # Page d'inscription
-├── mdp_oublie.html         # Récupération mot de passe
-├── code_mdp_oublie.html    # Définition nouveau mot de passe
+├── index.php              # Page d'accueil
+├── menu.php               # Catalogue des produits
+├── profil.php             # Profil utilisateur
+├── commandes.php          # Gestion des commandes (cuisine)
+├── admin.php              # Panel administrateur
+├── livraisons.php         # Gestion des livraisons
+├── login.php              # Page de connexion
+├── inscription.php        # Page d'inscription
+├── mdp_oublie.php         # Récupération mot de passe
+├── code_mdp_oublie.php    # Définition nouveau mot de passe
 │
 ├── css/                    # Feuilles de style
 │   ├── variables.css       # Variables et thème global
