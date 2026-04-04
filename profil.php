@@ -63,12 +63,43 @@
             }
         }
     }
+    function aff_num_cmd($num){
+        if($num<10){
+            return "000".$num;
+        }
+        else if($num<100){
+            return "00".$num;
+        }
+        else if($num<1000){
+            return "0".$num;
+        }
+        else{
+            return $num;
+        }
+    }
     function aff_temps($num){
         if($num<10){
             return "0".$num;
         }
         else{
             return $num;
+        }
+    }  
+
+    foreach($commande[$mail] as $id_cmd => $details){
+        if(isset($_REQUEST[aff_num_cmd($details['num'])])){
+            foreach($details['plats'] as $id => $pla){
+                $panier['total'] += ($pla['quantite'] * $pla['prix']);
+                if(isset($panier['plats'][$id])){
+                    $panier['plats'][$id]['quantite'] += $pla['quantite'];
+                }
+                else{
+                    $panier['plats'][$id] = $pla;
+                }
+            }
+            file_put_contents("donnees/panier_$mail.json", json_encode($panier, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            header("Location: panier.php");
+            exit; 
         }
     }
 ?>
@@ -102,11 +133,9 @@
                 <?php if(isset($client['role']['admin']) && $client['role']['admin'] == true){ ?>
                     <li><a href="admin.php">Administration</a></li>
                 <?php } ?>
-                <li><a href="index.php">Accueil</a></li>
                 <li><a href="menu.php">La Carte</a></li>
-                
-                <li><a href="profil.php" class="active">Mon profil</a></li>
                 <li><a href="panier.php">🛒</a></li>
+                <li><a href="profil.php" class="active">Mon profil</a></li>
                 <li><a href="logout.php" class="btn">Déconnexion</a></li>
             </ul>
         </nav>
@@ -167,7 +196,7 @@
                             <div class="commande">
                                 <div class="numero">
                                     <strong>Commande n°<?php aff_num_cmd_ou_fidelite($details['num'], 1) ;?> (<?php echo aff_temps($details['date']['jour'])."/".aff_temps($details['date']['mois'])."/".aff_temps($details['date']['annee']).":".aff_temps($details['date']['heure']).":".aff_temps($details['date']['minute']); ?>)</strong>
-                                    <button name="<?php aff_num_cmd_ou_fidelite($details['num'], 1) ; ?>" class="bouton-recommande">Recommander</button>
+                                    <form method="POST"><button name="<?php aff_num_cmd_ou_fidelite($details['num'], 1) ; ?>" class="bouton-recommande">Recommander</button></form>
                                 </div>
                                 <?php foreach($details['plats'] as $produit){ ?>
                                 <p><?php echo $produit['quantite']."x       -".$produit['name']; ?> - <?php echo number_format($produit['quantite']*$produit['prix'], 2, ',', ' '); ?>€</p>
