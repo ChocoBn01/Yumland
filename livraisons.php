@@ -167,13 +167,15 @@
                     </form>
                 </div>
             </div>
-        <?php } else{?>
-            <div class="livreur-info">
-                <div class="bloc-blanc">
-                    <h1>AUCUNE COMMANDE A LIVRER</h1>
-                </div>
-            </div>
-        <?php } ?>  
+        <?php } else { ?>
+    <div class="livreur-info aucune-commande">
+        <div class="bloc-vide">
+            <div class="icone-vide">🛵</div>
+            <h1>AUCUNE COMMANDE À LIVRER</h1>
+            <p>Vous n'avez pas de livraison assignée pour le moment.<br>Revenez vérifier dans quelques instants.</p>
+        </div>
+    </div>
+<?php } ?>
 </main>
     <footer>
         <p>&copy; 2026 Les Croquettes du Chef - Espace Livreur</p>
