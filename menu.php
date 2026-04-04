@@ -1,31 +1,106 @@
 <?php 
-    $client=json_decode($_COOKIE["client"], true);  
-    $mail=$client['email'];  
-    $plat_data=file_get_contents("donnees/plat.json");
-    $plat=json_decode($plat_data, true);
+    if(!isset($_COOKIE["client"])){
+        header("Location: index.php");
+        exit;
+    }
+    $client=json_decode($_COOKIE["client"], true);   
+    $commande_data =file_get_contents("donnees/commande_passe.json");
+    $commande = json_decode($commande_data, true); 
     $file=file_get_contents("donnees/data.json");
     $data=json_decode($file, true);
+    setcookie("client", json_encode($data[$client['email']]), time()-3600);  
+    setcookie("client", json_encode($data[$client['email']]), time()+3600);
+    $client=json_decode($_COOKIE["client"], true);
     if($data[$client['email']]['role']['bloque']==true){
         setcookie("client", json_encode($data[$mail]), time()-3600);  
         header("Location: index.php");
     }
-    if(isset($_COOKIE["client"])){ 
-        $commande_data =file_get_contents("donnees/panier_$mail.json");
-        $commande = json_decode($commande_data, true); 
-        foreach($plat as $index => $detail){
-            if(isset($_REQUEST['btn_plus_'.str_replace(" ", "_", $index)])){
-                $commande['total']=round($commande['total'] + $detail['prix'], 2);
-                if(isset($commande['plats'][$index])){
-                    $commande['plats'][$index]['quantite']++;
-                }
-                else{
-                    $commande['plats'][$index]['quantite']=1;
-                    $commande['plats'][$index]['prix']=$detail['prix'];
-                    $commande['plats'][$index]['name']=$detail['name'];
-                }
-                file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-                header("Location: menu.php");
+    $mail=$client['email'];   
+    if(!file_exists("donnees/panier_$mail.json")){
+        $panier=array("total"=>0, "reduction"=>false);
+        $panier_data="donnees/panier_$mail.json";
+        file_put_contents($panier_data, json_encode($panier, JSON_PRETTY_PRINT));
+    }
+    function aff_num_cmd_ou_fidelite($num, $cmd_ou_fidelite){
+        if($cmd_ou_fidelite==1){
+            if($num<10){
+                echo "000".$num;
             }
+            else if($num<100){
+                echo "00".$num;
+            }
+            else if($num<1000){
+                echo "0".$num;
+            }
+            else{
+                echo $num;
+            }
+        }
+        else{
+            if($num<10){
+                echo "0000000".$num;
+            }
+            else if($num<100){
+                echo "000000".$num;
+            }
+            else if($num<10000){
+                echo "00000".$num;
+            }
+            else if($num<100000){
+                echo "0000".$num;
+            }
+            else if($num<1000000){
+                echo "000".$num;
+            }
+            else if($num<10000000){
+                echo "00".$num;
+            }
+            else if($num<100000000){
+                echo "0".$num;
+            }
+            else{
+                echo $num;
+            }
+        }
+    }
+    function aff_num_cmd($num){
+        if($num<10){
+            return "000".$num;
+        }
+        else if($num<100){
+            return "00".$num;
+        }
+        else if($num<1000){
+            return "0".$num;
+        }
+        else{
+            return $num;
+        }
+    }
+    function aff_temps($num){
+        if($num<10){
+            return "0".$num;
+        }
+        else{
+            return $num;
+        }
+    }
+
+    foreach($commande[$email] as $id_cmd => $details){
+        if(isset($_REQUEST[aff_num_cmd($details['num'])])){
+            foreach($details['plats'] as $id => $pla){
+                $panier['total']=round($panier['total'] + $pla['quantite']*$pla['prix'], 2);
+                    if(isset($panier['plats'][$index])){
+                        $plat['plats'][$index]['quantite']++;
+                    }
+                    else{
+                        $commande['plats'][$index]['quantite']=1;
+                        $commande['plats'][$index]['prix']=$detail['prix'];
+                        $commande['plats'][$index]['name']=$detail['name'];
+                    }
+            }
+            file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            header("Location: menu.php");
         }
     }
 ?>
@@ -34,116 +109,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Carte - Les Croquettes du Chef</title>
+    <meta name="format-detection" content="telephone=no">
+    <title>Les Croquettes du Chef</title>
     
     <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/profil.css">
     <link rel="stylesheet" href="css/client.css">
-    <link rel="stylesheet" href="css/accueil.css"> <link rel="stylesheet" href="css/menu.css">   
     <link href="assets/Logo projet.png" rel="icon">
 </head>
 <body>
-
     <header>
         <div class="logo">
-            <img src="assets/Logo projet.png" alt="Logo" class="header-logo">
-            Les croquettes du chef 
+            <img src="assets/Logo projet.png" alt="Logo" class="header-logo" style="height: 35px;">
+            Espace client
         </div>
         <nav>
             <ul>
-                <li><a href="index.php">Accueil</a></li>
-                <li><a href="menu.php" class="active">La Carte</a></li>
+                <?php if(isset($client['role']['restaurateur']) && $client['role']['restaurateur'] == true){ ?>
+                    <li><a href="commandes.php">Commande</a></li>
+                <?php } ?>
+                <?php if(isset($client['role']['livreur']) && $client['role']['livreur'] == true){ ?>
+                    <li><a href="livraisons.php">Livraison</a></li>
+                <?php } ?>
+                <?php if(isset($client['role']['admin']) && $client['role']['admin'] == true){ ?>
+                    <li><a href="admin.php">Administration</a></li>
+                <?php } ?>
+                <li><a href="menu.php">La Carte</a></li>
                 <li><a href="panier.php">🛒</a></li>
-                <li>
-                    <a href="<?php if(isset($_COOKIE["client"])){ echo "profil.php"; } else{ echo "login.php"; }  ?>" class="btn">
-                        <?php  
-                            if(isset($_COOKIE["client"])){
-                                echo "Profil";
-                            }
-                            else{
-                                echo "Connexion";
-                            }
-                        ?>
-                    </a>
-                </li>
+                <li><a href="profil.php" class="active">Mon profil</a></li>
+                <li><a href="logout.php" class="btn">Déconnexion</a></li>
             </ul>
         </nav>
     </header>
+    <main class="container">
+    <aside class="sidebar-perso">
+        <div class="titre-modif">
+            <h3>Mes informations</h3>
+            <a href="modification.php" class="carre-crayon">✏️</a>
+        </div>
+        <div class="info-details">
+            <p>NOM :</p>
+            <p><strong><?php echo $client['fname']; ?></strong></p>
+            <p>PRÉNOM :</p>
+            <p><strong><?php echo $client['name']; ?></strong></p>
+            <p>ADRESSE :</p>
+            <p><strong><?php echo $client['adr']; ?></strong></p>
+            <p>TÉLÉPHONE :</p>
+            <p><strong><?php echo $client['tel']; ?></strong></p>
+            <?php if($client['infocomp']!=""){ ?>
+                <p>INFOS COMPLÉMENTAIRES :</p>
+                <p><strong><?php echo $client['infocomp']; ?></strong></p>
+            <?php } ?>
+        </div>
+    </aside>
 
-    <main>
-        <section class="banniere-menu">
-            <h1>Notre Carte <span class="text-primary">Gourmande</span> 🦴</h1>
-            <p>Sélectionnez le meilleur pour sa santé : sans céréales, frais et équilibré.</p>
-        </section>
+    <section class="contenu-profil">
+        <h1>Mon Profil</h1>
 
-        <section class="conteneur-menu">
-            
-            <aside class="colonne-filtres">
-                <div class="groupe-filtres">
-                    <h3>🐕 Âge</h3>
-                    <label><input type="checkbox" name="junior" checked> Chiots (Junior)</label>
-                    <label><input type="checkbox" name="adulte" checked> Adultes</label>
-                    <label><input type="checkbox" name="senior" checked> Seniors</label>
-                </div>
-
-                <div class="groupe-filtres">
-                    <h3>🥩 Saveurs</h3>
-                    <label><input type="checkbox" name="volaille" checked> Volaille</label>
-                    <label><input type="checkbox" name="boeuf/gibier" checked> Bœuf / Gibier</label>
-                    <label><input type="checkbox" name="poisson" checked> Poisson</label>
-                    <label><input type="checkbox" name="veggie" checked> Végétarien</label>
-                </div>
-
-                <div class="groupe-filtres">
-                    <h3>⚠️ Spécifique</h3>
-                    <label><input type="checkbox" name="sans cereale" checked> Sans Céréales</label>
-                    <label><input type="checkbox" name="hypoallergenique" checked> Hypoallergénique</label>
-                    <label><input type="checkbox" name="digestion sensible" checked> Digestion Sensible</label>
-                </div>
-
-                <div class="groupe-filtres">
-                    <h3>🛒 Pack</h3>
-                    <label><input type="checkbox" name="pack" checked> Pack</label>
-                    <label><input type="checkbox" name="produit_unique" checked> Produit Unique</label>
-                </div>
-
-                <button class="btn-filtres">Appliquer les filtres</button>
-            </aside>
-
-            <div class="zone-plats">
-                
-                <div class="barre-recherche-menu">
-                    <input type="text" placeholder="Rechercher une croquette précise...">
-                    <button>🔍</button>
-                </div>
-                <form method="POST" action="menu.php">
-                    <div class="grille-plats">
-                        <?php foreach($plat as $index=>$detail){ ?>
-                            <article class="carte-plat">
-                                <div class="carte-img">
-                                    <img src="assets/<?php echo $detail['image']; ?>" alt="<?php echo $detail['name']; ?>">
-                                    <?php if($detail['new']==true){ ?>
-                                        <span class="etiquette-nouveau">Nouveau</span>
-                                    <?php } ?>
-                                </div>
-                                <div class="carte-contenu">
-                                    <h4><?php echo $detail['name']; ?></h4>
-                                    <p class="description"><?php echo $detail['description']; ?></p>
-                                    <div class="carte-footer">
-                                        <span class="prix"><?php echo number_format($detail['prix'], 2, ',', ' ');?>€</span>
-                                        <button name="btn_plus_<?php echo str_replace(" ", "_", $index); ?>" class="btn-carte">+</button>
-                                    </div>
-                                </div>
-                            </article>
-                        <?php } ?>
-                    </div>
-                </form>
+        <div class="carte-info">
+            <h3>Programme De Fidélité</h3>
+            <p>
+                N° de carte de fidélité :<br />
+                <span class="numero-carte"><?php aff_num_cmd_ou_fidelite($client['numero_fidelite'], 2); ?></span>
+            </p>
+            <?php $pourcentage=(100*$client['point_fidelite'])/300;
+                if($pourcentage>=100){
+                    $pourcentage=100;
+                }
+            ?>
+            <p>Vous avez <strong><?php  echo $client['point_fidelite']; ?> points</strong></p>
+            <div class="barre">
+                <div class="avancee" style="width:<?php echo $pourcentage; ?>%;"></div>
             </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Les Croquettes du Chef - Espace Client</p>
-    </footer>
-
+            <?php if($pourcentage<100){ ?>
+                <p><small>Encore <?php echo 300-($client['point_fidelite']); ?> points avant la réduction de 25% sur la commande suivante !</small></p>
+            <?php }else{ ?>
+                <p><small>🎉 Félicitations ! Vous avez débloqué une réduction de 25% sur votre prochaine commande !</small></p>
+            <?php } ?>
+            
+        </div>
+        <div class="carte-info">
+            <h3>Anciennes commandes 🛍️</h3>
+                <?php 
+                    $email = $client['email'];
+                    if(!empty($commande[$email])){
+                        foreach($commande[$email] as $id_cmd => $details){ ?>
+                            <div class="commande">
+                                <div class="numero">
+                                    <strong>Commande n°<?php aff_num_cmd_ou_fidelite($details['num'], 1) ;?> (<?php echo aff_temps($details['date']['jour'])."/".aff_temps($details['date']['mois'])."/".aff_temps($details['date']['annee']).":".aff_temps($details['date']['heure']).":".aff_temps($details['date']['minute']); ?>)</strong>
+                                    <button name="<?php aff_num_cmd_ou_fidelite($details['num'], 1) ; ?>" class="bouton-recommande">Recommander</button>
+                                </div>
+                                <?php foreach($details['plats'] as $produit){ ?>
+                                <p><?php echo $produit['quantite']."x       -".$produit['name']; ?> - <?php echo number_format($produit['quantite']*$produit['prix'], 2, ',', ' '); ?>€</p>
+                                <?php } ?>
+                            </div>
+                        <?php } 
+                    } else { ?>
+                        <div class="commande">
+                            <div class="numero">
+                                <strong><br>Vous n'avez pas encore passé de commande.</strong>
+                                <button name="<?php aff_num_cmd_ou_fidelite($details['num'], 1) ; ?>" class="bouton-recommande">Commander</button>
+                            </div>
+                        </div>
+                <?php } ?>
+        </div>        
+    </section>    
+</main>
+<footer>
+    <p>&copy; 2026 Les Croquettes du Chef - Espace Client</p>
+</footer> 
 </body>
 </html>
+
