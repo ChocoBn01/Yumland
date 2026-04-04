@@ -170,7 +170,7 @@
         <?php } else{?>
             <div class="livreur-info">
                 <div class="bloc-blanc">
-                    <h1>AUCUNE COMMANDE A LIVREE</h1>
+                    <h1>AUCUNE COMMANDE A LIVRER</h1>
                 </div>
             </div>
         <?php } ?>  
