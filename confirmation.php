@@ -137,10 +137,6 @@
                     <span><?php echo aff_temps($commande['date']['jour'])."/".aff_temps($commande['date']['mois'])."/".aff_temps($commande['date']['annee'])." - ".aff_temps($commande['date']['heure']).":".aff_temps($commande['date']['minute']); ?></span>
                 </div>
                 <div class="ligne-info">
-                    <span class="label-info">Paiement</span>
-                    <span>Carte bancaire ****4821</span>
-                </div>
-                <div class="ligne-info">
                     <span class="label-info">Adresse</span>
                     <span><?php echo $client['adr']; ?></span>
                 </div>
