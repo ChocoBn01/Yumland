@@ -103,8 +103,9 @@
                     <li><a href="admin.php">Administration</a></li>
                 <?php } ?>
                 <li><a href="menu.php">La Carte</a></li>
-                <li><a href="panier.php">🛒</a></li>
+                
                 <li><a href="profil.php" class="active">Mon profil</a></li>
+                <li><a href="panier.php">🛒</a></li>
                 <li><a href="logout.php" class="btn">Déconnexion</a></li>
             </ul>
         </nav>
