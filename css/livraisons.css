@@ -106,6 +106,44 @@ main {
     font-size: large;
 }
 
+
+
+.aucune-commande {
+    justify-content: center;
+    align-items: center;
+    min-height: 600px;
+}
+
+.bloc-vide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+    padding: 60px 40px;
+    border: 2px solid var(--text-main);
+    border-radius: 15px;
+    background-color: white;
+    max-width: 600px;
+    width: 100%;
+}
+
+.icone-vide {
+    font-size: 80px;
+}
+
+.bloc-vide h1 {
+    font-family: var(--font-title);
+    font-size: 26px;
+    color: var(--text-main);
+    letter-spacing: 1px;
+}
+
+.bloc-vide p {
+    opacity: 0.75;
+}
+
 @media screen and (max-width: 768px) {
     .livreur-info {
         padding: 20px;
