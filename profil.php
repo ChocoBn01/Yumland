@@ -102,6 +102,7 @@
                 <?php if(isset($client['role']['admin']) && $client['role']['admin'] == true){ ?>
                     <li><a href="admin.php">Administration</a></li>
                 <?php } ?>
+                <li><a href="index.php">Accueil</a></li>
                 <li><a href="menu.php">La Carte</a></li>
                 
                 <li><a href="profil.php" class="active">Mon profil</a></li>
