@@ -1,6 +1,12 @@
 <?php 
     if(!isset($_COOKIE["client"])){
         header("Location: index.php");
+        exit;
+    }
+    if(isset($_COOKIE["admin"])){
+        setcookie("admin", json_encode($data[$mail]), time()-3600);  
+        header("Location: admin.php");
+        exit;
     }
     $client=json_decode($_COOKIE["client"], true);   
     $file=file_get_contents("donnees/data.json");
@@ -118,6 +124,11 @@
                 exit;
             }
         }
+        if(isset($_REQUEST['profil_'.$pers['numero_fidelite']])){
+            setcookie("admin", json_encode($data[$pers['email']]), time()+3600);  
+            header("Location: profil.php");
+            exit;
+        }
         if(isset($_REQUEST['supprimer_'.$pers['numero_fidelite']])){
             $commande_data = file_get_contents("donnees/commande.json");
             $commande = json_decode($commande_data, true);
@@ -215,7 +226,7 @@
         <td>
             <form method="POST" action="admin.php">
                 <?php if($pers['email']!="nathaneviname@gmail.com"){ ?>
-                    <p><a href="">Aller sur le profil</a></p>
+                    <p><button name="profil_<?php echo $pers['numero_fidelite']; ?>">Aller sur le profil</button></p>
                     <p><button name="bloque_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['bloque']==true){ echo "Débloquer";}else{ echo "Bloquer";} ?></button></p>
                 <?php } ?>
                 <p><button name="restaurateur_<?php echo $pers['numero_fidelite']; ?>"><?php if($pers['role']['restaurateur']==true){ echo "Retirer restaurateur";}else{ echo "Passer en restaurateur";} ?></button></p>
