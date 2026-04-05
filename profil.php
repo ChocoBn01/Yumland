@@ -1,10 +1,14 @@
 <?php 
-    error_reporting(0);
     if(!isset($_COOKIE["client"])){
         header("Location: index.php");
         exit;
     }
-    $client=json_decode($_COOKIE["client"], true);   
+    if(isset($_COOKIE["admin"])){
+        $client=json_decode($_COOKIE["admin"], true); 
+    }
+    else{
+        $client=json_decode($_COOKIE["client"], true);
+    }
     $commande_data =file_get_contents("donnees/commande_passe.json");
     $commande = json_decode($commande_data, true); 
     $file=file_get_contents("donnees/data.json");
@@ -86,7 +90,6 @@
             return $num;
         }
     }  
-
     foreach($commande[$mail] as $id_cmd => $details){
         if(isset($_REQUEST[aff_num_cmd($details['num'])])){
             foreach($details['plats'] as $id => $pla){
@@ -125,19 +128,29 @@
         </div>
         <nav>
             <ul>
-                <?php if(isset($client['role']['restaurateur']) && $client['role']['restaurateur'] == true){ ?>
+                <?php if(isset($client['role']['restaurateur']) && $client['role']['restaurateur'] == true && !isset($_COOKIE["admin"])){ ?>
                     <li><a href="commandes.php">Commande</a></li>
                 <?php } ?>
-                <?php if(isset($client['role']['livreur']) && $client['role']['livreur'] == true){ ?>
+                <?php if(isset($client['role']['livreur']) && $client['role']['livreur'] == true && !isset($_COOKIE["admin"])){ ?>
                     <li><a href="livraisons.php">Livraison</a></li>
                 <?php } ?>
-                <?php if(isset($client['role']['admin']) && $client['role']['admin'] == true){ ?>
+                <?php if(isset($client['role']['admin']) && $client['role']['admin'] == true && !isset($_COOKIE["admin"])){ ?>
                     <li><a href="admin.php">Administration</a></li>
                 <?php } ?>
-                <li><a href="menu.php">La Carte</a></li>
-                <li><a href="panier.php">🛒</a></li>
-                <li><a href="profil.php" class="active">Mon profil</a></li>
-                <li><a href="logout.php" class="btn">Déconnexion</a></li>
+                <?php if(!isset($_COOKIE["admin"])){ ?>
+                    <li><a href="menu.php">La Carte</a></li>
+                <?php } ?>
+                <?php if(!isset($_COOKIE["admin"])){ ?>
+                    <li><a href="panier.php">🛒</a></li>
+                <?php } ?>
+                <?php if(!isset($_COOKIE["admin"])){ ?>
+                    <li><a href="profil.php" class="active">Mon profil</a></li>
+                <?php } ?>
+                <?php if(isset($_COOKIE["admin"])){ ?>
+                    <li><a href="administration.php" class="btn">Retour page admin</a></li>
+                <?php }else{ ?>
+                    <li><a href="logout.php" class="btn">Déconnexion</a></li>
+                <?php } ?>
             </ul>
         </nav>
     </header>
