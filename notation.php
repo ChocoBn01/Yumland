@@ -10,7 +10,7 @@
     $commande_data =file_get_contents("donnees/commande_passe.json");
     $commande = json_decode($commande_data, true); 
     $plat_data=file_get_contents("donnees/plat.json");
-    $plat=json_decode($plat_data, true);
+    $pla=json_decode($plat_data, true);
     if($data[$client['email']]['role']['bloque']==true){
         setcookie("client", json_encode($data[$mail]), time()-3600);  
         header("Location: index.php");
@@ -19,80 +19,55 @@
     foreach($commande[$mail] as $id => $cmd_client){
         if($cmd_client['note']['etat']==false){
             $cmd=$cmd_client;
+            $id_cmd = $id;
         }
-    }
-    function aff_num_cmd($num){
-        if($num<10){
-            return "000".$num;
-        }
-        else if($num<100){
-            return "00".$num;
-        }
-        else if($num<1000){
-            return "0".$num;
-        }
-        else{
-            return $num;
+        else if($cmd_client['note']['note']==0){
+            $commande[$mail][$id]['note']['etat']=false;
+            file_put_contents("donnees/commande_passe.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            header("Location: notation.php");
+            exit;
         }
     }
     if(!isset($cmd)){
         header("Location: index.php");
         exit;
     }
-    else{
-        foreach($cmd['plats'] as $idplat => $plat){
+    if(isset($_REQUEST['submit_btn'])){
+        $somme = 0;
+        $quantite = 0;
+        foreach($cmd['plats'] as $idplat => $details_plat){
             if(isset($_REQUEST["name".str_replace(" ", "_", $idplat)])){
-                $commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']=intval($_REQUEST["name".str_replace(" ", "_", $idplat)]);
-            }
-        }
-        if(isset($_REQUEST['com'])){
-            $commande[$mail][aff_num_cmd($cmd['num'])]['note']['com']=$_REQUEST['com'];
-        }
-        else{
-            $commande[$mail][aff_num_cmd($cmd['num'])]['note']['com']="";
-        }
-        $all=0;
-        foreach($cmd['plats'] as $idplat => $plat){
-            if(!isset($commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note'])){
-                $commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']=0;
-                $all=1;
-            }
-            else if($commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']==0){
-                $commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']=0;
-                $all=1;
+                $note = intval($_REQUEST["name".str_replace(" ", "_", $idplat)]);
+                $commande[$mail][$id_cmd]['plats'][$idplat]['note'] = $note;
+            } else {
+                $note = 0;
+                $commande[$mail][$id_cmd]['plats'][$idplat]['note'] = $note;
             }
             if(isset($_REQUEST["com_".str_replace(" ", "_", $idplat)])){
-                $commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']['com']=$_REQUEST["com_".str_replace(" ", "_", $idplat)];
+                $commande[$mail][$id_cmd]['plats'][$idplat]['com_plat'] = $_REQUEST["com_".str_replace(" ", "_", $idplat)];
+            } else {
+                $commande[$mail][$id_cmd]['plats'][$idplat]['com_plat'] = "";
             }
-            if(!isset($commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']['com'])){
-                $commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note']['com']="";
-                $all=1;
-            }
+            
+            $somme += $note;
+            $quantite++;
         }
-        if($all==1){
-            $commande[$mail][aff_num_cmd($cmd['num'])]['note']['etat']=false;
-            file_put_contents("donnees/commande_passe.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-            header("Location: notation.php");
-            exit;
+        if(isset($_REQUEST['com'])){
+            $commande[$mail][$id_cmd]['note']['com'] = $_REQUEST['com'];
+        } 
+        else {
+            $commande[$mail][$id_cmd]['note']['com'] = "";
         }
-        else{
-            if(isset($_REQUEST['submit_btn'])){
-                $commande[$mail][aff_num_cmd($cmd['num'])]['note']['etat']=true;
-                
-                $somme = 0;
-                $quantite = 0;
-                
-                foreach($cmd['plats'] as $idplat => $plat){
-                    $somme+=$commande[$mail][aff_num_cmd($cmd['num'])]['plats'][$idplat]['note'];
-                    $quantite++;
-                }
-                $commande[$mail][aff_num_cmd($cmd['num'])]['note']['note']=intval($somme/$quantite);
-                
-                file_put_contents("donnees/commande_passe.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-                header("Location: index.php");
-                exit;
-            }
+        if($quantite > 0){
+            $commande[$mail][$id_cmd]['note']['note'] = intval($somme/$quantite);
+        } 
+        else {
+            $commande[$mail][$id_cmd]['note']['note'] = 0;
         }
+        $commande[$mail][$id_cmd]['note']['etat'] = true;
+        file_put_contents("donnees/commande_passe.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        header("Location: profil.php");
+        exit;
     }
 ?>
 <!DOCTYPE html>
@@ -118,46 +93,47 @@
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="menu.php">La carte</a></li>
                 <li><a href="menu.php" class="active">Avis</a></li>
+                <li><a href="profil.php" class="btn">Profil</a></li>
             </ul>
         </nav>
         </header>
         <div class="rect_bleu">
-            <form action="" method="post" target="_top" id="formulaire_login" name="connexion">
+            <form action="" method="post" id="formulaire_login" name="connexion">
                 <img class="logo_login" src="assets/Logo projet.png" alt="logo de notre site de vente">
                 <div class="Notez_votre_cmd">   
                     Notez votre commande
                 </div>
-                <form method="POST">
-                    <?php foreach($cmd['plats'] as $idplat => $plat){ ?>
-                        <div class="cmd_1">
-                            <img class="img_cmd_1" src="assets/Boeuf wagyu.png" alt="image Prestige du chef">
-                            <div class="cmd1_s_img">
-                                <div class="l1_1">
-                                    <div class="nplat_1">
-                                        <?php echo $plat['name']; ?>
-                                    </div>
-                                    <div class="radio_1">                               
-                                        <input type="radio" name="<?php echo "name".str_replace(" ", "_", $idplat); ?>" class="note_1" value="1">
-                                        <label for="idnote_1_1">★</label>                                
-                                        <input type="radio" name="<?php echo "name".str_replace(" ", "_", $idplat); ?>" class="note_1" value="2">
-                                        <label for="idnote_1_2">★</label>                               
-                                        <input type="radio" name="<?php echo "name".str_replace(" ", "_", $idplat); ?>" class="note_1" value="3">
-                                        <label for="idnote_1_3">★</label>                               
-                                        <input type="radio" name="<?php echo "name".str_replace(" ", "_", $idplat); ?>" class="note_1" value="4">
-                                        <label for="idnote_1_4">★</label>
-                                        <input type="radio" name="<?php echo "name".str_replace(" ", "_", $idplat); ?>" class="note_1" value="5">
-                                        <label for="idnote_1_5">★</label>
-                                    </div>
+                
+                <?php foreach($cmd['plats'] as $idplat => $plat){ ?>
+                    <div class="cmd_1">
+                        <img class="img_cmd_1" src="assets/<?php echo $pla[$idplat]['image']; ?>" alt="image <?php echo $plat['name']; ?>">
+                        <div class="cmd1_s_img">
+                            <div class="l1_1">
+                                <div class="nplat_1">
+                                    <?php echo $plat['name']; ?>
                                 </div>
-                                <textarea name="<?php echo "com_".str_replace(" ", "_", $idplat); ?>" class="com_1" placeholder="   Votre commentaire sur le plat"></textarea>
+                                <div class="radio_1">                               
+                                    <?php $id_etoile = str_replace(" ", "_", $idplat); ?>
+                                    <input type="radio" name="name<?php echo $id_etoile; ?>" id="idnote_<?php echo $id_etoile; ?>_5" class="note_1" value="5" required>
+                                    <label for="idnote_<?php echo $id_etoile; ?>_5">★</label>                                
+                                    <input type="radio" name="name<?php echo $id_etoile; ?>" id="idnote_<?php echo $id_etoile; ?>_4" class="note_1" value="4">
+                                    <label for="idnote_<?php echo $id_etoile; ?>_4">★</label>                               
+                                    <input type="radio" name="name<?php echo $id_etoile; ?>" id="idnote_<?php echo $id_etoile; ?>_3" class="note_1" value="3">
+                                    <label for="idnote_<?php echo $id_etoile; ?>_3">★</label>                               
+                                    <input type="radio" name="name<?php echo $id_etoile; ?>" id="idnote_<?php echo $id_etoile; ?>_2" class="note_1" value="2">
+                                    <label for="idnote_<?php echo $id_etoile; ?>_2">★</label>
+                                    <input type="radio" name="name<?php echo $id_etoile; ?>" id="idnote_<?php echo $id_etoile; ?>_1" class="note_1" value="1">
+                                    <label for="idnote_<?php echo $id_etoile; ?>_1">★</label>
+                                </div>
                             </div>
+                            <textarea name="<?php echo "com_".str_replace(" ", "_", $idplat); ?>" class="com_1" placeholder="   Votre commentaire sur le plat"></textarea>
                         </div>
-                    <?php } ?>
-                    <textarea name="com" class="com_1" placeholder="   Votre commentaire sur la commande"></textarea>
-                    <button class="avis_submit" name="submit_btn">
-                        Soumettre mes avis
-                    </button>
-                </form>    
+                    </div>
+                <?php } ?>
+                <textarea name="com" class="com_1" placeholder="   Votre commentaire sur la commande"></textarea>
+                <button class="avis_submit" name="submit_btn">
+                    Soumettre mes avis
+                </button>
             </form>
         </div>
     <footer>
