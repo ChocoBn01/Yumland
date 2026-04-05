@@ -1,4 +1,5 @@
 <?php
+    error_reporting(0);
     $client=json_decode($_COOKIE["client"], true);
     if(!isset($_COOKIE["client"])){
         header("Location: index.php");
