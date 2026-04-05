@@ -147,7 +147,7 @@
                     <li><a href="profil.php" class="active">Mon profil</a></li>
                 <?php } ?>
                 <?php if(isset($_COOKIE["admin"])){ ?>
-                    <li><a href="administration.php" class="btn">Retour page admin</a></li>
+                    <li><a href="admin.php" class="btn">Retour page admin</a></li>
                 <?php }else{ ?>
                     <li><a href="logout.php" class="btn">Déconnexion</a></li>
                 <?php } ?>
