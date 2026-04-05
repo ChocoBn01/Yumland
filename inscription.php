@@ -1,4 +1,5 @@
 <?php 
+    error_reporting(0);
     if(empty($_REQUEST['nname'])||empty($_REQUEST['nfname'])||empty($_REQUEST['nadr'])||empty($_REQUEST['ntel'])||empty($_REQUEST['nemail'])||empty($_REQUEST['ncode'])){
     }
     else{
