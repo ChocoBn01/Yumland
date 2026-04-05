@@ -1,7 +1,6 @@
 {
     "menu decouverte": {
         "name": "Menu Découverte",
-        "description": "Un trio parfait pour vous faire découvrir nos saveurs : volaille, poisson et une petite friandise.",
         "plats": [
             "cro'c poulet fermier",
             "saumon et patate douce",
@@ -11,7 +10,6 @@
     },
     "menu senior": {
         "name": "Menu Senior Zen",
-        "description": "Spécialement conçu pour les chiens seniors : digestion douce et bien-être au quotidien.",
         "plats": [
             "saumon et patate douce",
             "croquettes senior articulations"
@@ -20,7 +18,6 @@
     },
     "menu pack famille": {
         "name": "Menu Pack Famille",
-        "description": "Le grand format économique pour les foyers multi-chiens : trois références de notre menu",
         "plats": [
             "cro'c poulet fermier",
             "boeuf et legumes",
