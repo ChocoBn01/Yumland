@@ -1,4 +1,5 @@
 <?php 
+    error_reporting(0);
     $client=json_decode($_COOKIE["client"], true);  
     $mail=$client['email'];  
     $plat_data=file_get_contents("donnees/plat.json");
