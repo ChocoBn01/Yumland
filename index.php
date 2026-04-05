@@ -74,7 +74,7 @@
                             <p>Bœuf Wagyu & Éclats de Truffe • L'excellence</p>
                         </div>
                         <div class="capsule-action">
-                            <span class="prix">24.90€</span>
+                            <span class="prix">29.90€</span>
                         </div>
                     </article>
 
@@ -100,7 +100,7 @@
                             <p>Saumon Fumé & Graines de Chia • Digestion douce</p>
                         </div>
                         <div class="capsule-action">
-                            <span class="prix">26.00€</span>
+                            <span class="prix">27.90€</span>
                         </div>
                     </article>
 
