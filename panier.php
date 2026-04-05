@@ -1,4 +1,5 @@
 <?php 
+    error_reporting(0);
     if(!isset($_COOKIE["client"])){
         header("Location: index.php");
         exit;
@@ -168,7 +169,7 @@
                     <input type='hidden' name='vendeur' value='<?php echo $vendeur; ?>'>
                     <input type='hidden' name='retour' value='<?php echo $retour; ?>'>
                     <input type='hidden' name='control' value='<?php echo $control; ?>'>
-                    <input class="bouton-recommande" type='submit' value="Payement">
+                    <input class="bouton-recommande" type='submit' value="Paiement">
                 </form>
             </div>
         <?php }?>
