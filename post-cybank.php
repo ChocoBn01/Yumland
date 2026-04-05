@@ -85,7 +85,10 @@
         $new_cmd[aff_num_cmd($num)]['date'] = array("jour" => (int)date('d'), "mois" => (int)date('m'), "annee" => (int)date('Y'), "heure" => (int)date('H'), "minute" => (int)date('i'), "seconde" => (int)date('s'));
         if($commande['reduction']==true){
             $data[$mail]['point_fidelite'] -= 300;
-            $data[$mail]['point_fidelite'] += intval($montant_recu);
+        }
+        $data[$mail]['point_fidelite'] += intval($montant_recu);
+        foreach($new_cmd[aff_num_cmd($num)]['plats'] as $id => $name){
+            $new_cmd[aff_num_cmd($num)]['plats'][$id]['note'] = 0;
         }
         file_put_contents("donnees/data.json", json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         file_put_contents("donnees/commande.json", json_encode($new_cmd, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
