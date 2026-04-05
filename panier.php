@@ -1,67 +1,76 @@
-<?php 
-    error_reporting(0);
-    if(!isset($_COOKIE["client"])){
-        header("Location: index.php");
-        exit;
-    }
-    $client=json_decode($_COOKIE["client"], true);
-    $mail=$client['email'];   
-    $file=file_get_contents("donnees/data.json");
-    $data=json_decode($file, true);
-    $commande_data =file_get_contents("donnees/panier_$mail.json");
-    $commande = json_decode($commande_data, true); 
-    $plat_data=file_get_contents("donnees/plat.json");
-    $plat=json_decode($plat_data, true);
-    if($data[$client['email']]['role']['bloque']==true){
-        setcookie("client", json_encode($data[$mail]), time()-3600);  
-        header("Location: index.php");
-    }
-    include("getapikey/getapikey.php");
-    $getapikey = getAPIKey("MI-1_I");
-    if($commande['reduction'] == true){ 
-        $reduc=number_format($commande['total'] / 4, 2, '.', '');;
-        $montant = number_format(3*$commande['total'] / 4, 2, '.', ''); 
-    } else {
-        $montant = number_format($commande['total'], 2, '.', '');
+<?php
+if (!isset($_COOKIE["client"])) {
+    header("Location: index.php");
+    exit();
+}
+$client = json_decode($_COOKIE["client"], true);
+$mail = $client["email"];
+$file = file_get_contents("donnees/data.json");
+$data = json_decode($file, true);
+$commande_data = file_get_contents("donnees/panier_$mail.json");
+$commande = json_decode($commande_data, true);
+$plat_data = file_get_contents("donnees/plat.json");
+$plat = json_decode($plat_data, true);
+
+if ($data[$client["email"]]["role"]["bloque"] == true) {
+    setcookie("client", json_encode($data[$mail]), time() - 3600);
+    header("Location: index.php");
+    exit();
+}
+foreach ($commande["plats"] as $id => $detail) {
+    if (isset($_REQUEST["btn_suppr_" . str_replace(" ", "_", $id)])) {
+        $commande["total"] = $commande["total"] - ($detail["prix"] * $detail["quantite"]);
+        unset($commande["plats"][$id]);
+        file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        header("Location: panier.php");
+        exit();
     } 
-    $transac = uniqid();
-    $vendeur = "MI-1_I";
-    $retour = "http://localhost:7180/post-cybank.php"; 
-    $control = md5($getapikey . "#" . $transac . "#" . $montant . "#" . $vendeur . "#" . $retour . "#");
-    function conjugaison($sing, $plur, $val){
-        if($val==1){
-            return $sing;
-        }
-        else{
-            return $plur;
+    elseif (isset($_REQUEST["btn_plus_" . str_replace(" ", "_", $id)])) {
+        $commande["total"] = round($commande["total"] + $detail["prix"], 2);
+        $commande["plats"][$id]["quantite"]++;
+        file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        header("Location: panier.php");
+        exit();
+    } 
+    elseif ($detail["quantite"] > 1) {
+        if (isset($_REQUEST["btn_moins_" . str_replace(" ", "_", $id)])) {
+            $commande["total"] = round($commande["total"] - $detail["prix"], 2);
+            $commande["plats"][$id]["quantite"]--;
+            file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            header("Location: panier.php");
+            exit();
         }
     }
-    
-    foreach($commande['plats'] as $id => $detail){ 
-        if(isset($_REQUEST['btn_suppr_'.str_replace(" ", "_", $id)])){
-            $commande['total']=$commande['total']-$detail['prix'];
-            unset($commande['plats'][$id]);
-            file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-            header("Location: panier.php");
-            exit;
-        }
-        else if(isset($_REQUEST['btn_plus_'.str_replace(" ", "_", $id)])){
-            $commande['total']=round($commande['total'] + $detail['prix'], 2);;
-            $commande['plats'][$id]['quantite']++;
-            file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-            header("Location: panier.php");
-            exit;
-        }
-        else if($detail['quantite']>1){
-            if(isset($_REQUEST['btn_moins_'.str_replace(" ", "_", $id)])){
-                $commande['total']=round($commande['total'] - $detail['prix'], 2);;
-                $commande['plats'][$id]['quantite']--;
-                file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-                header("Location: panier.php");
-                exit;
-            }
-        }
-    }   
+}
+if ($data[$client["email"]]["point_fidelite"] > 299) {
+    $commande["reduction"] = true;
+} 
+else {
+    $commande["reduction"] = false;
+}
+file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+include "getapikey/getapikey.php";
+$getapikey = getAPIKey("MI-1_I");
+if ($commande["reduction"] == true) {
+    $reduc = $commande["total"] / 4;
+    $montant = number_format((3 * $commande["total"]) / 4, 2, ".", "");
+} 
+else {
+    $reduc = 0;
+    $montant = number_format($commande["total"], 2, ".", "");
+}
+$transac = uniqid();
+$vendeur = "MI-1_I";
+$retour = "http://localhost:7180/post-cybank.php";
+$control = md5($getapikey . "#" . $transac . "#" . $montant . "#" . $vendeur . "#" . $retour . "#");
+function conjugaison($sing, $plur, $val){
+    if ($val == 1) { 
+        return $sing; 
+    } 
+    else { 
+        return $plur; 
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
