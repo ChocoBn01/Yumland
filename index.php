@@ -75,7 +75,6 @@
                         </div>
                         <div class="capsule-action">
                             <span class="prix">24.90€</span>
-                            <a href="#" class="bouton-ajouter">+</a>
                         </div>
                     </article>
 
@@ -89,7 +88,6 @@
                         </div>
                         <div class="capsule-action">
                             <span class="prix">22.50€</span>
-                            <a href="#" class="bouton-ajouter">+</a>
                         </div>
                     </article>
 
@@ -103,7 +101,6 @@
                         </div>
                         <div class="capsule-action">
                             <span class="prix">26.00€</span>
-                            <a href="#" class="bouton-ajouter">+</a>
                         </div>
                     </article>
 
@@ -121,7 +118,6 @@
                         </div>
                         <div class="capsule-action">
                             <span class="prix">12.50€</span>
-                            <a href="#" class="bouton-ajouter">+</a>
                         </div>
                     </article>
 
@@ -135,7 +131,6 @@
                         </div>
                         <div class="capsule-action">
                             <span class="prix">14.90€</span>
-                            <a href="#" class="bouton-ajouter">+</a>
                         </div>
                     </article>
 
@@ -149,7 +144,6 @@
                         </div>
                         <div class="capsule-action">
                             <span class="prix">14.90€</span>
-                            <a href="#" class="bouton-ajouter">+</a>
                         </div>
                     </article>
 
