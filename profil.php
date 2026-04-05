@@ -4,21 +4,25 @@
         exit;
     }
     if(isset($_COOKIE["admin"])){
-        $client=json_decode($_COOKIE["admin"], true); 
+        $client_temp = json_decode($_COOKIE["admin"], true); 
     }
     else{
-        $client=json_decode($_COOKIE["client"], true);
+        $client_temp = json_decode($_COOKIE["client"], true);
     }
-    $commande_data =file_get_contents("donnees/commande_passe.json");
+    $commande_data = file_get_contents("donnees/commande_passe.json");
     $commande = json_decode($commande_data, true); 
-    $file=file_get_contents("donnees/data.json");
-    $data=json_decode($file, true);
-    setcookie("client", json_encode($data[$client['email']]), time()-3600);  
-    setcookie("client", json_encode($data[$client['email']]), time()+3600);
-    $client=json_decode($_COOKIE["client"], true);
-    if($data[$client['email']]['role']['bloque']==true){
-        setcookie("client", json_encode($data[$mail]), time()-3600);  
+    $file = file_get_contents("donnees/data.json");
+    $data = json_decode($file, true);
+    $client = $data[$client_temp['email']];
+    $mail = $client['email'];   
+    if(!isset($_COOKIE["admin"])){
+        setcookie("client", json_encode($client), time()-3600);  
+        setcookie("client", json_encode($client), time()+3600);
+    }
+    if($client['role']['bloque'] == true && !isset($_COOKIE["admin"])){
+        setcookie("client", json_encode($client), time()-3600);  
         header("Location: index.php");
+        exit;
     }
     $mail=$client['email'];   
     if(!file_exists("donnees/panier_$mail.json")){
