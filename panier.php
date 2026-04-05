@@ -57,6 +57,31 @@ if(isset($commande['menus'])){
         }
     }
 }
+foreach ($commande["menus"] as $id_m => $detail_m) {
+    if (isset($_REQUEST["btn_suppr_".str_replace(" ", "_", $id_m)])) {
+        $commande["total"] = $commande["total"] - ($detail_m["prix"] * $detail_m["quantite"]);
+        unset($commande["menu"][$id_m]);
+        file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        header("Location: panier.php");
+        exit();
+    } 
+    elseif (isset($_REQUEST["btn_plus_".str_replace(" ", "_", $id_m)])) {
+        $commande["total"] = round($commande["total"] + $detail_m["prix"], 2);
+        $commande["menu"][$id_m]["quantite"]++;
+        file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        header("Location: panier.php");
+        exit();
+    } 
+    elseif ($detail_m["quantite"] > 1) {
+        if (isset($_REQUEST["btn_moins_".str_replace(" ", "_", $id_m)])) {
+            $commande["total"] = round($commande["total"] - $detail_m["prix"], 2);
+            $commande["menu"][$id_m]["quantite"]--;
+            file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            header("Location: panier.php");
+            exit();
+        }
+    }
+}
 
 if(isset($_REQUEST['mode_temps'])){
     $commande['planification'] = $_REQUEST['mode_temps'];
@@ -131,8 +156,6 @@ function conjugaison($sing, $plur, $val){
     <main class="container">
         <div class="diff_part">
             <section class="contenu-profil">
-
-                <!-- Plats à la carte -->
                 <?php foreach($commande['plats'] as $id => $detail){ ?>
                     <div class="carte-info">
                         <img class="img_cmd" src="assets/<?php echo $plat[$id]['image']; ?>" alt="">
