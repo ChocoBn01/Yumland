@@ -4,6 +4,8 @@
     $mail=$client['email'];  
     $plat_data=file_get_contents("donnees/plat.json");
     $plat=json_decode($plat_data, true);
+    $menu_data = file_get_contents("donnees/menu.json");
+    $menu = json_decode($menu_data, true);
     $file=file_get_contents("donnees/data.json");
     $data=json_decode($file, true);
     if($data[$client['email']]['role']['bloque']==true){
@@ -28,7 +30,21 @@
                 header("Location: menu.php");
             }
         }
+        foreach($menu as $cle => $detail_menu){
+            if(isset($_REQUEST['btn_menu_'.str_replace(" ", "_", $cle)])){
+                $commande['total'] = round($commande['total'] + $detail_menu['prix'], 2);
+                if(isset($commande['menus'][$cle])){
+                    $commande['menus'][$cle]['quantite']++;
+                } else {
+                    $commande['menus'][$cle] = ['quantite' => 1, 'prix' => $detail_menu['prix'], 'name' => $detail_menu['name'], 'plats' => $detail_menu['plats']];
+                }
+                file_put_contents("donnees/panier_$mail.json", json_encode($commande, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+                header("Location: menu.php");
+                exit();
+            }
+        }
     }
+    
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -71,11 +87,40 @@
     </header>
 
     <main>
-        <section class="banniere-menu">
+         <section class="banniere-menu">
             <h1>Notre Carte <span class="text-primary">Gourmande</span> 🦴</h1>
             <p>Sélectionnez le meilleur pour sa santé : sans céréales, frais et équilibré.</p>
         </section>
 
+        <section class="section-menus">
+    <h2>Nos Menus</h2>
+    <form method="POST" action="menu.php">
+        <div class="grille-menus">
+            <?php 
+            $menu_data = file_get_contents("donnees/menu.json");
+            $menu = json_decode($menu_data, true);
+
+            foreach($menu as $cle => $detail_menu){ ?>
+                <article class="carte-menu">
+                    <div class="carte-menu-header">
+                        <h3><?php echo $detail_menu['name']; ?></h3>
+                    </div>
+                    <div class="carte-menu-plats">
+                        <ul>
+                            <?php foreach($detail_menu['plats'] as $nom_plat){ ?>
+                                <li><?php echo ucfirst($nom_plat); ?></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <div class="carte-menu-footer">
+                        <span class="prix"><?php echo number_format($detail_menu['prix'], 2, ',', ' '); ?>€</span>
+                        <button name="btn_menu_<?php echo str_replace(" ", "_", $cle); ?>" class="btn-ajout-menu">Ajouter</button>
+                    </div>
+                </article>
+            <?php } ?>
+        </div>
+    </form>
+</section>
         <section class="conteneur-menu">
             
             <aside class="colonne-filtres">
